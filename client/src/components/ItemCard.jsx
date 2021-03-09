@@ -1,4 +1,6 @@
 import React from "react";
+import SearchIcon from "@material-ui/icons/Search";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import "../styles/ItemCard.css";
 
 function numberWithCommas(x) {
@@ -16,22 +18,24 @@ function ItemCard() {
 
 	return (
 		<div className="ItemCard">
-			<div>
-				<section className="ItemCard__img">
-					<a href="/">
-						<img src={props.src} alt={props.name}></img>
-					</a>
-					<p>-{props.salePercent}%</p>
-					<div className="ItemCard__actions"></div>
-				</section>
-			</div>
+			<section className="ItemCard__img">
+				<a href="/">
+					<img src={props.src} alt={props.name}></img>
+				</a>
+				<p>-{props.salePercent}%</p>
+				<div className="ItemCard__actions">
+					<SearchIcon />
+					<div className="buy-button">Mua ngay</div>
+					<AddShoppingCartIcon />
+				</div>
+			</section>
 			<section className="ItemCard__info">
 				<h4>{props.name}</h4>
 				<div className="price">
 					<p>
-						{numberWithCommas((props.price * (100 - props.salePercent)) / 100)}
+						{numberWithCommas((props.price * (100 - props.salePercent)) / 100)}₫
 					</p>
-					<p>{numberWithCommas(props.price)}</p>
+					<p>{numberWithCommas(props.price)}₫</p>
 				</div>
 			</section>
 		</div>

@@ -126,6 +126,9 @@ function Home__collection() {
 			</div>
 			<div className="banner">
 				<ItemCard />
+				<ItemCard />
+				<ItemCard />
+				<ItemCard />
 			</div>
 		</div>
 	);

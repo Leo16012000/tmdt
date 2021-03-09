@@ -1,10 +1,11 @@
 .ItemCard {
-	max-width: 350px;
-	display: block;
-	background-color: lightcyan;
+	max-width: 315px;
+	font-family: Montserrat, Helvetica, Arial, sans-serif;
+	font-weight: 100;
 }
 .ItemCard__img {
 	position: relative;
+	height: auto;
 }
 .ItemCard__img > p {
 	position: absolute;
@@ -20,12 +21,49 @@
 }
 
 .ItemCard__img img {
-	position: absolute;
-	top: 0;
-	left: 0;
 	width: 100%;
 	height: auto;
 	background-color: red;
 }
+.ItemCard__img .ItemCard__actions {
+	cursor: pointer;
+	position: absolute;
+	bottom: 10px;
+	z-index: 3;
+	overflow: hidden;
+	vertical-align: middle !important;
+	left: 23%;
+	display: flex;
+	align-items: center;
+}
+.ItemCard__img .ItemCard__actions * {
+	height: 34px;
+	line-height: 34px;
+	padding: 0px 5px;
+	background: #fff;
+	color: #ff914a;
+	border: 0px;
+	outline: 0px;
+	float: left;
+	transition: all 0.5s ease-in-out;
+}
+.ItemCard__img .ItemCard__actions div.buy-button {
+	font-size: 15px;
+	font-weight: 500;
+	transform: translateY(150px);
+}
+.ItemCard__img .ItemCard__actions svg:first-child {
+	width: 24px;
+	transform: translateX(-150px);
+}
+.ItemCard__img .ItemCard__actions svg:last-child {
+	width: 24px;
+	transform: translateX(150px);
+}
+.ItemCard__img:hover .ItemCard__actions * {
+	transform: translate(0px) !important;
+}
 .ItemCard__info {
+	font-family: Montserrat, Helvetica, Arial, sans-serif;
+	font-weight: 100;
 }

@@ -60,3 +60,7 @@
 	letter-spacing: 1px;
 	padding: 12px 35px 12px 25px;
 }
+.Home__collection .banner {
+	display: flex;
+	justify-content: space-evenly;
+}
