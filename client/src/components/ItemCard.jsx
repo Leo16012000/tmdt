@@ -1,52 +1,39 @@
 import React from "react";
 import "../styles/ItemCard.css";
 
-function ItemCard(props) {
+function numberWithCommas(x) {
+	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function ItemCard() {
+	const props = {
+		name: "DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO",
+		price: "14525000",
+		salePercent: "60",
+		src:
+			"https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg",
+	};
+
 	return (
 		<div className="ItemCard">
-			<div className="ItemCard__ImgBlock">
-				<img
-					src={this.props.props.img}
-					alt="img"
-					className="ItemCard__ImgBlock__Img"
-				/>
-				<div className="ItemCard__ImgBlock__Sale">
-					-{this.props.props.sale}%
-				</div>
-				<div className="ItemCard__ImgBlock__ProductAction">
-					<button className="ItemCard__ImgBlock__ProductAction__Buy ProductAction__Button">
-						Mua ngay
-					</button>
-				</div>
-			</div>
-			<div className="ItemCard__InfoBlock">
-				<div className="ItemCard__InfoBlock__Info">
-					<a className="ItemCard__InfoBlock__Info__Link" href="">
-						{this.props.props.id} - {this.props.props.name}
+			<div>
+				<section className="ItemCard__img">
+					<a href="/">
+						<img src={props.src} alt={props.name}></img>
 					</a>
-				</div>
-
-				{this.props.props.onSale === true ? (
-					<div className="ItemCard__InfoBlock__PriceBlock">
-						<div className="ItemCard__InfoBlock__SalePrice">
-							{(
-								parseInt(this.props.props.price) -
-								(parseInt(this.props.props.price) *
-									parseInt(this.props.props.sale)) /
-									100
-							).toLocaleString()}
-							đ
-						</div>
-						<div className="ItemCard__InfoBlock__Price">
-							{parseInt(this.props.props.price).toLocaleString()}đ
-						</div>
-					</div>
-				) : (
-					<div className="ItemCard__InfoBlock__Price">
-						{parseInt(this.props.props.price).toLocaleString()}đ
-					</div>
-				)}
+					<p>-{props.salePercent}%</p>
+					<div className="ItemCard__actions"></div>
+				</section>
 			</div>
+			<section className="ItemCard__info">
+				<h4>{props.name}</h4>
+				<div className="price">
+					<p>
+						{numberWithCommas((props.price * (100 - props.salePercent)) / 100)}
+					</p>
+					<p>{numberWithCommas(props.price)}</p>
+				</div>
+			</section>
 		</div>
 	);
 }
