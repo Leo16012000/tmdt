@@ -1,8 +1,39 @@
 .Home__carousel .awssld__wrapper {
 	max-height: 500px !important;
 }
-
 .Home__carousel nav.awssld__bullets {
 	--control-bullet-color: #c1c1c1;
 	--control-bullet-active-color: #ff9494;
+}
+.Home__catalog {
+	margin: 4rem 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.Home__catalog .content {
+	font-family: Montserrat, Helvetica, Arial, sans-serif;
+	margin-bottom: 3rem;
+}
+.Home__catalog .content > h1 {
+	letter-spacing: 2px;
+}
+.Home__catalog .banner {
+	cursor: pointer;
+	display: flex;
+	max-width: 1350px;
+}
+.Home__catalog .banner h4 {
+	margin-top: 0;
+	margin-bottom: 25px;
+	font-weight: 100;
+	font-size: 15px;
+	font-family: Montserrat, Helvetica, Arial, sans-serif;
+}
+.Home__catalog .banner .banner__item:first-child h4 {
+	padding-right: 50px;
+}
+.Home__catalog .banner .banner__item:last-child h4 {
+	padding-left: 50px;
 }
