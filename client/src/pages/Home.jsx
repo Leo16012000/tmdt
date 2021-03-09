@@ -1,6 +1,7 @@
 import React from "react";
 import AwesomeSlider from "react-awesome-slider";
 import AwsSliderStyles from "react-awesome-slider/src/core/styles.scss";
+import ItemCard from "../components/ItemCard";
 
 import "../styles/Home.css";
 
@@ -123,7 +124,9 @@ function Home__collection() {
 				<div>GHẾ SOFA</div>
 				<div>TỦ TRANG TRÍ</div>
 			</div>
-			<div className="banner"></div>
+			<div className="banner">
+				<ItemCard />
+			</div>
 		</div>
 	);
 }

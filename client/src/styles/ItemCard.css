@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+.ItemCard {
+	width: 33.3%;
+	font-size: 14px;
+	font-family: Montserrat, Helvetica, Arial, sans-serif;
+}
+.ItemCard__ImgBlock {
+	position: relative;
+}
+
+.ItemCard__ImgBlock__Img {
+	width: 100%;
+	position: relative;
+}
+
+.ItemCard__ImgBlock:hover .ItemCard__ImgBlock__ProductAction__Buy {
+	display: block;
+}
+
+.ItemCard__ImgBlock__Sale {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	height: 27px;
+	width: 50px;
+	color: white;
+	background-color: #ff914a;
+	text-align: center;
+	line-height: 28px;
+}
+.ItemCard__ImgBlock__ProductAction {
+}
+.ItemCard__InfoBlock {
+}
+
+.ProductAction__Button {
+	height: 34px;
+	padding: 0px 5px;
+	font-size: 14px;
+}
+
+.ItemCard__ImgBlock__ProductAction__Buy {
+	display: none;
+	position: absolute;
+	left: calc((100% - 73px) / 2);
+	bottom: 10px;
+	border: none;
+	cursor: pointer;
+	background-color: white;
+	color: #ff914a;
+}
+
+.ItemCard__ImgBlock__ProductAction__Buy:hover {
+	background-color: #ff914a;
+	color: white;
+}
+
+.ItemCard__InfoBlock__Info {
+	display: inline-block;
+
+	padding-bottom: 5px;
+	font-weight: 400;
+	text-transform: uppercase;
+	text-align: left;
+}
+
+.ItemCard__InfoBlock__Info__Link {
+	text-decoration: none;
+	color: #000;
+}
+.ItemCard__InfoBlock__Price {
+	color: #adadad;
+	font-size: 17px;
+	font-weight: 300;
+	display: inline-block;
+	margin-left: 10px;
+	text-decoration: line-through;
+}
+
+.ItemCard__InfoBlock__SalePrice {
+	color: #cc0000;
+	display: inline-block;
+	font-size: 17px;
+	font-weight: 600;
+}
+
+.ItemCard__InfoBlock__PriceBlock {
+	display: flex;
+	flex-direction: row;
+
+	justify-content: flex-start;
+}
