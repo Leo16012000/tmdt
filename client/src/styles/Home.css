@@ -1,0 +1,8 @@
+.Home__carousel .awssld__wrapper {
+	max-height: 500px !important;
+}
+
+.Home__carousel nav.awssld__bullets {
+	--control-bullet-color: #c1c1c1;
+	--control-bullet-active-color: #ff9494;
+}

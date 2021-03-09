@@ -13,7 +13,6 @@ function App() {
 		<div className="App">
 			<Router>
 				<TopNavigation />
-				Loading
 				<Suspense fallback={<h1>....</h1>}>
 					<Switch>
 						<Route exact path="/">
