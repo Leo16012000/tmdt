@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
+import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import "../styles/TopNavigation.css";
 
 function TopNavigation() {
@@ -34,19 +35,45 @@ function TopNavigation() {
 							<a href="/">Trang chủ</a>
 						</li>
 						<li className="dropdown">
-							<a href="/">Phòng khách</a>
+							<a href="/">
+								Phòng khách
+								<ExpandMoreIcon />
+							</a>
 							<ul>
-								<li className="dropdown-item">item 1</li>
-								<li className="dropdown-item">item 2</li>
-								<li className="dropdown-item">item 3</li>
+								<div id="top--black"></div>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 1
+								</li>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 2
+								</li>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 3
+								</li>
 							</ul>
 						</li>
 						<li className="dropdown">
-							<a href="/">Phòng ngủ</a>
+							<a href="/">
+								Phòng ngủ
+								<ExpandMoreIcon />
+							</a>
 							<ul>
-								<li className="dropdown-item">item 1</li>
-								<li className="dropdown-item">item 2</li>
-								<li className="dropdown-item">item 3</li>
+								<div id="top--black"></div>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 1
+								</li>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 2
+								</li>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 3
+								</li>
 							</ul>
 						</li>
 						<li className="dropdown">
@@ -55,36 +82,85 @@ function TopNavigation() {
 								<ExpandMoreIcon />
 							</a>
 							<ul>
-								<li className="dropdown-item">item 1</li>
-								<li className="dropdown-item">item 2</li>
-								<li className="dropdown-item">item 3</li>
+								<div id="top--black"></div>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 1
+								</li>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 2
+								</li>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 3
+								</li>
 							</ul>
 						</li>
 						<li className="dropdown">
-							<a href="/">Phòng học / làm việc </a>
+							<a href="/">
+								Phòng học / làm việc
+								<ExpandMoreIcon />{" "}
+							</a>
 							<ul>
-								<li className="dropdown-item">item 1</li>
-								<li className="dropdown-item">item 2</li>
-								<li className="dropdown-item">item 3</li>
+								<div id="top--black"></div>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 1
+								</li>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 2
+								</li>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 3
+								</li>
 							</ul>
 						</li>
 						<li className="dropdown">
-							<a href="/">Sản phẩm khác</a>
+							<a href="/">
+								Sản phẩm khác
+								<ExpandMoreIcon />
+							</a>
 							<ul>
-								<li className="dropdown-item">item 1</li>
-								<li className="dropdown-item">item 2</li>
-								<li className="dropdown-item">item 3</li>
+								<div id="top--black"></div>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 1
+								</li>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 2
+								</li>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 3
+								</li>
 							</ul>
 						</li>
 						<li>
 							<a href="/">Khuyến mãi</a>
 						</li>
 						<li className="dropdown">
-							<a href="/">Tin tức</a>
+							<a href="/">
+								Tin tức
+								<ExpandMoreIcon />
+							</a>
 							<ul>
-								<li className="dropdown-item">item 1</li>
-								<li className="dropdown-item">item 2</li>
-								<li className="dropdown-item">item 3</li>
+								<div id="top--black"></div>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 1
+								</li>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 2
+								</li>
+								<li className="dropdown-item">
+									<ArrowRightIcon />
+									item 3
+								</li>
 							</ul>
 						</li>
 						<li>
