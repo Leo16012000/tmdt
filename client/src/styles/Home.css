@@ -5,8 +5,8 @@
 	--control-bullet-color: #c1c1c1;
 	--control-bullet-active-color: #ff9494;
 }
+/*CATALOG STYLES*/
 .Home__catalog {
-	margin: 4rem 0;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -36,4 +36,27 @@
 }
 .Home__catalog .banner .banner__item:last-child h4 {
 	padding-left: 50px;
+}
+.Home__catalog .map-banner > img {
+	width: 90%;
+	height: auto;
+}
+/* COLLECTION STYLES*/
+.Home__collection .content > h1,
+.Home__collection .nav > div {
+	font-family: Montserrat, Helvetica, Arial, sans-serif;
+	margin-bottom: 1.5rem;
+	letter-spacing: 2px;
+}
+.Home__collection .nav {
+	display: flex;
+	justify-content: center;
+	max-width: 1350px;
+	margin: 0 auto;
+}
+.Home__collection .nav > div {
+	cursor: pointer;
+	font-size: 15px;
+	letter-spacing: 1px;
+	padding: 12px 35px 12px 25px;
 }

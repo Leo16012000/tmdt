@@ -76,7 +76,7 @@ function Home__carousel() {
 
 function Home__catalog() {
 	return (
-		<div className="Home__catalog">
+		<div className="Home__catalog mt-5">
 			<div className="content">
 				<h1>DANH MỤC NỔI BẬT</h1>
 				<p>
@@ -100,6 +100,30 @@ function Home__catalog() {
 					</div>
 				))}
 			</div>
+			<div className="map-banner mt-5">
+				<img
+					src="https://theme.hstatic.net/1000360516/1000609234/14/map2.gif?v=293"
+					alt="map"
+				/>
+			</div>
+		</div>
+	);
+}
+
+function Home__collection() {
+	return (
+		<div className="Home__collection mt-5">
+			<div className="content">
+				<h1>NỘI THẤT NỔI BẬT</h1>
+			</div>
+			<div className="nav">
+				<div>GIƯỜNG NGỦ</div>
+				<div>BÀN TRÀ</div>
+				<div>BÀN ĂN</div>
+				<div>GHẾ SOFA</div>
+				<div>TỦ TRANG TRÍ</div>
+			</div>
+			<div className="banner"></div>
 		</div>
 	);
 }
@@ -109,6 +133,7 @@ function Home(props) {
 		<div className="Home">
 			<Home__carousel />
 			<Home__catalog />
+			<Home__collection />
 		</div>
 	);
 }
