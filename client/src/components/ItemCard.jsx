@@ -30,7 +30,9 @@ function ItemCard() {
 				</div>
 			</section>
 			<section className="ItemCard__info">
-				<h4>{props.name}</h4>
+				<a href={props.src}>
+					<h4>{props.name}</h4>
+				</a>
 				<div className="price">
 					<p>
 						{numberWithCommas((props.price * (100 - props.salePercent)) / 100)}₫

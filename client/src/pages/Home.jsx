@@ -130,6 +130,9 @@ function Home__collection() {
 				<ItemCard />
 				<ItemCard />
 			</div>
+			<div className="readmore-line">
+				<a>XEM TẤT CẢ</a>
+			</div>
 		</div>
 	);
 }

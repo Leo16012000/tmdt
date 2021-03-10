@@ -1,8 +1,8 @@
 .ItemCard {
 	max-width: 315px;
 	font-family: Montserrat, Helvetica, Arial, sans-serif;
-	font-weight: 100;
 }
+/* CardImg styles */
 .ItemCard__img {
 	position: relative;
 	height: auto;
@@ -47,6 +47,11 @@
 	float: left;
 	transition: all 0.5s ease-in-out;
 }
+.ItemCard__img .ItemCard__actions *:hover,
+.ItemCard__img .ItemCard__actions *:hover path {
+	background: #ff914a;
+	color: #fff;
+}
 .ItemCard__img .ItemCard__actions div.buy-button {
 	font-size: 15px;
 	font-weight: 500;
@@ -63,7 +68,28 @@
 .ItemCard__img:hover .ItemCard__actions * {
 	transform: translate(0px) !important;
 }
-.ItemCard__info {
-	font-family: Montserrat, Helvetica, Arial, sans-serif;
-	font-weight: 100;
+/* CardInfo styles */
+.ItemCard__info h4 {
+	margin: 10px 0;
+	color: #000;
+	font-weight: 100 !important;
+	transition: all 0.2s ease-in-out;
+}
+.ItemCard__info h4:hover {
+	color: #ff914a;
+}
+.ItemCard__info .price {
+	display: flex;
+	padding: 0 20px;
+	justify-content: space-between;
+}
+.ItemCard__info .price * {
+	margin: 0;
+	color: #cecece;
+	font-size: 18px;
+	text-decoration: line-through;
+}
+.ItemCard__info .price > p:first-child {
+	font-weight: 700;
+	color: #cc0000;
 }
