@@ -60,3 +60,14 @@
 	letter-spacing: 1px;
 	padding: 12px 35px 12px 25px;
 }
+
+.banner {
+	margin: 10%;
+	width: 80%;
+	display: grid;
+	grid-template-columns: repeat(4,22%);
+	grid-template-rows: auto;
+	grid-column-gap: 4%;
+	grid-row-gap: 100px;
+}
+

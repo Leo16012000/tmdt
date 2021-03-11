@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import NotFoundPage from "./pages/NotFoundPage";
+import Sofa from './pages/Sofa'
 
 function App() {
 	return (
@@ -15,6 +16,9 @@ function App() {
 				<TopNavigation />
 				<Suspense fallback={<h1>....</h1>}>
 					<Switch>
+						<Route exact path="/sofa">
+							<Sofa />
+						</Route>
 						<Route exact path="/">
 							<Home />
 						</Route>
@@ -32,6 +36,7 @@ function App() {
 						</Route>
 					</Switch>
 				</Suspense>
+				
 			</Router>
 		</div>
 	);

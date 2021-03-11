@@ -1,0 +1,33 @@
+.Option {
+    margin-bottom: 5px;
+    
+}
+
+.List {
+    text-align: left;
+    padding-left: 0px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.6;
+}
+
+.Accordion {
+    width: 100%,
+}
+
+#Heading {
+    font-family: Montserrat;
+    font-weight: normal;
+    font-size: 18px;
+    padding: 5px;
+    
+}
+
+#Heading:hover {
+    color: #2a3167;
+    
+}
+
+#panel1a-header {
+    background: #f9f9f9;
+}
