@@ -111,7 +111,7 @@ function Home__catalog() {
 	);
 }
 
-function Home__collection() {
+function Home__collection1() {
 	return (
 		<div className="Home__collection mt-5">
 			<div className="content">
@@ -137,12 +137,56 @@ function Home__collection() {
 	);
 }
 
+function Home__collection2() {
+	return (
+		<div className="Home__collection mt-5">
+			<div className="content">
+				<h1>NỘI THẤT BÁN CHẠY</h1>
+			</div>
+			<div className="banner">
+				<ItemCard />
+				<ItemCard />
+				<ItemCard />
+				<ItemCard />
+			</div>
+			<div className="banner">
+				<ItemCard />
+				<ItemCard />
+				<ItemCard />
+				<ItemCard />
+			</div>
+			<div className="banner">
+				<ItemCard />
+				<ItemCard />
+				<ItemCard />
+				<ItemCard />
+			</div>
+			<div className="readmore-line">
+				<a>XEM TẤT CẢ</a>
+			</div>
+		</div>
+	);
+}
+
 function Home(props) {
 	return (
 		<div className="Home">
 			<Home__carousel />
 			<Home__catalog />
-			<Home__collection />
+			<Home__collection1 />
+			<div className="banner-pic">
+				<img
+					src="https://theme.hstatic.net/1000360516/1000609234/14/banner_1350.gif?v=870"
+					alt="banner-pic"
+				/>
+			</div>
+			<Home__collection2 />
+			<div className="banner-pic mt-4">
+				<img
+					src="https://theme.hstatic.net/1000360516/1000609234/14/bn_0.jpg?v=428"
+					alt="banner-pic"
+				/>
+			</div>
 		</div>
 	);
 }

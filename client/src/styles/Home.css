@@ -6,8 +6,7 @@
 	--control-bullet-active-color: #ff9494;
 }
 /*CATALOG STYLES*/
-.Home__catalog,
-.Home__collection {
+.Home {
 	max-width: 1350px;
 	margin-left: auto;
 	margin-right: auto;
@@ -75,7 +74,7 @@
 	justify-content: space-between;
 }
 .Home__collection .readmore-line {
-	margin: 3rem 0;
+	margin-top: 4rem;
 	border-top: 1px solid #dbdbdb;
 }
 .Home__collection .readmore-line > a {
@@ -90,4 +89,9 @@
 	font-size: 12px;
 	font-weight: 400;
 	border-top: none;
+}
+/* BANNER-PIC STYLES */
+.Home .banner-pic > img {
+	padding: 40px 10px;
+	width: 100%;
 }
