@@ -37,6 +37,10 @@
 	font-weight: 100;
 	font-size: 15px;
 }
+
+.Home__catalog .banner img {
+	width: 100%;
+}
 .Home__catalog .banner .banner__item:first-child h4 {
 	padding-right: 50px;
 }
@@ -69,13 +73,13 @@
 	padding: 12px 35px 12px 25px;
 }
 
-/* .Home__collection .banner {
+.Home__catalog .banner {
 	display: flex;
 	max-width: 1350px;
-	margin: 0 auto;
-	padding: 0 20px;
+	/* margin: 0 auto; */
+	padding: 0 30px;
 	justify-content: space-between;
-} */
+}
 .Home__collection .readmore-line {
 	margin-top: 4rem;
 	border-top: 1px solid #dbdbdb;
@@ -100,7 +104,7 @@
 }
 
 
-.banner {
+ .list {
 	margin: 10%;
 	width: 80%;
 	display: grid;

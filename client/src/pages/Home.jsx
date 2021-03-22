@@ -133,7 +133,7 @@ function Home__collection1() {
 				<div>TỦ TRANG TRÍ</div>
 			</div>
 
-			<div className="banner">	
+			<div className="list">	
 				{
 					list
 				}
@@ -157,19 +157,26 @@ function Home__collection2() {
 			<div className="content">
 				<h1>NỘI THẤT BÁN CHẠY</h1>
 			</div>
-			<div className="banner">	
+			<div className="list">	
 				{
 					list
 				}
 
 			</div>
-			<div className="banner">	
+			<div className="list">	
 				{
 					list
 				}
 
 			</div>
-			<div className="banner">	
+			<div className="list">	
+				{
+					list
+				}
+
+			</div>
+			
+			<div className="list">	
 				{
 					list
 				}
@@ -177,13 +184,6 @@ function Home__collection2() {
 			</div>
 			<div className="readmore-line">
 				<a>XEM TẤT CẢ</a>
-			</div>
-
-			<div className="banner">	
-				{
-					list
-				}
-
 			</div>
 		</div>
 	);
