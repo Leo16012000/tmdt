@@ -1,11 +1,15 @@
 import React from 'react'
 import '../styles/Footer.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faFacebookF, faTwitter ,faYoutube,faInstagramSquare } from '@fortawesome/free-brands-svg-icons'
+import {faCopyright } from '@fortawesome/free-regular-svg-icons'
 
 
 function FooterRight(){
     return (
         <div className="FooterRight">
-            
+            <FontAwesomeIcon icon={faCopyright}/> Castle Furniture since 2021.
+            Website by <b>Team6</b>
         </div>
     )
 }
@@ -14,7 +18,18 @@ function FooterRight(){
 function FooterSubcribe(){
     return (
         <div className="FooterSubcribe">
+            <div className="Social">
+                <div className="Social-block"><a href="/" ><FontAwesomeIcon icon={faFacebookF} size="2x" className="Social-icon"/></a></div>
+                <div className="Social-block"><a href="/" ><FontAwesomeIcon icon={faYoutube} size="2x" className="Social-icon"/></a></div>
+                <div className="Social-block"><a href="/" ><FontAwesomeIcon icon={faTwitter} size="2x" className="Social-icon"/></a></div>
+                <div className="Social-block"><a href="/" ><FontAwesomeIcon icon={faInstagramSquare} size="2x" className="Social-icon"/></a></div>
+            </div>
 
+            <div className="EmailInput">
+                <input placeholder="Nhập email của bạn" className="Input"/>
+                <input type="submit" value="Đăng ký" className="InputButton" />
+                
+            </div>      
         </div>
     )
 }
@@ -70,8 +85,9 @@ function FooterContent(){
                         </li>
                     </ul>
                 </div>
-                <div className="Fanpage">
-
+                <div className="Method">
+                    <h3>Phương thức thanh toán</h3>
+                    <ul></ul>
                 </div>
             </div>
         </div>

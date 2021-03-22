@@ -69,13 +69,13 @@
 	padding: 12px 35px 12px 25px;
 }
 
-.Home__collection .banner {
+/* .Home__collection .banner {
 	display: flex;
 	max-width: 1350px;
 	margin: 0 auto;
 	padding: 0 20px;
 	justify-content: space-between;
-}
+} */
 .Home__collection .readmore-line {
 	margin-top: 4rem;
 	border-top: 1px solid #dbdbdb;
