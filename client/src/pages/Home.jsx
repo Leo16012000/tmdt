@@ -133,11 +133,11 @@ function Home__collection1() {
 				<div>TỦ TRANG TRÍ</div>
 			</div>
 
-			<div className="banner">
-				<ItemCard />
-				<ItemCard />
-				<ItemCard />
-				<ItemCard />
+			<div className="banner">	
+				{
+					list
+				}
+
 			</div>
 			<div className="readmore-line">
 				<a>XEM TẤT CẢ</a>
