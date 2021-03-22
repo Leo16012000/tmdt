@@ -1,0 +1,78 @@
+.FooterContent {
+    /* display: grid;
+    grid-template-columns: 33.3% repeat(2,16.6%) 33.3%; */
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    font-size: 19px;
+    font-family: Montserrat, Helvetica, Arial, sans-serif;
+    background-color: #f2f2f2;
+    line-height: 1.4;
+}
+
+.Contact a,p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+.Logo {
+    padding-bottom: 25px;
+    width: 180px;
+}
+
+.Content {
+    max-width: 1350px;
+    padding: 45px 30px;
+    margin: 0 auto;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.Nav {
+    width: 16.666%;
+    padding-left:30px
+}
+
+.Nav  h3 {
+    text-transform: uppercase;
+    position: relative;
+    margin: 0px 0px 15px 0px;
+    font-size: 19px;
+    color: #000000;
+}
+
+.Nav ul {
+    width: 100%;
+    padding: 0 0 ;
+}
+
+.Nav a { 
+    
+    margin: 0px;
+    font-size: 14px;
+    text-decoration: none;
+    color: black;
+    text-transform:capitalize;
+    padding: 10px 0;
+    line-height: 1.6em;
+}
+
+.Nav a:hover {
+    color: #ff6200;
+    text-decoration: none;
+}
+
+.Contact {
+    width: 33.333%;
+    display: flex;
+    flex-direction: column;
+}
+
+.Fanpage {
+    width: 33.3%;
+}
+

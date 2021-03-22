@@ -8,6 +8,7 @@ import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import NotFoundPage from "./pages/NotFoundPage";
 import Sofa from './pages/Sofa'
+import Footer from './components/Footer'
 
 function App() {
 	return (
@@ -36,7 +37,7 @@ function App() {
 						</Route>
 					</Switch>
 				</Suspense>
-				
+				<Footer />
 			</Router>
 		</div>
 	);

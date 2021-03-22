@@ -2,8 +2,9 @@ import React from "react";
 import sofas from "../data"
 import ItemCard from "../components/ItemCard";
 import '../styles/Sofa.css'
-// import Collapsible from 'react-collapsible';
 import Accordion from '../components/Accordion'
+import Pagination from '../components/Pagination'
+
 
 function Title(){
     return <div className="Title">
@@ -39,6 +40,8 @@ function Sofa(props) {
             <MyAccordion />
             <ItemList />
         </div>
+
+        <Pagination />
         
   </div>;
 }
