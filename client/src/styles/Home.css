@@ -66,6 +66,7 @@
 	letter-spacing: 1px;
 	padding: 12px 35px 12px 25px;
 }
+<<<<<<< HEAD
 .Home__collection .banner {
 	display: flex;
 	max-width: 1350px;
@@ -95,3 +96,16 @@
 	padding: 40px 10px;
 	width: 100%;
 }
+=======
+
+.banner {
+	margin: 10%;
+	width: 80%;
+	display: grid;
+	grid-template-columns: repeat(4,22%);
+	grid-template-rows: auto;
+	grid-column-gap: 4%;
+	grid-row-gap: 100px;
+}
+
+>>>>>>> Quan

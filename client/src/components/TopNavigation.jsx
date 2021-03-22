@@ -43,7 +43,7 @@ function TopNavigation() {
 								<div id="top--black"></div>
 								<li className="dropdown-item">
 									<ArrowRightIcon />
-									item 1
+									<a href="/sofa">Sofa</a>
 								</li>
 								<li className="dropdown-item">
 									<ArrowRightIcon />

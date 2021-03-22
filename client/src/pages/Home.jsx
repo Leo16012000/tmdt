@@ -2,7 +2,7 @@ import React from "react";
 import AwesomeSlider from "react-awesome-slider";
 import AwsSliderStyles from "react-awesome-slider/src/core/styles.scss";
 import ItemCard from "../components/ItemCard";
-
+import items from '../data'
 import "../styles/Home.css";
 
 const sliderImage = [
@@ -111,7 +111,15 @@ function Home__catalog() {
 	);
 }
 
+
 function Home__collection1() {
+
+	var list = [];
+	for( var i =0; i <4 ; i++){
+		list.push(<ItemCard props={items[i]}/>)
+	}
+	
+
 	return (
 		<div className="Home__collection mt-5">
 			<div className="content">
@@ -124,6 +132,7 @@ function Home__collection1() {
 				<div>GHẾ SOFA</div>
 				<div>TỦ TRANG TRÍ</div>
 			</div>
+
 			<div className="banner">
 				<ItemCard />
 				<ItemCard />
@@ -138,31 +147,43 @@ function Home__collection1() {
 }
 
 function Home__collection2() {
+	var list = [];
+	for( var i =0; i <4 ; i++){
+		list.push(<ItemCard props={items[i]}/>)
+	}
+
 	return (
 		<div className="Home__collection mt-5">
 			<div className="content">
 				<h1>NỘI THẤT BÁN CHẠY</h1>
 			</div>
-			<div className="banner">
-				<ItemCard />
-				<ItemCard />
-				<ItemCard />
-				<ItemCard />
+			<div className="banner">	
+				{
+					list
+				}
+
 			</div>
-			<div className="banner">
-				<ItemCard />
-				<ItemCard />
-				<ItemCard />
-				<ItemCard />
+			<div className="banner">	
+				{
+					list
+				}
+
 			</div>
-			<div className="banner">
-				<ItemCard />
-				<ItemCard />
-				<ItemCard />
-				<ItemCard />
+			<div className="banner">	
+				{
+					list
+				}
+
 			</div>
 			<div className="readmore-line">
 				<a>XEM TẤT CẢ</a>
+			</div>
+
+			<div className="banner">	
+				{
+					list
+				}
+
 			</div>
 		</div>
 	);

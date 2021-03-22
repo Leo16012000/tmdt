@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+h2 {
+    font-weight: normal;
+}
+
+.Sofa {
+    font-family: Montserrat, Helvetica, Arial, sans-serif;
+}
+
+.Sofa__inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    max-width: 1350px;
+    margin: 0 auto;
+}
+
+.Title {
+    max-width: 1350px;
+    font-size: 14px;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 300 ;
+    padding: 0 30px;
+    margin: 0 auto;
+    display: block;
+    padding-top: 80px;
+    padding-bottom: 40px;
+    line-height: 1.4;
+}
+
+.ItemList {
+    width: 75%;
+    display: grid;
+    grid-template-columns: repeat(3,calc((100% - 60px)/3));
+    grid-template-rows: repeat(6,auto);
+    grid-column-gap: 30px;
+    grid-row-gap: 50px;
+}
+
+.MyAccordion {
+    width: 25%;
+}
+
+.Accordion {
+    width: 90%;
+}
+
+
