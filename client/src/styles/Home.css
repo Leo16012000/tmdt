@@ -6,7 +6,9 @@
 	--control-bullet-active-color: #ff9494;
 }
 /*CATALOG STYLES*/
-.Home {
+.Home__catalog,
+.Home__collection,
+.Home .banner-pic {
 	max-width: 1350px;
 	margin-left: auto;
 	margin-right: auto;
