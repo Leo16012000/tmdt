@@ -1,0 +1,78 @@
+.product-wrapper {
+    padding: 70px 0;
+}
+
+.wrapper{
+    padding: 0 30px;
+    margin: 0 auto;
+    max-width: 1350px;
+}
+
+.note {
+    background-image: url("//theme.hstatic.net/1000360516/1000687729/14/huongdanthanhtoan.gif?v=3");
+    height: 230px;
+    background-repeat: no-repeat;
+    border: none;
+}
+
+.product-single {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+}
+
+.promotion {
+    padding: 70px 0 0 0;
+}
+
+.social-promotion {
+    width: 100%;
+    padding: 0px 0px 10px 0px ;
+}
+
+.product-content {
+    width: 50%;
+    padding-left:70px ;
+}
+
+.related-product {
+
+}
+
+.product-info {
+
+}
+
+.seen-product {
+
+}
+
+.inner {
+
+}
+
+.gallery {
+    width: 50%;
+}
+
+.gallery .list {
+    padding-left: 0px ;
+}
+
+.main-img img {
+    cursor: pointer;
+    width: 100%;
+}
+
+.image-item {
+    width: 25%;
+    margin: 0px 15px 15px 0px;
+
+}
+
+.img {
+    cursor: pointer;
+    width: 100%;
+    
+}

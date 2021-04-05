@@ -9,6 +9,8 @@ import Profile from "./pages/Profile";
 import NotFoundPage from "./pages/NotFoundPage";
 import Sofa from './pages/Sofa'
 import Footer from './components/Footer'
+import Payment from "./pages/Payment";
+import Product from './pages/Product'
 
 function App() {
 	return (
@@ -24,7 +26,7 @@ function App() {
 							<Home />
 						</Route>
 						<Route exact path="/login">
-							<Login />
+							<Login /> 
 						</Route>
 						<Route exact path="/cart">
 							<Cart />
@@ -32,9 +34,16 @@ function App() {
 						<Route exact path="/profile">
 							<Profile />
 						</Route>
+						<Route exact path="/create_payment_url">
+							<Payment />
+						</Route>
+						<Route path="/product/:id">
+							<Product />
+						</Route>
 						<Route>
 							<NotFoundPage />
 						</Route>
+						
 					</Switch>
 				</Suspense>
 				<Footer />
