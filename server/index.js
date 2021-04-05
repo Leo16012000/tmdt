@@ -1,16 +1,27 @@
-// app.js
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const app = express();
+const mysql = require("mysql");
 
-const http = require("http");
-
-// Create an instance of the http server to handle HTTP requests
-let app = http.createServer((req, res) => {
-  // Set a response type of plain text for the response
-  res.writeHead(200, { "Content-Type": "text/plain" });
-
-  // Send back a response and end the connection
-  res.end("Hello World!\n");
+const db = mysql.createPool({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "tmdt_ass0204",
 });
 
-// Start the server on port 3000
-app.listen(3001, "127.0.0.1");
-console.log("Node server running on port 3001");
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get("/", (req, res) => {
+  const sqlSelect = "SELECT * FROM `product` WHERE product.KindOfRoom=1";
+  db.query(sqlSelect, +[req.query.id], (err, result) => {
+    res.send(result);
+  });
+});
+
+app.listen(3001, () => {
+  console.log("running on port 3001");
+});
