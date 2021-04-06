@@ -1,0 +1,31 @@
+.Button {
+    border:none;
+    padding: 0px 30px;
+    text-transform: uppercase;
+    
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    margin-right:10px;
+}
+
+.Normal {
+    background: #dedede;
+    color: #000;
+}
+
+.Hightlight {
+    color: white; 
+    background: #ffa063;
+    
+}
+
+.Hightlight:hover{
+    background: #ff741a;
+}
+
+.Normal:hover {
+    background: #676767;
+    color: white; 
+}
+

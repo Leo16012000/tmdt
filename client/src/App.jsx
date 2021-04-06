@@ -37,8 +37,8 @@ function App() {
 						<Route exact path="/create_payment_url">
 							<Payment />
 						</Route>
-						<Route path="/product/:id">
-							<Product />
+						<Route path="/product">
+							<Product match="/product" />
 						</Route>
 						<Route>
 							<NotFoundPage />
