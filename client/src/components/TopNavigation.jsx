@@ -5,8 +5,15 @@ import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined"
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import "../styles/TopNavigation.css";
 import Account from "./Account";
+import { Button } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { roomFilter } from "../redux/action";
 
 function TopNavigation() {
+  const dispatch = useDispatch();
+  function handleFilterRoom(roomKind) {
+    dispatch(roomFilter(roomKind));
+  }
   return (
     <header className="TopNavigation">
       <div className="TopNavigation__container--top">
@@ -37,13 +44,15 @@ function TopNavigation() {
         <div className="wrapper">
           <ul className="list">
             <li>
-              <a href="/">Trang chủ</a>
+              <Button onClick={() => handleFilterRoom(undefined)}>
+                Trang chủ
+              </Button>
             </li>
             <li className="dropdown">
-              <a href="/">
-                Phòng khách
+              <Button onClick={() => handleFilterRoom(1)}>
+                <Link to="/collections">Phòng khách</Link>
                 <ExpandMoreIcon />
-              </a>
+              </Button>
               <ul>
                 <div id="top--black"></div>
                 <li className="dropdown-item">
@@ -66,13 +75,17 @@ function TopNavigation() {
                   <ArrowRightIcon />
                   Tivi
                 </li>
+                <li className="dropdown-item">
+                  <ArrowRightIcon />
+                  Giá treo quần áo
+                </li>
               </ul>
             </li>
             <li className="dropdown">
-              <a href="/">
+              <Button onClick={() => handleFilterRoom(2)}>
                 Phòng ngủ
                 <ExpandMoreIcon />
-              </a>
+              </Button>
               <ul>
                 <div id="top--black"></div>
                 <li className="dropdown-item">
@@ -91,13 +104,17 @@ function TopNavigation() {
                   <ArrowRightIcon />
                   Tủ đầu giường
                 </li>
+                <li className="dropdown-item">
+                  <ArrowRightIcon />
+                  Gối ngủ
+                </li>
               </ul>
             </li>
             <li className="dropdown">
-              <a href="/">
+              <Button onClick={() => handleFilterRoom(3)}>
                 Phòng ăn
                 <ExpandMoreIcon />
-              </a>
+              </Button>
               <ul>
                 <div id="top--black"></div>
                 <li className="dropdown-item">
@@ -107,10 +124,10 @@ function TopNavigation() {
               </ul>
             </li>
             <li className="dropdown">
-              <a href="/">
+              <Button onClick={() => handleFilterRoom(4)}>
                 Phòng học / làm việc
-                <ExpandMoreIcon />{" "}
-              </a>
+                <ExpandMoreIcon />
+              </Button>
               <ul>
                 <div id="top--black"></div>
                 <li className="dropdown-item">
@@ -123,23 +140,7 @@ function TopNavigation() {
                 </li>
               </ul>
             </li>
-            <li className="dropdown">
-              <a href="/">
-                Sản phẩm khác
-                <ExpandMoreIcon />
-              </a>
-              <ul>
-                <div id="top--black"></div>
-                <li className="dropdown-item">
-                  <ArrowRightIcon />
-                  Giá treo quần áo
-                </li>
-                <li className="dropdown-item">
-                  <ArrowRightIcon />
-                  Gối ngủ
-                </li>
-              </ul>
-            </li>
+
             <li>
               <a href="/">Khuyến mãi</a>
             </li>

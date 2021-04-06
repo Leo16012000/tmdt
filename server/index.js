@@ -15,9 +15,10 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  const sqlSelect = "SELECT * FROM `product` WHERE product.KindOfRoom=1";
-  db.query(sqlSelect, +[req.query.id], (err, result) => {
+//get all product
+app.get("/collections", (req, res) => {
+  const sqlSelect = "SELECT * FROM `product`";
+  db.query(sqlSelect, (err, result) => {
     res.send(result);
   });
 });

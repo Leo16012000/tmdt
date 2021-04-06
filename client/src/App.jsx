@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import NotFoundPage from "./pages/NotFoundPage";
 import Account from "./components/Account";
 import Contact from "./pages/Contact";
+import Collections from "./pages/Collections";
 
 function App() {
   return (
@@ -20,20 +21,23 @@ function App() {
             <Route exact path="/">
               <Home />
             </Route>
-            <Route exact path="/login">
+            <Route path="/login">
               <Login />
             </Route>
-            <Route exact path="/cart">
+            <Route path="/cart">
               <Cart />
             </Route>
-            <Route exact path="/profile">
+            <Route path="/profile">
               <Profile />
             </Route>
-            <Route exact path="/account">
+            <Route path="/account">
               <Account />
             </Route>
-            <Route exact path="/contact">
+            <Route path="/contact">
               <Contact />
+            </Route>
+            <Route path="/collections">
+              <Collections />
             </Route>
             <Route>
               <NotFoundPage />
