@@ -92,5 +92,6 @@
 }
 .ItemCard__info .price > p:first-child {
   font-weight: 700;
+  text-decoration: none;
   color: #cc0000;
 }

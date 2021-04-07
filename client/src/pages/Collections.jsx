@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import { useLocation } from "react-router";
 import { useSelector } from "react-redux";
@@ -11,17 +11,21 @@ function Collections(props) {
     setProductList(response.data);
   });
 
+  const filterProductList = productList.filter((i) => i.KindOfRoom == roomKind);
+
   return (
-    <div className="Home__collection mt-5">
-      {productList.map((i) => (
-        <ItemCard
-          name={i.Fullname}
-          price={i.Price}
-          salePercent={0}
-          src="https://product.hstatic.net/1000360516/product/tt002_3_60f52d1fc120475788c060538c6bbc26_4736ccc3c330476aa2addf3dfa710216_master.jpg"
-        />
+    <ul>
+      {filterProductList.map((i) => (
+        <li key={i.Id}>
+          <ItemCard
+            name={i.Fullname}
+            price={i.Price}
+            salePercent={i.SalePercent}
+            src={i.Image}
+          />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
 
