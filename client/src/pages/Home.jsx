@@ -122,10 +122,30 @@ function Home__collection1() {
         <div>TỦ TRANG TRÍ</div>
       </div>
       <div className="banner">
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
+        <ItemCard
+          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
+          price="14525000"
+          salePercent="60"
+          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
+        />
+        <ItemCard
+          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
+          price="14525000"
+          salePercent="60"
+          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
+        />
+        <ItemCard
+          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
+          price="14525000"
+          salePercent="60"
+          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
+        />
+        <ItemCard
+          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
+          price="14525000"
+          salePercent="60"
+          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
+        />
       </div>
       <div className="readmore-line">
         <a>XEM TẤT CẢ</a>
@@ -141,22 +161,82 @@ function Home__collection2() {
         <h1>NỘI THẤT BÁN CHẠY</h1>
       </div>
       <div className="banner">
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
+        <ItemCard
+          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
+          price="14525000"
+          salePercent="60"
+          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
+        />
+        <ItemCard
+          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
+          price="14525000"
+          salePercent="60"
+          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
+        />
+        <ItemCard
+          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
+          price="14525000"
+          salePercent="60"
+          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
+        />
+        <ItemCard
+          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
+          price="14525000"
+          salePercent="60"
+          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
+        />
       </div>
       <div className="banner">
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
+        <ItemCard
+          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
+          price="14525000"
+          salePercent="60"
+          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
+        />
+        <ItemCard
+          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
+          price="14525000"
+          salePercent="60"
+          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
+        />
+        <ItemCard
+          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
+          price="14525000"
+          salePercent="60"
+          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
+        />
+        <ItemCard
+          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
+          price="14525000"
+          salePercent="60"
+          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
+        />
       </div>
       <div className="banner">
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
+        <ItemCard
+          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
+          price="14525000"
+          salePercent="60"
+          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
+        />
+        <ItemCard
+          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
+          price="14525000"
+          salePercent="60"
+          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
+        />
+        <ItemCard
+          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
+          price="14525000"
+          salePercent="60"
+          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
+        />
+        <ItemCard
+          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
+          price="14525000"
+          salePercent="60"
+          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
+        />
       </div>
       <div className="readmore-line">
         <a>XEM TẤT CẢ</a>

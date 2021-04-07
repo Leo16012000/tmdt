@@ -45,7 +45,7 @@ function TopNavigation() {
           <ul className="list">
             <li>
               <Button onClick={() => handleFilterRoom(undefined)}>
-                Trang chủ
+                <Link to="/">Trang chủ</Link>
               </Button>
             </li>
             <li className="dropdown">
