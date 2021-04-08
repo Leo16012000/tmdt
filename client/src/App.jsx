@@ -10,6 +10,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import Account from "./components/Account";
 import Contact from "./pages/Contact";
 import Collections from "./pages/Collections";
+import Sofa from "./pages/Sofa";
 
 function App() {
   return (
@@ -38,6 +39,9 @@ function App() {
             </Route>
             <Route path="/collections">
               <Collections />
+            </Route>
+            <Route exact path="/sofa">
+              <Sofa />
             </Route>
             <Route>
               <NotFoundPage />

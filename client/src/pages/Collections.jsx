@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
-import { useLocation } from "react-router";
 import { useSelector } from "react-redux";
 import ItemCard from "../components/ItemCard";
 

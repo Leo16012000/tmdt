@@ -2,7 +2,7 @@ import React from "react";
 import AwesomeSlider from "react-awesome-slider";
 import AwsSliderStyles from "react-awesome-slider/src/core/styles.scss";
 import ItemCard from "../components/ItemCard";
-
+import items from '../data'
 import "../styles/Home.css";
 
 const sliderImage = [
@@ -108,141 +108,83 @@ function Home__catalog() {
   );
 }
 
+
 function Home__collection1() {
-  return (
-    <div className="Home__collection mt-5">
-      <div className="content">
-        <h1>NỘI THẤT NỔI BẬT</h1>
-      </div>
-      <div className="nav">
-        <div>GIƯỜNG NGỦ</div>
-        <div>BÀN TRÀ</div>
-        <div>BÀN ĂN</div>
-        <div>GHẾ SOFA</div>
-        <div>TỦ TRANG TRÍ</div>
-      </div>
-      <div className="banner">
-        <ItemCard
-          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
-          price="14525000"
-          salePercent="60"
-          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
-        />
-        <ItemCard
-          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
-          price="14525000"
-          salePercent="60"
-          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
-        />
-        <ItemCard
-          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
-          price="14525000"
-          salePercent="60"
-          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
-        />
-        <ItemCard
-          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
-          price="14525000"
-          salePercent="60"
-          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
-        />
-      </div>
-      <div className="readmore-line">
-        <a>XEM TẤT CẢ</a>
-      </div>
-    </div>
-  );
+
+
+	var list = [];
+	for( var i =0; i <4 ; i++){
+		list.push(<ItemCard props={items[i]}/>)
+	}
+	
+
+	return (
+		<div className="Home__collection mt-5">
+			<div className="content">
+				<h1>NỘI THẤT NỔI BẬT</h1>
+			</div>
+			<div className="nav">
+				<div>GIƯỜNG NGỦ</div>
+				<div>BÀN TRÀ</div>
+				<div>BÀN ĂN</div>
+				<div>GHẾ SOFA</div>
+				<div>TỦ TRANG TRÍ</div>
+			</div>
+
+			<div className="list">	
+				{
+					list
+				}
+
+			</div>
+			<div className="readmore-line">
+				<a>XEM TẤT CẢ</a>
+			</div>
+		</div>
+	);
 }
 
 function Home__collection2() {
-  return (
-    <div className="Home__collection mt-5">
-      <div className="content">
-        <h1>NỘI THẤT BÁN CHẠY</h1>
-      </div>
-      <div className="banner">
-        <ItemCard
-          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
-          price="14525000"
-          salePercent="60"
-          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
-        />
-        <ItemCard
-          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
-          price="14525000"
-          salePercent="60"
-          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
-        />
-        <ItemCard
-          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
-          price="14525000"
-          salePercent="60"
-          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
-        />
-        <ItemCard
-          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
-          price="14525000"
-          salePercent="60"
-          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
-        />
-      </div>
-      <div className="banner">
-        <ItemCard
-          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
-          price="14525000"
-          salePercent="60"
-          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
-        />
-        <ItemCard
-          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
-          price="14525000"
-          salePercent="60"
-          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
-        />
-        <ItemCard
-          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
-          price="14525000"
-          salePercent="60"
-          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
-        />
-        <ItemCard
-          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
-          price="14525000"
-          salePercent="60"
-          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
-        />
-      </div>
-      <div className="banner">
-        <ItemCard
-          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
-          price="14525000"
-          salePercent="60"
-          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
-        />
-        <ItemCard
-          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
-          price="14525000"
-          salePercent="60"
-          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
-        />
-        <ItemCard
-          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
-          price="14525000"
-          salePercent="60"
-          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
-        />
-        <ItemCard
-          name="DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO"
-          price="14525000"
-          salePercent="60"
-          src="https://product.hstatic.net/1000360516/product/db026_3_6ebe92f0888c442d8b7cf7ad171a99b4_medium.jpg"
-        />
-      </div>
-      <div className="readmore-line">
-        <a>XEM TẤT CẢ</a>
-      </div>
-    </div>
-  );
+	var list = [];
+	for( var i =0; i <4 ; i++){
+		list.push(<ItemCard props={items[i]}/>)
+	}
+
+	return (
+		<div className="Home__collection mt-5">
+			<div className="content">
+				<h1>NỘI THẤT BÁN CHẠY</h1>
+			</div>
+			<div className="list">	
+				{
+					list
+				}
+
+			</div>
+			<div className="list">	
+				{
+					list
+				}
+
+			</div>
+			<div className="list">	
+				{
+					list
+				}
+
+			</div>
+			
+			<div className="list">	
+				{
+					list
+				}
+
+			</div>
+			<div className="readmore-line">
+				<a>XEM TẤT CẢ</a>
+			</div>
+		</div>
+	);
 }
 
 function Home(props) {
