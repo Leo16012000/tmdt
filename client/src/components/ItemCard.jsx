@@ -44,7 +44,6 @@ function ItemCard(props) {
   // 		</section>
   // 	</div>
   // );
-  console.log(props);
   return (
     <div className="ItemCard">
       <div className="ItemCard__ImgBlock">
