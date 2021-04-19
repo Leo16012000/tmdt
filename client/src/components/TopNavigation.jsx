@@ -44,7 +44,7 @@ function TopNavigation() {
         <div className="wrapper">
           <ul className="list">
             <li>
-              <Button onClick={() => handleFilterRoom(undefined)}>
+              <Button onClick={() => handleFilterRoom(0)}>
                 <Link to="/">Trang chủ</Link>
               </Button>
             </li>

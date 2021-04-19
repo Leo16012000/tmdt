@@ -1,7 +1,7 @@
 import { ROOM_FILTER } from "./types";
 
 const initialState = {
-  room: undefined,
+  room: 0,
 };
 
 const appReducer = (state = initialState, action) => {
