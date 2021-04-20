@@ -2,7 +2,7 @@ import React from "react";
 import AwesomeSlider from "react-awesome-slider";
 import AwsSliderStyles from "react-awesome-slider/src/core/styles.scss";
 import ItemCard from "../components/ItemCard";
-import items from '../data'
+import items from "../data";
 import "../styles/Home.css";
 
 const sliderImage = [
@@ -108,83 +108,54 @@ function Home__catalog() {
   );
 }
 
-
 function Home__collection1() {
+  var list = [];
+  for (var i = 0; i < 4; i++) {
+    list.push(<ItemCard props={items[i]} />);
+  }
 
+  return (
+    <div className="Home__collection mt-5">
+      <div className="content">
+        <h1>NỘI THẤT NỔI BẬT</h1>
+      </div>
+      <div className="nav">
+        <div>GIƯỜNG NGỦ</div>
+        <div>BÀN TRÀ</div>
+        <div>BÀN ĂN</div>
+        <div>GHẾ SOFA</div>
+        <div>TỦ TRANG TRÍ</div>
+      </div>
 
-	var list = [];
-	for( var i =0; i <4 ; i++){
-		list.push(<ItemCard props={items[i]}/>)
-	}
-	
-
-	return (
-		<div className="Home__collection mt-5">
-			<div className="content">
-				<h1>NỘI THẤT NỔI BẬT</h1>
-			</div>
-			<div className="nav">
-				<div>GIƯỜNG NGỦ</div>
-				<div>BÀN TRÀ</div>
-				<div>BÀN ĂN</div>
-				<div>GHẾ SOFA</div>
-				<div>TỦ TRANG TRÍ</div>
-			</div>
-
-			<div className="list">	
-				{
-					list
-				}
-
-			</div>
-			<div className="readmore-line">
-				<a>XEM TẤT CẢ</a>
-			</div>
-		</div>
-	);
+      <div className="list">{list}</div>
+      <div className="readmore-line">
+        <a>XEM TẤT CẢ</a>
+      </div>
+    </div>
+  );
 }
 
 function Home__collection2() {
-	var list = [];
-	for( var i =0; i <4 ; i++){
-		list.push(<ItemCard props={items[i]}/>)
-	}
+  var list = [];
+  for (var i = 0; i < 4; i++) {
+    list.push(<ItemCard props={items[i]} />);
+  }
 
-	return (
-		<div className="Home__collection mt-5">
-			<div className="content">
-				<h1>NỘI THẤT BÁN CHẠY</h1>
-			</div>
-			<div className="list">	
-				{
-					list
-				}
+  return (
+    <div className="Home__collection mt-5">
+      <div className="content">
+        <h1>NỘI THẤT BÁN CHẠY</h1>
+      </div>
+      <div className="list">{list}</div>
+      <div className="list">{list}</div>
+      <div className="list">{list}</div>
 
-			</div>
-			<div className="list">	
-				{
-					list
-				}
-
-			</div>
-			<div className="list">	
-				{
-					list
-				}
-
-			</div>
-			
-			<div className="list">	
-				{
-					list
-				}
-
-			</div>
-			<div className="readmore-line">
-				<a>XEM TẤT CẢ</a>
-			</div>
-		</div>
-	);
+      <div className="list">{list}</div>
+      <div className="readmore-line">
+        <a>XEM TẤT CẢ</a>
+      </div>
+    </div>
+  );
 }
 
 function Home(props) {
