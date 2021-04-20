@@ -5,6 +5,7 @@ import ItemCard from "../components/ItemCard";
 
 function Collections(props) {
   const roomKind = useSelector((state) => state.room);
+  const category = useSelector((state) => state.category);
   const [productList, setProductList] = useState([]);
   Axios.get(`http://localhost:3001/collections`).then((response) => {
     setProductList(response.data);

@@ -1,7 +1,8 @@
-import { ROOM_FILTER } from "./types";
+import { ROOM_FILTER, CATEGORY_FILTER } from "./types";
 
 const initialState = {
   room: 0,
+  category: 0,
 };
 
 const appReducer = (state = initialState, action) => {
@@ -10,6 +11,9 @@ const appReducer = (state = initialState, action) => {
   switch (action.type) {
     case ROOM_FILTER: {
       return { ...state, room: action.value };
+    }
+    case CATEGORY_FILTER: {
+      return { ...state, category: action.value };
     }
     default:
       return state;
