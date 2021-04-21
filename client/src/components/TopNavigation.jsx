@@ -6,7 +6,7 @@ import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import "../styles/TopNavigation.css";
 import Account from "./Account";
 import { Button } from "@material-ui/core";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { roomFilter } from "../redux/action";
 
 function TopNavigation() {
