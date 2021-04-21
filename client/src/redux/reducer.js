@@ -1,8 +1,14 @@
-import { ROOM_FILTER, CATEGORY_FILTER, PRICE_FILTER } from "./types";
+import {
+  ROOM_FILTER,
+  CATEGORY_FILTER,
+  PRICE_FILTER,
+  UPDATE_USER,
+} from "./types";
 
 const initialState = {
   room: 0,
   category: 0,
+  user: {},
 };
 
 const appReducer = (state = initialState, action) => {
@@ -17,6 +23,21 @@ const appReducer = (state = initialState, action) => {
     }
     case PRICE_FILTER: {
       return { ...state, price: action.value };
+    }
+    case ROOM_FILTER: {
+      return { ...state, room: action.value };
+    }
+    case UPDATE_USER: {
+      return {
+        ...state,
+        user: {
+          email: action.payload.email,
+          displayName: action.payload.displayName,
+          phoneNumber: action.payload.phoneNumber,
+          photoUrl: action.payload.photoUrl,
+          verify: action.payload.verify,
+        },
+      };
     }
     default:
       return state;
