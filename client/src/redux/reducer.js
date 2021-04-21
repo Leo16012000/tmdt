@@ -5,6 +5,7 @@ const initialState = {
   category: 'all',
   priceLower : 0,
   priceUpper : 0,
+  keyword: ''
 };
 
 const appReducer = (state = initialState, action) => {
@@ -21,7 +22,7 @@ const appReducer = (state = initialState, action) => {
       return { ...state, priceLower: action.lower , priceUpper: action.upper };
     }
     case SEARCH_FILTER: {
-      return { ...state, priceLower: action.lower , priceUpper: action.upper };
+      return { ...state, category: 'all' , keyword: action.value  };
     }
     default:
       return state;
