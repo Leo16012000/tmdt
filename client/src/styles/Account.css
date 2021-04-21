@@ -1,0 +1,23 @@
+.Login__Form > p,
+.Register__Form > p {
+	cursor: pointer;
+	display: flex;
+	justify-content: flex-end;
+	padding-right: 100px;
+}
+
+.Login__Form,
+.Register__Form {
+	width: 100%;
+}
+
+.Login__Form > *,
+.Register__Form > * {
+	margin: 0 auto !important;
+	max-width: 280px !important;
+}
+
+.Login__Form button,
+.Register__Form button {
+	margin-top: 30px !important;
+}
