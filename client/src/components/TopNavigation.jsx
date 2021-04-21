@@ -4,19 +4,18 @@ import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import "../styles/TopNavigation.css";
+import { useSelector, useDispatch } from "react-redux";
+import { roomFilter, categoryFilter } from "../redux/action";
 import { Button } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
-import { roomFilter } from "../redux/action";
 
 function TopNavigation() {
   const user = useSelector((state) => state.user);
-
   const dispatch = useDispatch();
 
-  function handleFilterRoom(roomKind) {
-    dispatch(roomFilter(roomKind));
+  function handleFilter(room, category) {
+    dispatch(room);
+    dispatch(category);
   }
-
   return (
     <header className="TopNavigation">
       <div className="TopNavigation__container--top">
@@ -53,12 +52,20 @@ function TopNavigation() {
         <div className="wrapper">
           <ul className="list">
             <li>
-              <Button onClick={() => handleFilterRoom(0)}>
+              <Button
+                onClick={() =>
+                  handleFilter(roomFilter(1), categoryFilter("all"))
+                }
+              >
                 <Link to="/">Trang chủ</Link>
               </Button>
             </li>
             <li className="dropdown">
-              <Button onClick={() => handleFilterRoom(1)}>
+              <Button
+                onClick={() => {
+                  handleFilter(roomFilter(1), categoryFilter("all"));
+                }}
+              >
                 <Link to="/collections">Phòng khách</Link>
                 <ExpandMoreIcon />
               </Button>
@@ -66,32 +73,52 @@ function TopNavigation() {
                 <div id="top--black"></div>
                 <li className="dropdown-item">
                   <ArrowRightIcon />
-                  Ghế sofa
+                  <Button
+                    onClick={() =>
+                      handleFilter(roomFilter(1), categoryFilter("bàn"))
+                    }
+                  >
+                    <Link to="/collections">Bàn</Link>
+                  </Button>
                 </li>
                 <li className="dropdown-item">
                   <ArrowRightIcon />
-                  Bàn trà
+                  <Button
+                    onClick={() =>
+                      handleFilter(roomFilter(1), categoryFilter("tủ"))
+                    }
+                  >
+                    <Link to="/collections">Tủ</Link>
+                  </Button>
                 </li>
                 <li className="dropdown-item">
                   <ArrowRightIcon />
-                  Kệ trang trí
+                  <Button
+                    onClick={() =>
+                      handleFilter(roomFilter(1), categoryFilter("giá"))
+                    }
+                  >
+                    <Link to="/collections">Giá</Link>
+                  </Button>
                 </li>
                 <li className="dropdown-item">
                   <ArrowRightIcon />
-                  Tủ trang trí
-                </li>
-                <li className="dropdown-item">
-                  <ArrowRightIcon />
-                  Tivi
-                </li>
-                <li className="dropdown-item">
-                  <ArrowRightIcon />
-                  Giá treo quần áo
+                  <Button
+                    onClick={() =>
+                      handleFilter(roomFilter(1), categoryFilter("kệ"))
+                    }
+                  >
+                    <Link to="/collections">Kệ</Link>
+                  </Button>
                 </li>
               </ul>
             </li>
             <li className="dropdown">
-              <Button onClick={() => handleFilterRoom(2)}>
+              <Button
+                onClick={() => {
+                  handleFilter(roomFilter(2), categoryFilter("all"));
+                }}
+              >
                 <Link to="/collections">Phòng ngủ</Link>
                 <ExpandMoreIcon />
               </Button>
@@ -99,28 +126,52 @@ function TopNavigation() {
                 <div id="top--black"></div>
                 <li className="dropdown-item">
                   <ArrowRightIcon />
-                  Giường ngủ
+                  <Button
+                    onClick={() =>
+                      handleFilter(roomFilter(2), categoryFilter("bàn"))
+                    }
+                  >
+                    <Link to="/collections">Bàn</Link>
+                  </Button>
                 </li>
                 <li className="dropdown-item">
                   <ArrowRightIcon />
-                  Bàn trang điểm
+                  <Button
+                    onClick={() =>
+                      handleFilter(roomFilter(2), categoryFilter("tủ"))
+                    }
+                  >
+                    <Link to="/collections">Tủ</Link>
+                  </Button>
                 </li>
                 <li className="dropdown-item">
                   <ArrowRightIcon />
-                  Tủ quần áo
+                  <Button
+                    onClick={() =>
+                      handleFilter(roomFilter(2), categoryFilter("gối"))
+                    }
+                  >
+                    <Link to="/collections">Gối</Link>
+                  </Button>
                 </li>
                 <li className="dropdown-item">
                   <ArrowRightIcon />
-                  Tủ đầu giường
-                </li>
-                <li className="dropdown-item">
-                  <ArrowRightIcon />
-                  Gối ngủ
+                  <Button
+                    onClick={() =>
+                      handleFilter(roomFilter(2), categoryFilter("giường"))
+                    }
+                  >
+                    <Link to="/collections">Giường</Link>
+                  </Button>
                 </li>
               </ul>
             </li>
             <li className="dropdown">
-              <Button onClick={() => handleFilterRoom(3)}>
+              <Button
+                onClick={() => {
+                  handleFilter(roomFilter(3), categoryFilter("all"));
+                }}
+              >
                 <Link to="/collections">Phòng ăn</Link>
                 <ExpandMoreIcon />
               </Button>
@@ -128,12 +179,22 @@ function TopNavigation() {
                 <div id="top--black"></div>
                 <li className="dropdown-item">
                   <ArrowRightIcon />
-                  Bàn ăn
+                  <Button
+                    onClick={() =>
+                      handleFilter(roomFilter(3), categoryFilter("bàn"))
+                    }
+                  >
+                    <Link to="/collections">Bàn</Link>
+                  </Button>
                 </li>
               </ul>
             </li>
             <li className="dropdown">
-              <Button onClick={() => handleFilterRoom(4)}>
+              <Button
+                onClick={() => {
+                  handleFilter(roomFilter(4), categoryFilter("all"));
+                }}
+              >
                 <Link to="/collections">Phòng học/làm việc</Link>
                 <ExpandMoreIcon />
               </Button>
@@ -141,11 +202,33 @@ function TopNavigation() {
                 <div id="top--black"></div>
                 <li className="dropdown-item">
                   <ArrowRightIcon />
-                  Bộ bàn học/làm việc
+                  <Button
+                    onClick={() =>
+                      handleFilter(roomFilter(4), categoryFilter("bàn"))
+                    }
+                  >
+                    <Link to="/collections">Bàn</Link>
+                  </Button>
                 </li>
                 <li className="dropdown-item">
                   <ArrowRightIcon />
-                  Kệ sách
+                  <Button
+                    onClick={() =>
+                      handleFilter(roomFilter(4), categoryFilter("kệ"))
+                    }
+                  >
+                    <Link to="/collections">Kệ</Link>
+                  </Button>
+                </li>
+                <li className="dropdown-item">
+                  <ArrowRightIcon />
+                  <Button
+                    onClick={() =>
+                      handleFilter(roomFilter(4), categoryFilter("tủ"))
+                    }
+                  >
+                    <Link to="/collections">Tủ</Link>
+                  </Button>
                 </li>
               </ul>
             </li>

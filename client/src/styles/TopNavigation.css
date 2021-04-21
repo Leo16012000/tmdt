@@ -1,8 +1,10 @@
 .TopNavigation {
+	
 	text-transform: uppercase;
 }
 
 .TopNavigation__container--top {
+	
 	padding: 22px 0;
 	border-bottom: 1px solid #ececec;
 }

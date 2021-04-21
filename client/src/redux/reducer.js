@@ -1,13 +1,11 @@
-import {
-  ROOM_FILTER,
-  CATEGORY_FILTER,
-  PRICE_FILTER,
-  UPDATE_USER,
-} from "./types";
+import { ROOM_FILTER , CATEGORY_FILTER , PRICE_FILTER , SEARCH_FILTER} from "./types";
 
 const initialState = {
   room: 0,
-  category: 0,
+  category: 'all',
+  priceLower : 0,
+  priceUpper : 0,
+  keyword: '',
   user: {},
 };
 
@@ -22,23 +20,25 @@ const appReducer = (state = initialState, action) => {
       return { ...state, category: action.value };
     }
     case PRICE_FILTER: {
-      return { ...state, price: action.value };
+      return { ...state, priceLower: action.lower , priceUpper: action.upper };
     }
-    case ROOM_FILTER: {
-      return { ...state, room: action.value };
-    }
-    case UPDATE_USER: {
-      return {
-        ...state,
-        user: {
-          email: action.payload.email,
-          displayName: action.payload.displayName,
-          phoneNumber: action.payload.phoneNumber,
-          photoUrl: action.payload.photoUrl,
-          verify: action.payload.verify,
-        },
-      };
-    }
+	case ROOM_FILTER: {
+		return { ...state, room: action.value };
+	  }
+	  case UPDATE_USER: {
+		return {
+		  ...state,
+		  user: {
+			email: action.payload.email,
+			displayName: action.payload.displayName,
+			phoneNumber: action.payload.phoneNumber,
+			photoUrl: action.payload.photoUrl,
+			verify: action.payload.verify,
+		  },
+		};}
+    case SEARCH_FILTER: {
+      return { ...state, category: 'all' , keyword: action.value  };
+	}
     default:
       return state;
   }

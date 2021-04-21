@@ -1,9 +1,11 @@
-import React from "react";
+import {React, useState , useEffect} from "react";
+import Axios from "axios";
 import AwesomeSlider from "react-awesome-slider";
 import AwsSliderStyles from "react-awesome-slider/src/core/styles.scss";
 import ItemCard from "../components/ItemCard";
 import items from "../data";
 import "../styles/Home.css";
+import { Button } from "@material-ui/core";
 
 const sliderImage = [
   { src: "https://theme.hstatic.net/1000360516/1000609234/14/slideshow_1.png" },
@@ -109,53 +111,83 @@ function Home__catalog() {
 }
 
 function Home__collection1() {
-  var list = [];
-  for (var i = 0; i < 4; i++) {
-    list.push(<ItemCard props={items[i]} />);
-  }
+	const [item, setItem] = useState([]);
 
-  return (
-    <div className="Home__collection mt-5">
-      <div className="content">
-        <h1>NỘI THẤT NỔI BẬT</h1>
-      </div>
-      <div className="nav">
-        <div>GIƯỜNG NGỦ</div>
-        <div>BÀN TRÀ</div>
-        <div>BÀN ĂN</div>
-        <div>GHẾ SOFA</div>
-        <div>TỦ TRANG TRÍ</div>
-      </div>
+	useEffect(() => {
+        Axios.get(`http://localhost:8080/collections`).then(
+          (response) => {
+            setItem(response.data);
+          }
+        );
+      }, []);
 
-      <div className="list">{list}</div>
-      <div className="readmore-line">
-        <a>XEM TẤT CẢ</a>
-      </div>
-    </div>
-  );
+	return (
+		<div className="Home__collection mt-5">
+			<div className="content">
+				<h1>NỘI THẤT NỔI BẬT</h1>
+			</div>
+			<div className="nav">
+				<div>GIƯỜNG NGỦ</div>
+				<div>BÀN TRÀ</div>
+				<div>BÀN ĂN</div>
+				<div>GHẾ SOFA</div>
+				<div>TỦ TRANG TRÍ</div>
+			</div>
+
+			<div className="list">	
+				{
+					item.filter(item => item.ID < 6).map( (item) => {
+						return <ItemCard props={item} />
+					})
+				}
+
+			</div>
+			<div className="readmore-line">
+			
+			</div>
+		</div>
+	);
 }
 
 function Home__collection2() {
-  var list = [];
-  for (var i = 0; i < 4; i++) {
-    list.push(<ItemCard props={items[i]} />);
-  }
+	const [item, setItem] = useState([]);
+	const [readMore, setreadMore] = useState(false);
 
-  return (
-    <div className="Home__collection mt-5">
-      <div className="content">
-        <h1>NỘI THẤT BÁN CHẠY</h1>
-      </div>
-      <div className="list">{list}</div>
-      <div className="list">{list}</div>
-      <div className="list">{list}</div>
+	function handleClick(){
+		setreadMore(!readMore)
+	}
 
-      <div className="list">{list}</div>
-      <div className="readmore-line">
-        <a>XEM TẤT CẢ</a>
-      </div>
-    </div>
-  );
+    useEffect(() => {
+        Axios.get(`http://localhost:8080/collections`).then(
+          (response) => {
+            setItem(response.data);
+          }
+        );
+      }, []);
+
+	return (
+		<div className="Home__collection mt-5">
+			<div className="content">
+				<h1>NỘI THẤT BÁN CHẠY</h1>
+			</div>
+			<div className="list">	
+				{
+					readMore === false ?
+					item.filter(item => item.ID < 10).map( (item) => {
+						return <ItemCard props={item} />
+					})
+					:
+					item.map(item => <ItemCard props={item} />)
+				}
+
+			</div>
+			
+			
+			<div className="readmore-line">
+				<a><Button onClick={() => handleClick()}> {readMore === false ? "Xem tất cả" : "Thu gọn"}</Button></a>
+			</div>
+		</div>
+	);
 }
 
 function Home(props) {
