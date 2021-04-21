@@ -10,6 +10,8 @@ import {faSearchPlus, faCartPlus } from '@fortawesome/free-solid-svg-icons'
 // }
 
 function ItemCard(props) {
+
+	
 	// const props = {
 	// 	name: "DB026 - GIƯỜNG NGỦ GỖ ĐÈN LED NGĂN KÉO",
 	// 	price: "14525000",
@@ -48,8 +50,10 @@ function ItemCard(props) {
 
 	return <div className="ItemCard">
                 <div className="ItemCard__ImgBlock">
-                    <img src={props.props.src} alt="img" className="ItemCard__ImgBlock__Img"/>
-                    <div className="ItemCard__ImgBlock__Sale">-{props.props.salePercent}%</div>
+                    <img src={props.props.Image} alt="error" className="ItemCard__ImgBlock__Img"/>
+                    {
+						props.props.salePercent > 0 ? <div className="ItemCard__ImgBlock__Sale">-{props.props.salePercent}%</div> : ""
+					}
                     <div className="ItemCard__ImgBlock__ProductAction">
                         <button className="ItemCard__ImgBlock__ProductAction__Buy ProductAction__Button Left_Button"><FontAwesomeIcon icon={faSearchPlus} size='1x'/></button>
                         <button className="ItemCard__ImgBlock__ProductAction__Buy ProductAction__Button Center_Button">Mua ngay</button>
@@ -57,15 +61,15 @@ function ItemCard(props) {
                     </div>
                 </div>
                 <div className="ItemCard__InfoBlock">
-                    <div className="ItemCard__InfoBlock__Info"><a className="ItemCard__InfoBlock__Info__Link" href="/">{props.props.id} - {props.props.name}</a></div>
-                    { props.props.salePercent > 0 
-                        ? 
+                    <div className="ItemCard__InfoBlock__Info"><a className="ItemCard__InfoBlock__Info__Link" href="/">{props.props.Id} - {props.props.Fullname}</a></div>
+                    { 
+                        props.props.salePercent > 0 ? 
                         <div className="ItemCard__InfoBlock__PriceBlock">
-                            <div className="ItemCard__InfoBlock__SalePrice">{(parseInt(props.props.price) - parseInt(props.props.price)*parseInt(props.props.salePercent)/100).toLocaleString()}đ</div>
-                            <div className="ItemCard__InfoBlock__Price">{parseInt(props.props.price).toLocaleString()}đ</div>
+                            <div className="ItemCard__InfoBlock__SalePrice">{(parseInt(props.props.Price) - parseInt(props.props.Price)*parseInt(props.props.salePercent)/100).toLocaleString()}đ</div>
+                            <div className="ItemCard__InfoBlock__Price">{parseInt(props.props.Price).toLocaleString()}đ</div>
                         </div>
                         : 
-                        <div className="ItemCard__InfoBlock__Price">{parseInt(props.props.price).toLocaleString()}đ</div>
+                        <div className="ItemCard__InfoBlock__SalePrice">{parseInt(props.props.Price).toLocaleString()}đ</div>
                     }          
                 </div>
             </div>

@@ -1,0 +1,5 @@
+export const ROOM_FILTER = "ROOM_FILTER";
+
+export const CATEGORY_FILTER = "CATEGORY_FILTER";
+
+export const PRICE_FILTER = "PRICE_FILTER";

@@ -35,3 +35,22 @@ function QuantityModifier({quantityValue}) {
 }
 
 export default QuantityModifier
+
+
+
+// Matrix<float ,3,3> matran;
+
+// float arr[3][3] = {
+//     {1,2,3},
+//     {4,5,6},
+//     {7,8,9}
+// };
+
+
+// for(int i = 0;i< 3 ;i++){
+//     for(int j=0;j<3;j++){
+//         matran(i,j) = arr[i][j];
+//     }
+// }
+
+// cout << matran << endl;

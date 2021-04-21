@@ -7,10 +7,12 @@ import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import NotFoundPage from "./pages/NotFoundPage";
-import Sofa from './pages/Sofa'
 import Footer from './components/Footer'
 import Payment from "./pages/Payment";
 import Product from './pages/Product'
+import Form from './pages/Form'
+import VPNReturn from "./pages/VPNReturn";
+import Collections from "./pages/Collections";
 
 function App() {
 	return (
@@ -19,9 +21,13 @@ function App() {
 				<TopNavigation />
 				<Suspense fallback={<h1>....</h1>}>
 					<Switch>
-						<Route exact path="/sofa">
-							<Sofa />
+
+						
+						
+						<Route exact path="/collections">
+							<Collections />
 						</Route>
+
 						<Route exact path="/">
 							<Home />
 						</Route>
@@ -40,6 +46,10 @@ function App() {
 						<Route path="/product">
 							<Product match="/product" />
 						</Route>
+						<Route path="/post">
+							<Form />
+						</Route>
+						<Route path="/vnpay_return" component={VPNReturn }/>		
 						<Route>
 							<NotFoundPage />
 						</Route>
