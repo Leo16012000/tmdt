@@ -1,4 +1,4 @@
-import { ROOM_FILTER , CATEGORY_FILTER , PRICE_FILTER } from "./types";
+import { ROOM_FILTER , CATEGORY_FILTER , PRICE_FILTER , SEARCH_FILTER} from "./types";
 
 const initialState = {
   room: 0,
@@ -18,6 +18,9 @@ const appReducer = (state = initialState, action) => {
       return { ...state, category: action.value };
     }
     case PRICE_FILTER: {
+      return { ...state, priceLower: action.lower , priceUpper: action.upper };
+    }
+    case SEARCH_FILTER: {
       return { ...state, priceLower: action.lower , priceUpper: action.upper };
     }
     default:
