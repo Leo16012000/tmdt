@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 .ItemCard {
+
     width: 100%;
     font-size: 14px;
     font-family: Montserrat, Helvetica, Arial, sans-serif;
@@ -67,6 +68,9 @@
     cursor: pointer;
     background-color: white;
     color:#ff914a;
+    
+
+    
 }
 
 .ItemCard__ImgBlock__ProductAction__Buy:hover {

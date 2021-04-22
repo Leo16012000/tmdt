@@ -1,7 +1,5 @@
 export const ROOM_FILTER = "ROOM_FILTER";
-
 export const CATEGORY_FILTER = "CATEGORY_FILTER";
-
 export const PRICE_FILTER = "PRICE_FILTER";
-
+export const UPDATE_USER = "UPDATE_USER";
 export const SEARCH_FILTER = "SEARCH_FILTER";

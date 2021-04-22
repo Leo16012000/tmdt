@@ -2,8 +2,8 @@ import React from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import "../styles/ItemCard.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faSearchPlus, faCartPlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearchPlus, faCartPlus } from "@fortawesome/free-solid-svg-icons";
 
 // function numberWithCommas(x) {
 // 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -73,7 +73,7 @@ function ItemCard(props) {
                     }          
                 </div>
             </div>
-
+  
 }
 
 export default ItemCard;

@@ -202,11 +202,13 @@ const PORT = 8080;
 const db = mysql.createPool({
   host: "localhost",
   user: "root",
-  password: "quan0402",
-  database: "tmdt_ass0204",
+  password: "",
+  database: "tmdt_ass2004",
 });
 
-
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //get all product
 app.get("/collections", (req, res) => {
@@ -219,5 +221,6 @@ app.get("/collections", (req, res) => {
   });
 });
 
-  
-app.listen(PORT, console.log(`Server started on port ${PORT}`));
+app.listen(3001, () => {
+  console.log("running on port 3001");
+});
