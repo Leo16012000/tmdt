@@ -3,7 +3,7 @@ import "./App.css";
 import TopNavigation from "./components/TopNavigation";
 import React, { Suspense } from "react";
 import Home from "./pages/Home";
-import Account from "./pages/Account";
+import Account from "./account/Account";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -18,46 +18,55 @@ import Form from "./pages/Form";
 import VPNReturn from "./pages/VPNReturn";
 import Collections from "./pages/Collections";
 
+// account Auth
+import { AuthProvider } from "./account/Auth";
+import LogIn from "./account/LogIn";
+import SignUp from "./account/SignUp";
+
 function App() {
 	return (
 		<div className="App">
-			<Router>
-				<TopNavigation />
-				<ReactNotification />
-				<Suspense fallback={<h1>....</h1>}>
-					<Switch>
-						<Route exact path="/collections">
-							<Collections />
-						</Route>
+			<AuthProvider>
+				<Router>
+					<TopNavigation />
+					<ReactNotification />
+					<Suspense fallback={<h1>....</h1>}>
+						<Switch>
+							<Route exact path="/collections">
+								<Collections />
+							</Route>
 
-						<Route exact path="/">
-							<Home />
-						</Route>
-						<Route path="/cart">
-							<Cart />
-						</Route>
-						<Route path="/profile">
-							<Profile />
-						</Route>
-						<Route path="/account">
-							<Account />
-						</Route>
-						<Route path="/contact">
-							<Contact />
-						</Route>
-						<Route path="/collections">
-							<Collections />
-						</Route>
-						<Route path="/post">
-							<Form />
-						</Route>
-						<Route path="/vnpay_return" component={VPNReturn} />
-						<Route>
-							<NotFoundPage />
-						</Route>
-					</Switch>
-				</Suspense>
-			</Router>
+							<Route exact path="/">
+								<Home />
+							</Route>
+							<Route path="/cart">
+								<Cart />
+							</Route>
+							<Route path="/profile">
+								<Profile />
+							</Route>
+							<Route path="/contact">
+								<Contact />
+							</Route>
+							<Route path="/collections">
+								<Collections />
+							</Route>
+							<Route path="/post">
+								<Form />
+							</Route>
+							<Route path="/vnpay_return" component={VPNReturn} />
+							<Route path="/account">
+								<Account />
+							</Route>
+							<Route exact path="/login" component={LogIn} />
+							<Route exact path="/signup" component={SignUp} />
+							<Route>
+								<NotFoundPage />
+							</Route>
+						</Switch>
+					</Suspense>
+				</Router>
+			</AuthProvider>
 		</div>
 	);
 }

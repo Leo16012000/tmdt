@@ -1,9 +1,9 @@
-.Login__Form > p,
-.Register__Form > p {
+.Login__Form > a,
+.Register__Form > a {
 	cursor: pointer;
 	display: flex;
 	justify-content: flex-end;
-	padding-right: 100px;
+	padding-right: 40px;
 }
 
 .Login__Form,
@@ -19,5 +19,16 @@
 
 .Login__Form button,
 .Register__Form button {
+	margin-top: 30px !important;
+}
+
+.Account__profile {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.Account__profile > * {
+	max-width: 500px;
 	margin-top: 30px !important;
 }

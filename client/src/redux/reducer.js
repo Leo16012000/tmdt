@@ -36,6 +36,7 @@ const appReducer = (state = initialState, action) => {
 					displayName: action.payload.displayName,
 					phoneNumber: action.payload.phoneNumber,
 					photoUrl: action.payload.photoUrl,
+					address: action.payload.address,
 					verify: action.payload.verify,
 				},
 			};
