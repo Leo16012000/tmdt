@@ -28,9 +28,6 @@ const appReducer = (state = initialState, action) => {
 		case PRICE_FILTER: {
 			return { ...state, priceLower: action.lower, priceUpper: action.upper };
 		}
-		case ROOM_FILTER: {
-			return { ...state, room: action.value };
-		}
 		case UPDATE_USER: {
 			return {
 				...state,

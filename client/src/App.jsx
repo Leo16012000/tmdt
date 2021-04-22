@@ -48,9 +48,6 @@ function App() {
 						<Route path="/collections">
 							<Collections />
 						</Route>
-						{/* <Route exact path="/sofa">
-							<Sofa />
-						</Route> */}
 						<Route path="/post">
 							<Form />
 						</Route>
