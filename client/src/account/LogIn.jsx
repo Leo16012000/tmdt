@@ -3,6 +3,10 @@ import { AuthContext } from "./Auth";
 import { Redirect } from "react-router-dom";
 import { auth } from "../firebase";
 import { Link } from "react-router-dom";
+
+import firebase from "firebase/app";
+import "firebase/auth";
+
 import sendMessage from "./sendMessage";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -67,6 +71,8 @@ const LogIn = () => {
 				</Grid>
 			</Grid>
 			<Link to="/signup">Sign up?</Link>
+
+			<Link to="/phoneauth">Login with Phone number?</Link>
 			<Button variant="outlined" color="secondary" onClick={() => onLogin()}>
 				Đăng nhập
 			</Button>

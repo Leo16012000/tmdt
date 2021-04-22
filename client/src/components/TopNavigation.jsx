@@ -1,15 +1,14 @@
-import { Link } from "react-router-dom";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import "../styles/TopNavigation.css";
-import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { roomFilter, categoryFilter } from "../redux/action";
 import { Button } from "@material-ui/core";
 
 function TopNavigation() {
-	const user = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 
 	function handleFilter(room, category) {
@@ -228,10 +227,14 @@ function TopNavigation() {
 						</li>
 
 						<li>
-							<a href="/">Khuyến mãi</a>
+							<Button>
+								<Link to="/">Khuyến mãi</Link>
+							</Button>
 						</li>
 						<li>
-							<Link to="/contact">Liên hệ</Link>
+							<Button>
+								<Link to="/contact">Liên hệ</Link>
+							</Button>
 						</li>
 					</ul>
 				</div>

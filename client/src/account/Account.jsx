@@ -12,14 +12,12 @@ import "../styles/Account.css";
 function Account(props) {
 	const { currentUser } = useContext(AuthContext);
 
+	console.log("user ", currentUser);
+
 	const [values, setValues] = useState({
-		username: "",
-		password: "",
-		password2: "",
 		displayName: "",
 		phoneNumber: "",
 		photoUrl: "",
-		address: "",
 	});
 
 	const handleChange = (prop) => (event) => {
@@ -41,41 +39,24 @@ function Account(props) {
 	};
 
 	const onProfileChange = () => {
-		console.log(currentUser);
-	};
-	// 	auth.onAuthStateChanged(function (user) {
-	// 		if (user) {
-	// 			dispatch(
-	// 				updateUser(
-	// 					user.email,
-	// 					values.displayName,
-	// 					values.phoneNumber,
-	// 					values.photoUrl,
-	// 					values.address,
-	// 					user.verify
-	// 				)
-	// 			);
+		auth.currentUser
+			.updateProfile({
+				phoneNumber: values.phoneNumber,
+				displayName: values.displayName,
+				photoURL: "/photo",
+			})
+			.then(() => {
+				sendMessage(
+					"Cập nhật thông tin thành công!",
+					"Successfully",
+					"success"
+				);
+			});
 
-	// 			user
-	// 				.updateProfile({
-	// 					displayName: values.displayName,
-	// 					photoURL: values.photoUrl,
-	// 					phoneNumber: values.phoneNumber,
-	// 					address: values.address,
-	// 					verify: user.verify,
-	// 				})
-	// 				.then(
-	// 					sendMessage(
-	// 						"Cập nhật thông tin thành công!",
-	// 						"Successfully",
-	// 						"success"
-	// 					)
-	// 				);
-	// 		} else {
-	// 			console.log("Not login");
-	// 		}
-	// 	});
-	// };
+		auth.currentUser.updatePhoneNumber(values.phoneNumber);
+
+		console.log("user:", currentUser);
+	};
 
 	if (!currentUser) {
 		return (
@@ -107,13 +88,6 @@ function Account(props) {
 				label="Số điện thoại"
 				onChange={handleChange("phoneNumber")}
 			/>
-			<TextField
-				id="input-with-icon-grid"
-				type="email"
-				label="Địa chỉ"
-				onChange={handleChange("address")}
-			/>
-
 			<Button
 				variant="outlined"
 				color="primary"

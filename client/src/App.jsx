@@ -20,6 +20,7 @@ import Collections from "./pages/Collections";
 
 // account Auth
 import { AuthProvider } from "./account/Auth";
+import PhoneAuth from "./account/PhoneAuth";
 import LogIn from "./account/LogIn";
 import SignUp from "./account/SignUp";
 
@@ -60,6 +61,7 @@ function App() {
 							</Route>
 							<Route exact path="/login" component={LogIn} />
 							<Route exact path="/signup" component={SignUp} />
+							<Route exact path="/phoneauth" component={PhoneAuth} />
 							<Route>
 								<NotFoundPage />
 							</Route>
