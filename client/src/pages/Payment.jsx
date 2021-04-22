@@ -1,10 +1,10 @@
 import React from "react";
-// import '../styles/Payment.css'
-import { OnePayDomestic } from "vn-payments";
 import { OnePayInternational } from "vn-payments";
-import { VNPay } from "vn-payments";
-import { SohaPay } from "vn-payments";
-import { NganLuong } from "vn-payments";
+// import '../styles/Payment.css'
+// import { OnePayDomestic } from "vn-payments";
+// import { VNPay } from "vn-payments";
+// import { SohaPay } from "vn-payments";
+// import { NganLuong } from "vn-payments";
 
 const axios = require("axios").default;
 const onepayIntl = new OnePayInternational({
