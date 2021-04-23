@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import { AuthContext } from "../account/Auth";
+import { Link, Redirect } from "react-router-dom";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Typography from "@material-ui/core/Typography";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
@@ -8,17 +9,47 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+
 import LocalPicker from "../vietnamlocalselector";
 
 import "../styles/Checkouts.css";
+import sendMessage from "../account/sendMessage";
 
 function Checkouts(props) {
+	const { currentUser } = useContext(AuthContext);
+	const defaultInfo = currentUser
+		? {
+				email: currentUser.email,
+				displayName: currentUser.displayName,
+				phoneNumber: currentUser.phoneNumber,
+		  }
+		: {};
+
+	const [values, setValues] = useState(defaultInfo);
+	const [expanded, setExpanded] = useState("panel1");
+
+	const handleChange = (prop) => (event) => {
+		setValues({ ...values, [prop]: event.target.value });
+	};
+
+	const moveNextStep = () => {
+		var errors = [];
+		if (!values.displayName) errors.push("Tên không được để trống!");
+
+		if (!values.phoneNumber) errors.push("Số điện thoại không được để trống!");
+
+		if (!values.address) errors.push("Địa chỉ không được để trống!");
+
+		if (errors?.length)
+			errors.map((err) => sendMessage("Error happened!", err, "danger"));
+		else console.log(`<Redirect to="/checkouts?step=2" />;`);
+	};
+
 	useEffect(() => {
 		// Load Location
-		const test = new LocalPicker();
+		LocalPicker();
 	});
-
-	const [expanded, setExpanded] = React.useState("panel1");
 
 	return (
 		<div className="Checkouts__container">
@@ -29,18 +60,20 @@ function Checkouts(props) {
 						separator={<NavigateNextIcon fontSize="small" />}
 						aria-label="breadcrumb"
 					>
-						<Link color="inherit" href="/">
-							Material-UI
+						<Link color="inherit" to="/cart">
+							Giỏ hàng
 						</Link>
-						<Link color="inherit" href="/getting-started/installation/">
-							Core
+						<Link color="inherit" to="/getting-started/installation/">
+							Thông tin vận chuyển
 						</Link>
-						<Typography color="textPrimary">Breadcrumb</Typography>
+						<Typography color="textPrimary">Phương thức thanh toán</Typography>
 					</Breadcrumbs>
-					<h4>Thông tin thanh toán</h4>
-					<p>
-						Bạn đã có tài khoản? <Link to="signin">Đăng nhập</Link>
-					</p>
+					<h5>Thông tin vận chuyển</h5>
+					{!currentUser && (
+						<p>
+							Bạn đã có tài khoản? <Link to="/login">Đăng nhập</Link>
+						</p>
+					)}
 				</header>
 				<main>
 					<TextField
@@ -48,18 +81,24 @@ function Checkouts(props) {
 						variant="outlined"
 						margin="dense"
 						id="fullName"
+						onChange={handleChange("displayName")}
+						defaultValue={currentUser ? currentUser.displayName : ""}
 						fullWidth
 					/>
 					<TextField
 						label="Email"
 						variant="outlined"
 						margin="dense"
+						onChange={handleChange("email")}
+						defaultValue={currentUser ? currentUser.email : ""}
 						id="email"
 					/>
 					<TextField
 						label="Điện thoại"
 						variant="outlined"
 						margin="dense"
+						onChange={handleChange("phoneNumber")}
+						defaultValue={currentUser ? currentUser.phoneNumber : ""}
 						id="phoneNumber"
 					/>
 					<TextField
@@ -67,6 +106,7 @@ function Checkouts(props) {
 						variant="outlined"
 						margin="dense"
 						id="address"
+						onChange={handleChange("address")}
 						fullWidth
 					/>
 
@@ -109,9 +149,58 @@ function Checkouts(props) {
 						</Accordion>
 					</div>
 				</main>
+				<footer>
+					<Link to="/cart">
+						<div className="backToCart">
+							<ArrowBackIosIcon />
+							<p>Giỏ hàng</p>
+						</div>
+					</Link>
+
+					<div
+						to="/checkouts?step=2"
+						className="nextStep"
+						onClick={() => moveNextStep()}
+					>
+						<p>Phương thức thanh toán</p>
+					</div>
+				</footer>
 			</div>
 			<div className="Checkouts__conclusion">
-				<h1>Conclusion</h1>
+				<div className="products">
+					<div className="product">
+						<div className="product__thumbnail">
+							<img
+								src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTgzLHajkq5kyTvBNpN4i6kb7CsflEi3GBZXNkxk_BgKMNKUBRcw1LkV6zct8XapA&usqp=CAc"
+								alt="product__thumbnail"
+							/>
+						</div>
+						<div className="product__info">
+							<p>VNL001 - BỘ BÀN ĂN VANILLA 4 GHẾ ĐƠN</p>
+						</div>
+						<p className="product__price">7,273,000₫</p>
+					</div>
+
+					<div className="product">
+						<div className="product__thumbnail">
+							<img
+								src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTgzLHajkq5kyTvBNpN4i6kb7CsflEi3GBZXNkxk_BgKMNKUBRcw1LkV6zct8XapA&usqp=CAc"
+								alt="product__thumbnail"
+							/>
+						</div>
+						<div className="product__info">
+							<p>VNL001 - BỘ BÀN ĂN VANILLA 4 GHẾ ĐƠN</p>
+						</div>
+						<p className="product__price">7,273,000₫</p>
+					</div>
+				</div>
+				<div className="finalPrice">
+					<p>Tổng tiền</p>
+					<div>
+						<p>VND</p>
+						<h4>7,273,000₫</h4>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

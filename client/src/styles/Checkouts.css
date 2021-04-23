@@ -1,13 +1,22 @@
 .Checkouts__container {
-	display: grid;
-	margin: 0 10%;
-	grid-template-columns: auto auto;
+	display: flex;
+	flex-grow: 1;
+	font-family: Helvetica Neue, sans-serif;
+}
+
+.Checkouts__container > * {
+	flex: 1;
 }
 
 .Checkouts__info {
-	margin: 0 15%;
 	max-width: 572px;
-	float: left;
+	text-align: left;
+	margin: 15px 5% 0 20%;
+}
+
+.Checkouts__info > header > h5 {
+	margin: 20px 0;
+	font-size: 20px;
 }
 
 .Checkouts__info > main > div:nth-child(2) {
@@ -21,14 +30,101 @@
 }
 
 .Checkouts__delivery {
-	margin: 20px 0;
+	margin: 25px 0 40px 0;
 }
 
 .Checkouts__delivery .selectContainer {
 	display: flex;
-	justify-content: space-evenly;
+	justify-content: space-between;
+}
+
+.selectContainer > select {
+	background-color: #338dbc;
+	color: white;
+	padding: 12px;
+	max-width: 170px;
+	border: none;
+	font-size: 14px;
+	box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+	-webkit-appearance: button;
+	appearance: button;
+	outline: none;
+}
+
+.selectContainer > select > * {
+	padding: 30px;
+}
+
+.Checkouts__info > footer,
+.Checkouts__info > footer .backToCart {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.Checkouts__info > footer .nextStep {
+	cursor: pointer;
+	text-decoration: none;
+	line-height: 2.5em;
+	max-width: fit-content;
+	padding: 10px 20px;
+	font-size: 15px;
+	color: aliceblue;
+	background-color: #338dbc;
+	transition: all 0.5s;
+}
+
+.Checkouts__info > footer > div:hover {
+	background-color: #286f94;
 }
 
 .Checkouts__conclusion {
+	padding: 40px;
 	background-color: antiquewhite;
+	border-left: 1px solid rgb(193 193 193);
+	background-color: #fafafa;
+}
+
+.Checkouts__conclusion .product {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	max-width: 70%;
+	padding-top: 15px;
+	padding-bottom: 25px;
+	border-bottom: 1px solid rgb(193 193 193);
+}
+
+.Checkouts__conclusion .product__thumbnail {
+	max-width: 70px;
+	margin: 0 5px;
+}
+
+.Checkouts__conclusion .product__thumbnail > img {
+	max-width: inherit;
+	border-radius: 5px;
+}
+
+.Checkouts__conclusion .product__info {
+	color: #4b4b4b;
+}
+
+.Checkouts__conclusion .product__price {
+	max-width: fit-content;
+	padding: 0 10px;
+	color: #4b4b4b;
+	font-size: 13px;
+}
+
+.Checkouts__conclusion .finalPrice {
+	width: 70%;
+	margin: 30px 10px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.Checkouts__conclusion .finalPrice > div {
+	display: flex;
+	gap: 10px;
 }

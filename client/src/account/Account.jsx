@@ -23,7 +23,6 @@ function Account(props) {
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
-		console.log(values);
 	};
 
 	const sendEmailVerification = () => {
@@ -89,7 +88,7 @@ function Account(props) {
 
 		auth.currentUser
 			.updateProfile({
-				phoneNumber: values.phoneNumber,
+				displayName: values.displayName,
 				photoURL: "/photo",
 			})
 			.then(() => {
@@ -124,14 +123,15 @@ function Account(props) {
 				id="input-with-icon-grid"
 				type="email"
 				label="Họ và tên"
-				// placeholder={user.displayName ? user.displayName : ""}
 				onChange={handleChange("displayName")}
+				defaultValue={currentUser ? currentUser.displayName : ""}
 			/>
 			<TextField
 				id="input-with-icon-grid"
 				type="email"
 				label="Số điện thoại"
 				onChange={handleChange("phoneNumber")}
+				defaultValue={currentUser ? currentUser.phoneNumber : ""}
 			/>
 			<Button
 				variant="outlined"
