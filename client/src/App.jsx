@@ -17,6 +17,7 @@ import "react-notifications-component/dist/theme.css";
 import Form from "./pages/Form";
 import VPNReturn from "./pages/VPNReturn";
 import Collections from "./pages/Collections";
+import Checkouts from "./pages/Checkouts";
 
 // account Auth
 import { AuthProvider } from "./account/Auth";
@@ -62,6 +63,9 @@ function App() {
 							<Route exact path="/login" component={LogIn} />
 							<Route exact path="/signup" component={SignUp} />
 							<Route exact path="/phoneauth" component={PhoneAuth} />
+							<Route exact path="/checkouts">
+								<Checkouts />
+							</Route>
 							<Route>
 								<NotFoundPage />
 							</Route>

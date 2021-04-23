@@ -1,0 +1,34 @@
+.Checkouts__container {
+	display: grid;
+	margin: 0 10%;
+	grid-template-columns: auto auto;
+}
+
+.Checkouts__info {
+	margin: 0 15%;
+	max-width: 572px;
+	float: left;
+}
+
+.Checkouts__info > main > div:nth-child(2) {
+	float: left;
+	width: 66% !important;
+}
+
+.Checkouts__info > main > div:nth-child(3) {
+	float: right;
+	width: 33% !important;
+}
+
+.Checkouts__delivery {
+	margin: 20px 0;
+}
+
+.Checkouts__delivery .selectContainer {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.Checkouts__conclusion {
+	background-color: antiquewhite;
+}
