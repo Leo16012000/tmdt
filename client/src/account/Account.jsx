@@ -4,6 +4,7 @@ import { auth } from "../firebase";
 import { Avatar } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import sendMessage from "./sendMessage";
+import firebase from "firebase/app";
 
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -25,7 +26,7 @@ function Account(props) {
 		console.log(values);
 	};
 
-	const sendVerification = () => {
+	const sendEmailVerification = () => {
 		var user = auth.currentUser;
 
 		user
@@ -39,10 +40,56 @@ function Account(props) {
 	};
 
 	const onProfileChange = () => {
+		// Xác thực sđt trước
+		window.appVerifier = new firebase.auth.RecaptchaVerifier(
+			"recaptcha-container",
+			{
+				size: "invisible",
+				// Bỏ qua xác thực hình ảnh trước
+				// callback: (res) => {},
+			}
+		);
+
+		const appVerifier = window.appVerifier;
+
+		firebase
+			.auth()
+			.currentUser.linkWithPhoneNumber(
+				`+84${values.phoneNumber.slice(1)}`,
+				appVerifier
+			)
+			.then((confirmationResult) => {
+				window.confirmationResult = confirmationResult;
+				// prompt user to entre code
+				let code = window.prompt(
+					"Please enter the 6 digit code from your phone number!"
+				);
+
+				confirmationResult
+					.confirm(code)
+					.then((result) => {
+						const credential = firebase.auth.PhoneAuthProvider.credential(
+							window.confirmationResult.verificationId,
+							code
+						);
+						firebase.auth().currentUser.linkWithCredential(credential);
+					})
+					.then((res) => {
+						sendMessage("Successfully", "Xác thực thành công!", "success");
+					})
+					.catch((error) => {
+						// reset rechatcha and try again
+						sendMessage("Error happend!", error.toString(), "danger");
+					});
+			})
+			.catch((error) => {
+				// reset rechatcha and try again
+				sendMessage("Error happend!", error.toString(), "danger");
+			});
+
 		auth.currentUser
 			.updateProfile({
 				phoneNumber: values.phoneNumber,
-				displayName: values.displayName,
 				photoURL: "/photo",
 			})
 			.then(() => {
@@ -52,8 +99,6 @@ function Account(props) {
 					"success"
 				);
 			});
-
-		auth.currentUser.updatePhoneNumber(values.phoneNumber);
 
 		console.log("user:", currentUser);
 	};
@@ -91,6 +136,7 @@ function Account(props) {
 			<Button
 				variant="outlined"
 				color="primary"
+				id="recaptcha-container"
 				onClick={() => onProfileChange()}
 			>
 				Lưu thông tin

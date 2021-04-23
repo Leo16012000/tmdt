@@ -4,7 +4,6 @@ import { Redirect } from "react-router-dom";
 import { auth } from "../firebase";
 import { Link } from "react-router-dom";
 
-import firebase from "firebase/app";
 import "firebase/auth";
 
 import sendMessage from "./sendMessage";

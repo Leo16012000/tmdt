@@ -25,7 +25,8 @@ const PhoneAuth = () => {
 			"recaptcha-container",
 			{
 				size: "invisible",
-				callback: (res) => {},
+				// Bỏ qua xác thực hình ảnh trước
+				// callback: (res) => {},
 			}
 		);
 
@@ -42,6 +43,9 @@ const PhoneAuth = () => {
 
 				let code = window.prompt("Please enter the 6 digit code");
 				return confirmationResult.confirm(code);
+			})
+			.then(() => {
+				sendMessage("Successfully", "Xác thực thành công!", "success");
 			})
 			.catch(function (error) {
 				sendMessage("Error happend!", error.toString(), "danger");
