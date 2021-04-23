@@ -30,7 +30,7 @@ function TopNavigation() {
               Hotline: <a href="tel:(+84) 938.38.15.13">(+84) 938.38.15.13</a>
             </p>
             <div className="info">
-              <p id="account">
+              <div id="account">
                 <Link to="/account">Tài khoản</Link>
                 {!user.email && (
                   <div id="options">
@@ -38,10 +38,10 @@ function TopNavigation() {
                     <Link to="/account">Đăng ký</Link>
                   </div>
                 )}
-              </p>
-              <p id="shop">
+              </div>
+              <div id="shop">
                 <Link to="/cart">Giỏ hàng</Link>
-              </p>
+              </div>
               <ShoppingCartOutlinedIcon />
               <PersonOutlineOutlinedIcon />
             </div>

@@ -4,6 +4,8 @@ import {
   PRICE_FILTER,
   UPDATE_USER,
   SEARCH_FILTER,
+  INCREASE_QUANTITY,
+  DECREASE_QUANTITY,
 } from "./types";
 
 export const roomFilter = (value) => {
@@ -27,10 +29,17 @@ export const categoryFilter = (value) => {
   return { type: CATEGORY_FILTER, value };
 };
 
-export const priceFilter = (lower , upper) => {
-  return { type: PRICE_FILTER, lower , upper  };
+export const priceFilter = (lower, upper) => {
+  return { type: PRICE_FILTER, lower, upper };
 };
 
 export const searchFilter = (keyword) => {
-  return { type: SEARCH_FILTER, keyword  };
+  return { type: SEARCH_FILTER, keyword };
+};
+
+export const increaseQuantity = (index) => {
+  return { type: INCREASE_QUANTITY, index };
+};
+export const decreaseQuantity = (index) => {
+  return { type: DECREASE_QUANTITY, index };
 };
