@@ -6,6 +6,7 @@ import {
   UPDATE_USER,
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
+  ADD_CART,
 } from "./types";
 
 const initialState = {
@@ -67,14 +68,28 @@ const appReducer = (state = initialState, action) => {
       state.listCart[action.index].quantity++;
       return {
         ...state,
-        // listCart: [...state.listCart, state.listCart[action.index].quantity++],
+        listCart: [...state.listCart],
       };
     }
     case DECREASE_QUANTITY: {
       state.listCart[action.index].quantity--;
       return {
         ...state,
-        // listCart: [...state.listCart, state.listCart[action.index].quantity++],
+        listCart: [...state.listCart],
+      };
+    }
+    case ADD_CART: {
+      const cartItem = {
+        id: action.payload.id,
+        image: action.payload.image,
+        name: action.payload.fullName,
+        quantity: 1,
+        unitCost: action.payload.price,
+      };
+      state.listCart.push(cartItem);
+      return {
+        ...state,
+        listCart: [...state.listCart],
       };
     }
     default:

@@ -6,9 +6,11 @@ import { increaseQuantity, decreaseQuantity } from "../redux/action";
 function Cart(props) {
   const dispatch = useDispatch();
   let listCart = useSelector((state) => state.listCart);
-  let totalCart = listCart.reduce(
-    (a, b) => a.quantity * a.unitCost + b.quantity * b.unitCost
-  );
+  console.log(listCart);
+  let totalCart = 0;
+  for (let i = 0; i <= listCart.length - 1; i++) {
+    totalCart += listCart[i].quantity + listCart[i].unitCost;
+  }
   console.log(totalCart);
   function DeleteCart() {}
   function DecreaseQuantity(key) {
