@@ -35,12 +35,58 @@ function Title() {
   );
 }
 
-function MyAccordion() {
-  return (
-    <div className="MyAccordion">
-      <div className="Accordion">
-        <Accordion />
-      </div>
+function MyAccordion(){
+    return (
+        <div className="MyAccordion">
+            <div className="Accordion">
+                <Accordion />
+            </div>
+        </div>
+    );
+}
+
+function ItemList(){
+
+    const roomKind = useSelector((state) => state.room);
+    const categoryKind = useSelector((state) => state.category);
+    const priceUpper = useSelector((state) => state.priceUpper);
+    const priceLower = useSelector((state) => state.priceLower);
+
+    const [item, setItem] = useState([]);
+
+    useEffect(() => {
+        Axios.get(`http://localhost:3001/collections`).then(
+          (response) => {
+            setItem(response.data);
+          }
+        );
+      }, []);
+
+   
+    var itemList = item;
+
+    if(roomKind === 0){
+        itemList = item;
+    }
+    else {
+        itemList = itemList.filter((i) => i.KindOfRoom === roomKind );
+    }
+
+    if(categoryKind !== 'all'){
+        itemList = itemList.filter((i) => i.Category === categoryKind );
+    }
+
+    if(priceLower !== 0 && priceUpper !== 0){
+        itemList = itemList.filter((i) => i.Price < priceUpper && i.Price >= priceLower);
+        console.log('hello');
+    }
+    
+    return <div className="ItemList">
+            {
+                itemList.map( sofa => {
+                    return <ItemCard props={sofa} />
+                })
+            }
     </div>
   );
 }

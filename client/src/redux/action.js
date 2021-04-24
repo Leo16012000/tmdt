@@ -18,11 +18,12 @@ export const updateUser = (
   displayName,
   phoneNumber,
   photoUrl,
+  address,
   verify
 ) => {
   return {
     type: UPDATE_USER,
-    payload: { email, displayName, phoneNumber, photoUrl, verify },
+    payload: { email, displayName, phoneNumber, photoUrl, address, verify },
   };
 };
 
