@@ -9,7 +9,7 @@ function Cart(props) {
   console.log(listCart);
   let totalCart = 0;
   for (let i = 0; i <= listCart.length - 1; i++) {
-    totalCart += listCart[i].quantity + listCart[i].unitCost;
+    totalCart += listCart[i].quantity * listCart[i].unitCost;
   }
   console.log(totalCart);
   function DeleteCart() {}
