@@ -1,11 +1,4 @@
 var express = require("express");
-const { v1: uuidv1 } = require("uuid");
-var router = express.Router();
-var path = require("path");
-var favicon = require("serve-favicon");
-var fs = require("fs");
-var logger = require("morgan");
-
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
@@ -194,8 +187,8 @@ const PORT = 8080;
 const db = mysql.createPool({
 	host: "localhost",
 	user: "root",
-	password: "",
-	database: "tmdt_ass2004",
+	password: "quan0402",
+	database: "tmdt_ass0204",
 });
 
 app.use(cors());

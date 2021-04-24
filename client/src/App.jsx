@@ -8,10 +8,9 @@ import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import NotFoundPage from "./pages/NotFoundPage";
 import Contact from "./pages/Contact";
-// import Sofa from "./pages/Sofa";
 import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
-// import Footer from "./components/Footer";
+import Footer from "./components/Footer";
 // import Payment from "./pages/Payment";
 // import Product from "./pages/Product";
 import Form from "./pages/Form";
@@ -67,6 +66,7 @@ function App() {
 							</Route>
 						</Switch>
 					</Suspense>
+					<Footer/>
 				</Router>
 			</AuthProvider>
 		</div>

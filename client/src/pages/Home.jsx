@@ -114,7 +114,7 @@ function HomeCollection1() {
 	const [item, setItem] = useState([]);
 
 	useEffect(() => {
-		Axios.get(`http://localhost:8080/collections`).then((response) => {
+		Axios.get(`http://localhost:3001/collections`).then((response) => {
 			setItem(response.data);
 		});
 	}, []);
@@ -153,7 +153,7 @@ function HomeCollection2() {
 	}
 
 	useEffect(() => {
-		Axios.get(`http://localhost:8080/collections`).then((response) => {
+		Axios.get(`http://localhost:3001/collections`).then((response) => {
 			setItem(response.data);
 		});
 	}, []);
@@ -174,10 +174,10 @@ function HomeCollection2() {
 			</div>
 
 			<div className="readmore-line">
-				<a href="/collections">
+				<a>
 					<Button onClick={() => handleClick()}>
 						{" "}
-						{readMore === false ? "Xem tất cả" : "Thu gọn"}
+						{readMore === false ? "Xem them" : "Thu gọn"}
 					</Button>
 				</a>
 			</div>

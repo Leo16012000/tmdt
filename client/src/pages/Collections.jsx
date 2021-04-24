@@ -44,7 +44,7 @@ function ItemList(){
     const [item, setItem] = useState([]);
 
     useEffect(() => {
-        Axios.get(`http://localhost:8080/collections`).then(
+        Axios.get(`http://localhost:3001/collections`).then(
           (response) => {
             setItem(response.data);
           }
