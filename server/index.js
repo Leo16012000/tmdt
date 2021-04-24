@@ -187,8 +187,8 @@ const PORT = 8080;
 const db = mysql.createPool({
 	host: "localhost",
 	user: "root",
-	password: "quan0402",
-	database: "tmdt_ass0204",
+	password: "",
+	database: "tmdt_ass2004",
 });
 
 app.use(cors());
