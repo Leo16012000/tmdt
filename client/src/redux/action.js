@@ -32,6 +32,6 @@ export const priceFilter = (lower, upper) => {
 	return { type: PRICE_FILTER, lower, upper };
 };
 
-export const searchFilter = (keyword) => {
-	return { type: SEARCH_FILTER, keyword };
+export const searchFilter = (value) => {
+	return { type: SEARCH_FILTER, value };
 };

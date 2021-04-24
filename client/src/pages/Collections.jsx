@@ -40,6 +40,8 @@ function ItemList(){
     const categoryKind = useSelector((state) => state.category);
     const priceUpper = useSelector((state) => state.priceUpper);
     const priceLower = useSelector((state) => state.priceLower);
+    const keyword = useSelector((state) => state.keyword);
+    console.log(keyword)
 
     const [item, setItem] = useState([]);
 
@@ -65,10 +67,26 @@ function ItemList(){
         itemList = itemList.filter((i) => i.Category === categoryKind );
     }
 
-    if(priceLower !== 0 && priceUpper !== 0){
+    if(priceLower !== 0 || priceUpper !== 0){
         itemList = itemList.filter((i) => i.Price < priceUpper && i.Price >= priceLower);
-        console.log('hello');
     }
+
+    
+    if(keyword !== "" ){
+        const words = keyword.split(' ');
+        itemList = itemList.filter((i) => {
+            for(var word of words){
+                if( word !== ""){
+                    if(i.Fullname.includes(word.toUpperCase()) === true){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
+    }
+
+    console.log(itemList);
     
     return <div className="ItemList">
             {

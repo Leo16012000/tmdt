@@ -5,16 +5,33 @@ import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import "../styles/TopNavigation.css";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { roomFilter, categoryFilter } from "../redux/action";
+import { roomFilter, categoryFilter,priceFilter,searchFilter } from "../redux/action";
 import { Button } from "@material-ui/core";
+import {React, useState , useEffect} from "react";
 
 function TopNavigation() {
 	const dispatch = useDispatch();
 
+	const [keyword, setKeyword] = useState("");
+
 	function handleFilter(room, category) {
 		dispatch(room);
 		dispatch(category);
+		dispatch(priceFilter(0,0))
 	}
+
+	function handleSearchFilter(keyword) {
+		console.log("đã dispatch")
+		dispatch(searchFilter(keyword));
+	}
+
+	function handleChange(e){
+		console.log("đã update vô keyword")
+		setKeyword(e.target.value)
+	}
+
+
+
 	return (
 		<header className="TopNavigation">
 			<div className="TopNavigation__container--top">
@@ -23,7 +40,14 @@ function TopNavigation() {
 						src="https://theme.hstatic.net/1000360516/1000609234/14/logo.png?v=1449"
 						alt="logo"
 					/>
-					<input placeholder="Tìm kiếm sản phẩm..." />
+					<input placeholder="Tìm kiếm sản phẩm..." onChange={(e) => handleChange(e)} />
+					<Button
+						onClick={() =>
+							handleSearchFilter(keyword)
+						}
+					>
+						<Link to="/collections">Tìm kiếm</Link>
+					</Button>
 					<div className="items">
 						<p>
 							Hotline: <a href="tel:(+84) 938.38.15.13">(+84) 938.38.15.13</a>

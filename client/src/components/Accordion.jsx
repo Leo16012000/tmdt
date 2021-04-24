@@ -5,12 +5,15 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import '../styles/Accordion.css'
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { priceFilter , categoryFilter } from "../redux/action";
 
 
 export default function SimpleAccordion() {
 
+  const categoryKind = useSelector((state) => state.category);
+  const upper = useSelector((state) => state.priceUpper);
+  const lower = useSelector((state) => state.priceLower);
   const dispatch = useDispatch();
 	
 	function handleFilter(filter){
@@ -31,7 +34,7 @@ export default function SimpleAccordion() {
         <AccordionDetails>
           <ul className="List">
               <li>
-                <input type="radio" onChange={() => handleFilter(priceFilter(0,0))} className="Option" name="price"/> Tất cả
+                <input type="radio" onChange={() => handleFilter(priceFilter(0,0))} className="Option" checked={upper === 0 && lower === 0 ? true : false  } name="price"/> Tất cả
               </li>
               <li>
                 <input type="radio" onChange={() => handleFilter(priceFilter(0,2000000))} className="Option" name="price"/> Nhỏ hơn 2,000,000đ
@@ -67,25 +70,25 @@ export default function SimpleAccordion() {
         <AccordionDetails>
           <ul className="List">
               <li>
-                <input type="radio" onChange={() => handleFilter(categoryFilter('all'))} className="Option" name="type"/> Tất cả
+                <input type="radio" onChange={() => handleFilter(categoryFilter('all'))} className="Option" checked={categoryKind === 'all' ? true : false  } name="type"/> Tất cả
               </li>
               <li>
-                <input type="radio" onChange={() => handleFilter(categoryFilter('bàn'))} className="Option" name="type"/> Bàn
+                <input type="radio" onChange={() => handleFilter(categoryFilter('bàn'))} className="Option" checked={categoryKind === 'bàn' ? true : false  } name="type"/> Bàn
               </li>
               <li>
-                <input type="radio" onChange={() => handleFilter(categoryFilter('giá'))} className="Option" name="type"/> Giá
+                <input type="radio" onChange={() => handleFilter(categoryFilter('giá'))} className="Option" checked={categoryKind === 'giá' ? true : false  } name="type"/> Giá
               </li>
               <li>
-                <input type="radio" onChange={() => handleFilter(categoryFilter('giường'))} className="Option" name="type"/> Giường
+                <input type="radio" onChange={() => handleFilter(categoryFilter('giường'))} className="Option" checked={categoryKind === 'giường' ? true : false  } name="type"/> Giường
               </li>
               <li>
-                <input type="radio" onChange={() => handleFilter(categoryFilter('gối'))} className="Option" name="type"/> Gối
+                <input type="radio" onChange={() => handleFilter(categoryFilter('gối'))} className="Option" checked={categoryKind === 'gối' ? true : false  } name="type"/> Gối
               </li>
               <li>
-                <input type="radio" onChange={() => handleFilter(categoryFilter('kệ'))} className="Option" name="type"/> Kệ
+                <input type="radio" onChange={() => handleFilter(categoryFilter('kệ'))} className="Option" checked={categoryKind === 'kệ' ? true : false  } name="type"/> Kệ
               </li>
               <li>
-                <input type="radio" onChange={() => handleFilter(categoryFilter('tủ'))} className="Option" name="type"/> Tủ
+                <input type="radio" onChange={() => handleFilter(categoryFilter('tủ'))} className="Option" checked={categoryKind === 'tủ' ? true : false  } name="type"/> Tủ
               </li>
           </ul>
         </AccordionDetails>
