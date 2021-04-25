@@ -21,8 +21,6 @@ export default function LocalPicker() {
 		levelAttributeName = "data-level",
 	} = arguments[0] && typeof arguments[0] === "object" ? arguments[0] : {};
 
-	console.log("Picker");
-
 	let data = [
 			{
 				i: 89,

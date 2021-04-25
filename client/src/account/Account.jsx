@@ -25,18 +25,18 @@ function Account(props) {
 		setValues({ ...values, [prop]: event.target.value });
 	};
 
-	const sendEmailVerification = () => {
-		var user = auth.currentUser;
+	// const sendEmailVerification = () => {
+	// 	var user = auth.currentUser;
 
-		user
-			.sendEmailVerification()
-			.then(() => {
-				console.log("Email sended");
-			})
-			.catch((err) => {
-				window.alert(err);
-			});
-	};
+	// 	user
+	// 		.sendEmailVerification()
+	// 		.then(() => {
+	// 			console.log("Email sended");
+	// 		})
+	// 		.catch((err) => {
+	// 			window.alert(err);
+	// 		});
+	// };
 
 	const onProfileChange = () => {
 		// Xác thực sđt trước

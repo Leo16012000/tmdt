@@ -28,28 +28,53 @@ function Checkouts(props) {
 
 	const [values, setValues] = useState(defaultInfo);
 	const [expanded, setExpanded] = useState("panel1");
+	const [redirect, setRedirect] = useState(null);
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
 	};
 
-	const moveNextStep = () => {
+	const moveNextStep = (e) => {
 		var errors = [];
+
+		const ls_province = document.getElementById("ls_province")
+			.selectedOptions[0];
+
+		const ls_district = document.getElementById("ls_district");
+
+		const ls_ward = document.getElementById("ls_ward");
+
 		if (!values.displayName) errors.push("Tên không được để trống!");
 
 		if (!values.phoneNumber) errors.push("Số điện thoại không được để trống!");
 
 		if (!values.address) errors.push("Địa chỉ không được để trống!");
 
+		if (expanded === "panel1" && !ls_ward.value)
+			errors.push("Vui lòng chọn địa chỉ giao hàng!");
+
 		if (errors?.length)
 			errors.map((err) => sendMessage("Error happened!", err, "danger"));
-		else console.log(`<Redirect to="/checkouts?step=2" />;`);
+		else {
+			const addressDelivery =
+				ls_ward.selectedOptions[0].innerText +
+				", " +
+				ls_district.selectedOptions[0].innerText +
+				", " +
+				ls_province.dataset.level +
+				" " +
+				ls_province.innerText;
+			setValues({ ...values, addressDelivery: addressDelivery });
+			setRedirect(`/checkouts?step=2`);
+		}
 	};
 
 	useEffect(() => {
 		// Load Location
 		LocalPicker();
-	});
+	}, []);
+
+	if (redirect) return <Redirect to={redirect} />;
 
 	return (
 		<div className="Checkouts__container">
@@ -123,9 +148,9 @@ function Checkouts(props) {
 								<Typography>Giao hàng</Typography>
 							</AccordionSummary>
 							<AccordionDetails className="selectContainer">
-								<select id="ls_province"></select>
-								<select id="ls_district"></select>
-								<select id="ls_ward"></select>
+								<select id="ls_province" />
+								<select id="ls_district" />
+								<select id="ls_ward" />
 							</AccordionDetails>
 						</Accordion>
 						<Accordion
@@ -160,7 +185,7 @@ function Checkouts(props) {
 					<div
 						to="/checkouts?step=2"
 						className="nextStep"
-						onClick={() => moveNextStep()}
+						onClick={(e) => moveNextStep(e)}
 					>
 						<p>Phương thức thanh toán</p>
 					</div>
