@@ -7,8 +7,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { roomFilter, categoryFilter } from "../redux/action";
 import { Button, Icon, SvgIcon } from "@material-ui/core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import logo from "../images/logo.png";
 
 function TopNavigation() {
   const dispatch = useDispatch();
@@ -25,10 +24,7 @@ function TopNavigation() {
     <header className="TopNavigation">
       <div className="TopNavigation__container--top">
         <div className="wrapper">
-          <img
-            src="https://theme.hstatic.net/1000360516/1000609234/14/logo.png?v=1449"
-            alt="logo"
-          />
+          <img src={logo} alt="logo" />
           <input placeholder="Tìm kiếm sản phẩm..." />
           <div className="items">
             <p>

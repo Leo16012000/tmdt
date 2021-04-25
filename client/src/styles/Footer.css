@@ -1,152 +1,158 @@
 .Footer {
-	background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
 .FooterContent {
-	/* display: grid;
+  /* display: grid;
     grid-template-columns: 33.3% repeat(2,16.6%) 33.3%; */
-	border-top: 1px solid #eee;
-	border-bottom: 1px solid #eee;
-	font-size: 19px;
-	font-family: Montserrat, Helvetica, Arial, sans-serif;
-	background-color: #f2f2f2;
-	line-height: 1.4;
+  display: flex;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  font-size: 19px;
+  font-family: Montserrat, Helvetica, Arial, sans-serif;
+  background-color: #f2f2f2;
+  line-height: 1.4;
+}
+
+.FooterContent img {
+  width: 200px;
+  height: 200px;
 }
 
 .Contact a,
 p {
-	font-size: 14px;
-	font-weight: 300;
-	line-height: 1.6;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.6;
 }
 
 .Logo {
-	padding-bottom: 25px;
-	width: 180px;
+  padding-bottom: 25px;
+  width: 180px;
 }
 
 .Content {
-	max-width: 1350px;
-	padding: 45px 30px;
-	margin: 0 auto;
-	text-align: left;
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-start;
-	align-items: center;
-	flex-wrap: wrap;
+  padding: 0px 30px;
+  margin: 0 auto;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-.Nav,
-.Method {
-	width: 16.666%;
-	padding-left: 30px;
+.Nav {
+  width: 33.33%;
+  text-align: center;
 }
 
 .Nav h3,
 .Method h3 {
-	text-transform: uppercase;
-	position: relative;
-	margin: 0px 0px 15px 0px;
-	font-size: 19px;
-	color: #000000;
+  text-transform: uppercase;
+  position: relative;
+  margin: 0px 0px 15px 0px;
+  font-size: 19px;
+  color: #000000;
 }
 
 .Nav ul,
 .Method ul {
-	width: 100%;
-	padding: 0 0;
+  width: 100%;
+  padding: 0 0;
 }
 
 .Nav a {
-	margin: 0px;
-	font-size: 14px;
-	text-decoration: none;
-	color: black;
-	text-transform: capitalize;
-	padding: 10px 0;
-	line-height: 1.6em;
+  margin: 0px;
+  font-size: 14px;
+  text-decoration: none;
+  color: black;
+  text-transform: capitalize;
+  padding: 10px 0;
+  line-height: 1.6em;
 }
 
 .Nav a:hover {
-	color: #ff6200;
-	text-decoration: none;
+  color: #ff6200;
+  text-decoration: none;
 }
 
 .Contact {
-	width: 33.333%;
-	display: flex;
-	flex-direction: column;
+  width: 33.333%;
+  display: flex;
+  flex-direction: column;
 }
 
 .Method {
-	width: 33.3%;
+  width: 33.3%;
 }
 
 .FooterSubcribe {
-	margin: 0 auto;
-	max-width: 1350px;
-	padding: 45px 30px;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1350px;
+  padding: 0px 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .FooterRight {
-	margin: 0 auto;
-	max-width: 1350px;
-	padding: 45px 30px;
-	text-align: left;
+  margin: 0 auto;
+  max-width: 1350px;
+  padding: 45px 30px 5px 30px;
+  text-align: left;
 }
 
 .Social {
-	width: 10%;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+  padding-top: 12px;
+
+  width: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .Social a {
-	text-decoration: none;
-	color: #333;
-	font-size: 10px;
+  text-decoration: none;
+  color: #333;
+  font-size: 10px;
 }
 
 .Social-block a:hover {
-	color: #ff6200;
-	transform: rotate(360deg);
-	-webkit-transform: rotate(360deg);
-	-moz-transform: rotate(360deg);
-	-o-transform: rotate(360deg);
-	-ms-transform: rotate(360deg);
+  color: #ff6200;
+  transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
 }
 
 .EmailInput {
-	height: 50px;
-	background-color: #fff;
-	width: 40%;
+  height: 50px;
+  background-color: #fff;
+  width: 40%;
 
-	border: 1px solid #dadada;
-	border-radius: 30px;
-	display: flex;
-	justify-content: space-between;
-	outline: none;
+  border: 1px solid #dadada;
+  border-radius: 30px;
+  display: flex;
+  justify-content: space-between;
+  outline: none;
 }
 
 input {
-	outline: none;
+  outline: none;
 }
 
 .EmailInput .Input {
-	margin-left: 26px;
-	border: none;
+  margin-left: 26px;
+  border: none;
 }
 
 .InputButton {
-	padding: 0 15px;
-	height: 40px;
-	border: none;
-	border-radius: 30px;
-	margin: 4px;
+  padding: 0 15px;
+  height: 40px;
+  border: none;
+  border-radius: 30px;
+  margin: 4px;
 }
 /* 
 
