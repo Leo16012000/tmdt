@@ -6,12 +6,17 @@ import "../styles/TopNavigation.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { roomFilter, categoryFilter } from "../redux/action";
-import { Button } from "@material-ui/core";
+import { Button, Icon, SvgIcon } from "@material-ui/core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 
 function TopNavigation() {
   const dispatch = useDispatch();
   const listCart = useSelector((state) => state.listCart);
-  console.log(listCart);
+  let numberCart = 0;
+  listCart.forEach((item) => {
+    numberCart += item.quantity;
+  });
   function handleFilter(room, category) {
     dispatch(room);
     dispatch(category);
@@ -35,7 +40,11 @@ function TopNavigation() {
               </p>
               <p id="shop">
                 <Link to="/cart">Giỏ hàng</Link>
+                <span class="badge badge-warning" id="lblCartCount">
+                  {numberCart}
+                </span>
               </p>
+
               <ShoppingCartOutlinedIcon />
               <PersonOutlineOutlinedIcon />
             </div>
