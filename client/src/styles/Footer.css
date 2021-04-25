@@ -90,10 +90,9 @@ p {
 .FooterSubcribe {
   margin: 0 auto;
   max-width: 1350px;
-  padding: 0px 30px;
+  padding: 0px 85px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
 }
 
 .FooterRight {
@@ -105,7 +104,7 @@ p {
 
 .Social {
   padding-top: 12px;
-
+  margin-right: 160px;
   width: 10%;
   display: flex;
   flex-direction: row;
