@@ -7,6 +7,7 @@ import {
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
   ADD_CART,
+  REMOVE_CART,
 } from "./types";
 
 const initialState = {
@@ -32,6 +33,14 @@ const initialState = {
       name: "KỆ TRANG TRÍ ĐA NĂNG 3 TẦNG",
       quantity: 2,
       unitCost: 2600000,
+    },
+    {
+      id: 3,
+      image:
+        "https://product.hstatic.net/1000360516/product/3_6af68c1787fe43d5af687508793262f0_master.jpg",
+      name: "TỦ TRANG TRÍ SUNNY 1000",
+      quantity: 2,
+      unitCost: 7264000,
     },
   ],
 };
@@ -87,11 +96,21 @@ const appReducer = (state = initialState, action) => {
         unitCost: action.payload.price,
       };
       state.listCart.push(cartItem);
+      console.log("ADD CART FROM REDUCER");
       return {
         ...state,
         listCart: [...state.listCart],
       };
     }
+    case REMOVE_CART: {
+      state.listCart.splice(action.index, 1);
+      console.log(state.listCart);
+      return {
+        ...state,
+        listCart: [...state.listCart],
+      };
+    }
+
     default:
       return state;
   }

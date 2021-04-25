@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { addCart } from "../redux/action";
-import { Link, Redirect } from "react-router-dom";
 
 // function numberWithCommas(x) {
 // 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -49,8 +48,8 @@ function ItemCard(props) {
   // );
   const dispatch = useDispatch();
   function handleAddCart(id, image, fullName, price) {
+    console.log("run into handleAddCart");
     dispatch(addCart(id, image, fullName, price));
-    window.location.href = "http://localhost:3000/cart";
   }
   return (
     <div className="ItemCard">
@@ -71,12 +70,24 @@ function ItemCard(props) {
           <button className="ItemCard__ImgBlock__ProductAction__Buy ProductAction__Button Left_Button">
             <FontAwesomeIcon icon={faSearchPlus} size="1x" />
           </button>
-          <button className="ItemCard__ImgBlock__ProductAction__Buy ProductAction__Button Center_Button">
+          <button
+            onClick={() => {
+              handleAddCart(
+                //without moving to cart
+                props.props.ID,
+                props.props.Image,
+                props.props.Fullname,
+                props.props.Price
+              );
+            }}
+            className="ItemCard__ImgBlock__ProductAction__Buy ProductAction__Button Center_Button"
+          >
             Mua ngay
           </button>
           <button
             onClick={() => {
               handleAddCart(
+                //moving to cart
                 props.props.ID,
                 props.props.Image,
                 props.props.Fullname,

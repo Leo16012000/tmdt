@@ -7,6 +7,7 @@ import {
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
   ADD_CART,
+  REMOVE_CART,
 } from "./types";
 
 export const roomFilter = (value) => {
@@ -46,5 +47,9 @@ export const decreaseQuantity = (index) => {
   return { type: DECREASE_QUANTITY, index };
 };
 export const addCart = (id, image, fullName, price) => {
+  console.log("run into addCart action");
   return { type: ADD_CART, payload: { id, image, fullName, price } };
+};
+export const removeCart = (index) => {
+  return { type: REMOVE_CART, index };
 };

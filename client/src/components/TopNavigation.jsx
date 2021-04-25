@@ -4,13 +4,14 @@ import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined"
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import "../styles/TopNavigation.css";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { roomFilter, categoryFilter } from "../redux/action";
 import { Button } from "@material-ui/core";
 
 function TopNavigation() {
   const dispatch = useDispatch();
-
+  const listCart = useSelector((state) => state.listCart);
+  console.log(listCart);
   function handleFilter(room, category) {
     dispatch(room);
     dispatch(category);

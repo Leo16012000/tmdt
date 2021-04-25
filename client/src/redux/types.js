@@ -6,3 +6,4 @@ export const SEARCH_FILTER = "SEARCH_FILTER";
 export const INCREASE_QUANTITY = "INCREASE_QUANTITY";
 export const DECREASE_QUANTITY = "DECREASE_QUANTITY";
 export const ADD_CART = "ADD_CART";
+export const REMOVE_CART = "REMOVE_CART";

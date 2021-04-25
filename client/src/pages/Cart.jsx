@@ -1,7 +1,11 @@
 import React from "react";
 import "../styles/Cart.css";
 import { useSelector, useDispatch } from "react-redux";
-import { increaseQuantity, decreaseQuantity } from "../redux/action";
+import {
+  increaseQuantity,
+  decreaseQuantity,
+  removeCart,
+} from "../redux/action";
 
 function Cart(props) {
   const dispatch = useDispatch();
@@ -11,15 +15,14 @@ function Cart(props) {
   for (let i = 0; i <= listCart.length - 1; i++) {
     totalCart += listCart[i].quantity * listCart[i].unitCost;
   }
-  console.log(totalCart);
-  function DeleteCart() {}
+  function DeleteCart(key) {
+    dispatch(removeCart(key));
+  }
   function DecreaseQuantity(key) {
     dispatch(decreaseQuantity(key));
-    console.log(listCart);
   }
   function IncreaseQuantity(key) {
     dispatch(increaseQuantity(key));
-    console.log(listCart);
   }
   return (
     <div className="row">
