@@ -20,17 +20,14 @@ export const AuthProvider = ({ children }) => {
 			<div
 				style={{
 					width: "100%",
-					height: "100%",
-					display: "flex",
 					position: "fixed",
-					alignItems: "center",
-					justifyContent: "center",
+					top: "50%",
 				}}
 			>
 				<CircularProgress
 					style={{
-						width: "20%",
-						height: "20%",
+						width: "5%",
+						height: "5%",
 					}}
 					color="secondary"
 				/>

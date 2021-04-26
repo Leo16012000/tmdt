@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../account/Auth";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Typography from "@material-ui/core/Typography";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
@@ -10,11 +10,19 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 import LocalPicker from "../vietnamlocalselector";
 
 import "../styles/Checkouts.css";
 import sendMessage from "../account/sendMessage";
+
+const axios = require("axios");
 
 function Checkouts(props) {
 	const { currentUser } = useContext(AuthContext);
@@ -28,13 +36,18 @@ function Checkouts(props) {
 
 	const [values, setValues] = useState(defaultInfo);
 	const [expanded, setExpanded] = useState("panel1");
-	const [redirect, setRedirect] = useState(null);
+	const [method, setMethod] = useState("momo");
+	const [open, setOpen] = useState(false);
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
 	};
 
-	const moveNextStep = (e) => {
+	const handleClickDialog = () => {
+		setOpen(!open);
+	};
+
+	const moveNextStep = () => {
 		var errors = [];
 
 		const ls_province = document.getElementById("ls_province")
@@ -45,9 +58,7 @@ function Checkouts(props) {
 		const ls_ward = document.getElementById("ls_ward");
 
 		if (!values.displayName) errors.push("Tên không được để trống!");
-
 		if (!values.phoneNumber) errors.push("Số điện thoại không được để trống!");
-
 		if (!values.address) errors.push("Địa chỉ không được để trống!");
 
 		if (expanded === "panel1" && !ls_ward.value)
@@ -65,16 +76,29 @@ function Checkouts(props) {
 				" " +
 				ls_province.innerText;
 			setValues({ ...values, addressDelivery: addressDelivery });
-			setRedirect(`/checkouts?step=2`);
+			setOpen(true);
 		}
+	};
+
+	const sendPayment = () => {
+		if (method === "momo")
+			axios
+				.get("/api/momo")
+				.then((res) => {
+					const dataRes = res.data;
+					if (dataRes.statusCode === 200)
+						if (!dataRes.errorCode) window.location.href = dataRes.body.payUrl;
+						else console.log(dataRes.body.localMessage);
+					else console.log("Something wrong happened!");
+				})
+				.catch((err) => console.log(err));
+		else if (method === "vnpay") console.log("VNPAY");
 	};
 
 	useEffect(() => {
 		// Load Location
 		LocalPicker();
 	}, []);
-
-	if (redirect) return <Redirect to={redirect} />;
 
 	return (
 		<div className="Checkouts__container">
@@ -88,10 +112,9 @@ function Checkouts(props) {
 						<Link color="inherit" to="/cart">
 							Giỏ hàng
 						</Link>
-						<Link color="inherit" to="/getting-started/installation/">
+						<Link color="inherit" to="/checkouts">
 							Thông tin vận chuyển
 						</Link>
-						<Typography color="textPrimary">Phương thức thanh toán</Typography>
 					</Breadcrumbs>
 					<h5>Thông tin vận chuyển</h5>
 					{!currentUser && (
@@ -106,6 +129,7 @@ function Checkouts(props) {
 						variant="outlined"
 						margin="dense"
 						id="fullName"
+						required
 						onChange={handleChange("displayName")}
 						defaultValue={currentUser ? currentUser.displayName : ""}
 						fullWidth
@@ -122,6 +146,7 @@ function Checkouts(props) {
 						label="Điện thoại"
 						variant="outlined"
 						margin="dense"
+						required
 						onChange={handleChange("phoneNumber")}
 						defaultValue={currentUser ? currentUser.phoneNumber : ""}
 						id="phoneNumber"
@@ -131,6 +156,7 @@ function Checkouts(props) {
 						variant="outlined"
 						margin="dense"
 						id="address"
+						required
 						onChange={handleChange("address")}
 						fullWidth
 					/>
@@ -148,9 +174,15 @@ function Checkouts(props) {
 								<Typography>Giao hàng</Typography>
 							</AccordionSummary>
 							<AccordionDetails className="selectContainer">
-								<select id="ls_province" />
-								<select id="ls_district" />
-								<select id="ls_ward" />
+								<div class="select">
+									<select id="ls_province" />
+								</div>
+								<div class="select">
+									<select id="ls_district" />
+								</div>
+								<div class="select">
+									<select id="ls_ward" />
+								</div>
 							</AccordionDetails>
 						</Accordion>
 						<Accordion
@@ -182,13 +214,76 @@ function Checkouts(props) {
 						</div>
 					</Link>
 
-					<div
-						to="/checkouts?step=2"
-						className="nextStep"
-						onClick={(e) => moveNextStep(e)}
-					>
+					<div className="methodPayment" onClick={() => moveNextStep()}>
 						<p>Phương thức thanh toán</p>
 					</div>
+					<Dialog
+						open={open}
+						maxWidth="xl"
+						onClose={handleClickDialog}
+						aria-labelledby="responsive-dialog-title"
+					>
+						<DialogTitle id="responsive-dialog-title">
+							PHƯƠNG THỨC THANH TOÁN
+						</DialogTitle>
+						<DialogContent>
+							<DialogContentText>
+								Bạn vui lòng chọn một trong số những phương thức thanh toán sau.
+							</DialogContentText>
+							<div className="radio-group row justify-content-between px-3 text-center a">
+								<div
+									className={`col-auto mr-sm-2 mx-1 card-block py-0 text-center radio ${
+										method === "momo" ? "selected" : ""
+									}`}
+									onClick={() => setMethod("momo")}
+								>
+									<div className="flex-row">
+										<div className="col">
+											<div className="pic">
+												<img
+													className="irc_mut img-fluid"
+													src="https://res-2.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco/v1458245625/pwegh6kadcb37kuz0woj.png"
+													alt="momo-logo"
+													width="100"
+													height="100"
+												/>
+											</div>
+											<p>Thanh toán trực tuyến qua MoMo</p>
+										</div>
+									</div>
+								</div>
+								<div
+									className={`col-auto mr-sm-2 mx-1 card-block py-0 text-center radio ${
+										method === "vnpay" ? "selected" : ""
+									}`}
+									onClick={() => setMethod("vnpay")}
+								>
+									<div className="flex-row">
+										<div className="col">
+											<div className="pic">
+												<img
+													className="irc_mut img-fluid"
+													src="https://res-4.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco/fux5pruztupxjy0lcxv0"
+													alt="vnpay-logo"
+													width="100"
+													height="100"
+												/>
+											</div>
+											<p>Thanh toán trực tuyến qua VNPAY</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</DialogContent>
+						<DialogActions>
+							<Button autoFocus onClick={handleClickDialog} color="primary">
+								Bỏ qua
+							</Button>
+							<Button onClick={() => sendPayment()} color="primary" autoFocus>
+								Thanh toán
+							</Button>
+						</DialogActions>
+					</Dialog>
 				</footer>
 			</div>
 			<div className="Checkouts__conclusion">

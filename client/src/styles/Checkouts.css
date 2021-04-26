@@ -38,21 +38,56 @@
 	justify-content: space-between;
 }
 
-.selectContainer > select {
-	background-color: #338dbc;
-	color: white;
-	padding: 12px;
-	max-width: 170px;
-	border: none;
-	font-size: 14px;
-	box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-	-webkit-appearance: button;
-	appearance: button;
-	outline: none;
+/* Reset Select */
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	appearance: none;
+	outline: 0;
+	box-shadow: none;
+	border: 0 !important;
+	background: #46709a;
+	background-image: none;
 }
-
-.selectContainer > select > * {
-	padding: 30px;
+/* Remove IE arrow */
+select::-ms-expand {
+	display: none;
+}
+/* Custom Select */
+.select {
+	position: relative;
+	display: flex;
+	width: 11em;
+	height: 2.5em;
+	line-height: 3;
+	background: #46709a;
+	overflow: hidden;
+	border-radius: 0.25em;
+}
+select {
+	flex: 1;
+	padding: 0 0.5em;
+	color: #fff;
+	cursor: pointer;
+}
+/* Arrow */
+.select::after {
+	content: "\25BC";
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 0 0.4em;
+	background: #375e86;
+	cursor: pointer;
+	pointer-events: none;
+	-webkit-transition: 0.25s all ease;
+	-o-transition: 0.25s all ease;
+	transition: 0.25s all ease;
+}
+/* Transition */
+.select:hover::after {
+	color: #f39c12;
 }
 
 .Checkouts__info > footer,
@@ -63,7 +98,7 @@
 	justify-content: space-between;
 }
 
-.Checkouts__info > footer .nextStep {
+.Checkouts__info > footer .methodPayment {
 	cursor: pointer;
 	text-decoration: none;
 	line-height: 2.5em;
@@ -127,4 +162,62 @@
 .Checkouts__conclusion .finalPrice > div {
 	display: flex;
 	gap: 10px;
+}
+
+/*Dialog Radio Button*/
+.radio-group {
+	margin: 20px 0;
+}
+
+.pic {
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+
+.card-block {
+	width: 200px;
+	border: 1px solid lightgrey;
+	border-radius: 5px !important;
+	background-color: #fafafa;
+	margin-bottom: 30px;
+}
+
+.card-body.show {
+	display: block;
+}
+
+.card {
+	padding-bottom: 20px;
+	box-shadow: 2px 2px 6px 0px rgb(200, 167, 216);
+}
+
+.radio {
+	display: inline-block;
+	border-radius: 0;
+	box-sizing: border-box;
+	cursor: pointer;
+	color: #000;
+	font-weight: 500;
+	-webkit-filter: grayscale(100%);
+	-moz-filter: grayscale(100%);
+	-o-filter: grayscale(100%);
+	-ms-filter: grayscale(100%);
+	filter: grayscale(100%);
+}
+
+.radio:hover {
+	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.radio.selected {
+	box-shadow: 0px 8px 16px 0px #eeeeee;
+	-webkit-filter: grayscale(0%);
+	-moz-filter: grayscale(0%);
+	-o-filter: grayscale(0%);
+	-ms-filter: grayscale(0%);
+	filter: grayscale(0%);
+}
+
+.selected {
+	background-color: #e0f2f1;
 }

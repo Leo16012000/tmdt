@@ -11,7 +11,6 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import VpnKeyRoundedIcon from "@material-ui/icons/VpnKeyRounded";
 
 const PhoneAuth = () => {
 	const { currentUser } = useContext(AuthContext);

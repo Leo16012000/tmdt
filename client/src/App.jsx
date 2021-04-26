@@ -28,10 +28,10 @@ import SignUp from "./account/SignUp";
 function App() {
 	return (
 		<div className="App">
-			<AuthProvider>
-				<Router>
-					<TopNavigation />
-					<ReactNotification />
+			<Router>
+				<TopNavigation />
+				<ReactNotification />
+				<AuthProvider>
 					<Suspense fallback={<h1>....</h1>}>
 						<Switch>
 							<Route exact path="/collections">
@@ -71,8 +71,8 @@ function App() {
 							</Route>
 						</Switch>
 					</Suspense>
-				</Router>
-			</AuthProvider>
+				</AuthProvider>
+			</Router>
 		</div>
 	);
 }

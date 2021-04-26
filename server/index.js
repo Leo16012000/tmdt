@@ -16,6 +16,9 @@ var router = express.Router();
 
 var sortObject = require("sort-object");
 
+// momo requirement
+const { sendPaymentMomo } = require("./sendPaymentMomo");
+
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
@@ -43,6 +46,20 @@ app.get("/post", function (req, res, next) {
 app.post("/post", (req, res) => {
 	console.log("Connected to React");
 	res.redirect("/");
+});
+
+// Momo Payment
+
+app.get("/api/momo", (req, res) => {
+	sendPaymentMomo(req, res);
+});
+
+app.get("/callback", (req, res) => {
+	console.log("Callback: " + req);
+});
+
+app.get("/return", (req, res) => {
+	console.log("Return: " + req);
 });
 
 // Create URL payment
@@ -189,7 +206,7 @@ app.get("/vnpay_ipn", function (req, res, next) {
 	}
 });
 
-const PORT = 8080;
+const PORT = 3001;
 
 const db = mysql.createPool({
 	host: "localhost",
@@ -213,6 +230,6 @@ app.get("/collections", (req, res) => {
 	});
 });
 
-app.listen(3001, () => {
-	console.log("running on port 3001");
+app.listen(PORT, () => {
+	console.log("running on port ", PORT);
 });
