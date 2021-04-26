@@ -7,6 +7,7 @@
 
 .main__App {
 	flex: 1;
+	margin-bottom: 2rem;
 }
 
 .App-logo {

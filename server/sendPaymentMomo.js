@@ -2,6 +2,7 @@ require("dotenv").config();
 const https = require("https");
 const crypto = require("crypto");
 const uuidv1 = require("uuidv1");
+const c = require("config");
 
 var endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
 var hostname = "https://test-payment.momo.vn";
@@ -12,14 +13,15 @@ var serectkey = process.env.SECRET_KEY;
 var orderInfo = "pay with MoMo";
 var returnUrl = process.env.PROXY + "/callback";
 var notifyurl = process.env.PROXY + "/return";
-var amount = "2000000";
+// var amount = "2000000";
 var orderId = uuidv1();
 var requestId = uuidv1();
 var requestType = "captureMoMoWallet";
 var extraData = "merchantName=RoyalFurniture;merchantId=001"; //pass empty value if your merchant does not have stores else merchantName=[storeName]; merchantId=[storeId] to identify a transaction map with a physical store
 var ret = {};
 
-function sendPaymentMomo(request, response) {
+function sendPaymentMomo(request, response, dataReq) {
+	const amount = dataReq.amount.toString();
 	//before sign HMAC SHA256 with format
 	//partnerCode=$partnerCode&accessKey=$accessKey&requestId=$requestId&amount=$amount&orderId=$oderId&orderInfo=$orderInfo&returnUrl=$returnUrl&notifyUrl=$notifyUrl&extraData=$extraData
 	var rawSignature =

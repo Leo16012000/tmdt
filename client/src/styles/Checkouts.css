@@ -121,6 +121,14 @@ select {
 	background-color: #fafafa;
 }
 
+.Checkouts__conclusion .products {
+	max-height: 70vh;
+	overflow-y: scroll;
+}
+.Checkouts__conclusion .products::-webkit-scrollbar {
+	display: none;
+}
+
 .Checkouts__conclusion .product {
 	display: flex;
 	align-items: center;
@@ -132,6 +140,7 @@ select {
 }
 
 .Checkouts__conclusion .product__thumbnail {
+	position: relative;
 	max-width: 70px;
 	margin: 0 5px;
 }
@@ -139,6 +148,15 @@ select {
 .Checkouts__conclusion .product__thumbnail > img {
 	max-width: inherit;
 	border-radius: 5px;
+}
+
+.Checkouts__conclusion .product__quantity {
+	top: -10px;
+	right: -5px;
+	width: 20px;
+	border-radius: 5px;
+	position: absolute;
+	background-color: #f39c12;
 }
 
 .Checkouts__conclusion .product__info {

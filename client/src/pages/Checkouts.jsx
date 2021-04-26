@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { AuthContext } from "../account/Auth";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
@@ -17,12 +18,16 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
+import sendMessage from "../account/sendMessage";
 import LocalPicker from "../vietnamlocalselector";
 
 import "../styles/Checkouts.css";
-import sendMessage from "../account/sendMessage";
 
 const axios = require("axios");
+
+function numberWithCommas(x) {
+	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 function Checkouts(props) {
 	const { currentUser } = useContext(AuthContext);
@@ -33,11 +38,12 @@ function Checkouts(props) {
 				phoneNumber: currentUser.phoneNumber,
 		  }
 		: {};
-
+	const listCart = useSelector((state) => state.listCart);
 	const [values, setValues] = useState(defaultInfo);
 	const [expanded, setExpanded] = useState("panel1");
 	const [method, setMethod] = useState("momo");
 	const [open, setOpen] = useState(false);
+	var finalPrice = 0;
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
@@ -83,7 +89,7 @@ function Checkouts(props) {
 	const sendPayment = () => {
 		if (method === "momo")
 			axios
-				.get("/api/momo")
+				.post("/api/momo", { amount: finalPrice })
 				.then((res) => {
 					const dataRes = res.data;
 					if (dataRes.statusCode === 200)
@@ -288,37 +294,29 @@ function Checkouts(props) {
 			</div>
 			<div className="Checkouts__conclusion">
 				<div className="products">
-					<div className="product">
-						<div className="product__thumbnail">
-							<img
-								src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTgzLHajkq5kyTvBNpN4i6kb7CsflEi3GBZXNkxk_BgKMNKUBRcw1LkV6zct8XapA&usqp=CAc"
-								alt="product__thumbnail"
-							/>
-						</div>
-						<div className="product__info">
-							<p>VNL001 - BỘ BÀN ĂN VANILLA 4 GHẾ ĐƠN</p>
-						</div>
-						<p className="product__price">7,273,000₫</p>
-					</div>
-
-					<div className="product">
-						<div className="product__thumbnail">
-							<img
-								src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTgzLHajkq5kyTvBNpN4i6kb7CsflEi3GBZXNkxk_BgKMNKUBRcw1LkV6zct8XapA&usqp=CAc"
-								alt="product__thumbnail"
-							/>
-						</div>
-						<div className="product__info">
-							<p>VNL001 - BỘ BÀN ĂN VANILLA 4 GHẾ ĐƠN</p>
-						</div>
-						<p className="product__price">7,273,000₫</p>
-					</div>
+					{listCart?.map((product) => {
+						finalPrice += product.quantity * product.unitCost;
+						return (
+							<div className="product" key={product.id}>
+								<div className="product__thumbnail">
+									<img src={product.image} alt="product__thumbnail" />
+									<p className="product__quantity">{product.quantity}</p>
+								</div>
+								<div className="product__info">
+									<p>{product.name}</p>
+								</div>
+								<p className="product__price">
+									{numberWithCommas(product.unitCost)}₫
+								</p>
+							</div>
+						);
+					})}
 				</div>
 				<div className="finalPrice">
 					<p>Tổng tiền</p>
 					<div>
 						<p>VND</p>
-						<h4>7,273,000₫</h4>
+						<h4>{numberWithCommas(finalPrice)}₫</h4>
 					</div>
 				</div>
 			</div>

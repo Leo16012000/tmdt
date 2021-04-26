@@ -49,8 +49,9 @@ app.post("/post", (req, res) => {
 
 // Momo Payment
 
-app.get("/api/momo", (req, res) => {
-	sendPaymentMomo(req, res);
+app.post("/api/momo", (req, res) => {
+	const dataReq = { amount: req.body.amount };
+	sendPaymentMomo(req, res, dataReq);
 });
 
 app.get("/callback", (req, res) => {
@@ -225,7 +226,7 @@ const PORT = 3001;
 const db = mysql.createPool({
 	host: "localhost",
 	user: "root",
-	password: "",
+	password: "sanglaso1",
 	database: "tmdt_ass2004",
 });
 
