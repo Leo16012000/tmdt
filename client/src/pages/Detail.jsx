@@ -1,9 +1,11 @@
-import React, { useState, useEffect }  from 'react'
+import {React, useState , useEffect,useLayoutEffect, Suspense , Spinner} from "react";
 import '../styles/Detail.css'
 import product from '../data.js'
 import Button from '../components/Button'
 import QuantityModifier from '../components/QuantityModifier'
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link , useParams,useLocation} from "react-router-dom";
+import Axios from "axios";
+
 
 
 const images = [
@@ -35,13 +37,54 @@ const banners =[
 
 ]
 
+function Detail(props) {
+
+    let query = useQuery();
+
+    const item = {
+        id :  query.get("id"),
+        fullname :  query.get("fullname"),
+        price :  query.get("price"),
+        des :  query.get("des"),
+        img : query.get("img")
+    }
+
+    return (
+        <Suspense fallback={<Spinner />}>
+        <div className="product-wrapper">
+            <div className="wrapper">
+                <div className="inner">
+                    <div className="product-single">
+                        <ProductGallery img={item.img}/>
+                        <ProductContent item={item} />
+                    </div>
+                    <div className="note"></div>
+                    <div className="related-product"></div>
+                    <div className="product-info"></div>
+                    <div className="seen-product"></div>
+                    
+                    <ProductDescription match={props.match}/>
+
+                </div>
+            </div>
+            
+        </div>
+        </Suspense>
+    )
+}
+
 function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function ProductGallery(){
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
 
-    const [photo, setPhoto] = useState(images[0]);
+
+function ProductGallery(props){
+
+    const [photo, setPhoto] = useState(props.img);
 
     return (
         <div className="gallery">
@@ -63,28 +106,25 @@ function ProductGallery(){
     )
 }
 
-function ProductContent(){
+
+function ProductContent(props){
 
     var value = 0;
 
+
+    
+    console.log(props)
+
     return (
         <div className="product-content">
-            <div ><p className="product-id">Mã SP: {product[0].productId}</p></div>
-            <div className="product-name">{ product[0].name}</div>
-            <div className="product-price">{numberWithCommas(product[0].price)}đ</div>
-            <div className="product-short-description">{product[0].description}</div>
+            <div ><p className="product-id">Mã SP: {props.item.id}</p></div>
+            <div className="product-name">{props.item.fullname}</div>
+            {/* <div className="product-price">{numberWithCommas(props.item.Price)}đ</div> */}
+            <div className="product-short-description">{props.item.des}</div>
 
-            <div className="choice-header"><h6>Kiểu dáng</h6></div>
-
-            <div className="choice-header"><h6>Vật liệu</h6> </div>
-
-            <div className="choice-header"><h6>Màu sắc</h6></div>
-           
-            <div className="choice-header"><h6>Số lượng</h6></div>
-           
             <div >
                 <QuantityModifier quantityValue={value}/>
-                <Button name="giỏ hàng" type="Normal"/>
+                <Button name="thêm giỏ hàng" type="Normal"/>
                 <Button name="mua ngay" type="Hightlight"/>
             </div>
 
@@ -99,32 +139,8 @@ function ProductContent(){
     
 }
 
-function Product(props) {
 
-    console.log("hello")
-    console.log(props.match)
 
-    return (
-        <div className="product-wrapper">
-            <div className="wrapper">
-                <div className="inner">
-                    <div className="product-single">
-                        <ProductGallery />
-                        <ProductContent />
-                    </div>
-                    <div className="note"></div>
-                    <div className="related-product"></div>
-                    <div className="product-info"></div>
-                    <div className="seen-product"></div>
-                    
-                    <ProductDescription match={props.match}/>
-
-                </div>
-            </div>
-            
-        </div>
-    )
-}
 
 function Description() {
     return (
@@ -152,13 +168,13 @@ function ProductDescription({match}) {
     return(
         <div>
         <div className="links">
-          <Link to={`${path}/description`} className="link left-tab">Mô tả sản phẩm</Link>
+          <Link to={`${path}`} className="link left-tab">Mô tả sản phẩm</Link>
           <Link to={`${path}/faqs`} className="link center-tab">FAQs</Link>
           <Link to={`${path}/comments`} className="link right-tab">Đánh giá</Link>
         </div>
         <div className="tabs">
           <Switch>
-            <Route path={`${path}/description`}  exact component={Description} />
+            <Route path={`${path}`}  exact component={Description} />
             <Route path={`${path}/faqs`} component={FAQs} />
             <Route path={`${path}/comments`} component={Comments} />
           </Switch>
@@ -169,4 +185,4 @@ function ProductDescription({match}) {
 }
 
 
-export default Product
+export default Detail

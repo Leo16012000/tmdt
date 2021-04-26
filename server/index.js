@@ -206,6 +206,19 @@ app.get("/collections", (req, res) => {
 	});
 });
 
+// get info of a product for Detail pages
+app.get("/detail/:id", (req, res) => {
+
+	const sqlSelect = "SELECT * FROM `product` WHERE ID = " + req.params.id;
+	db.query(sqlSelect, (err, result) => {
+		if (err) {
+			res.send(err);
+		}
+		res.send(result);
+	});
+});
+
+
 app.listen(3001, () => {
 	console.log("running on port 3001");
 });

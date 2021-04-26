@@ -28,7 +28,7 @@ function QuantityModifier({quantityValue}) {
                     }
                     />
                 </div>
-                <button className="button" onClick={()=>{setQuantity(quantity-1);quantityValue = quantity;}} disabled={quantity === 0 ? "true" : false}>-</button>
+                <button className="button" onClick={()=>{setQuantity(quantity-1);quantityValue = quantity;}} disabled={quantity <= 1 ? "true" : false}>-</button>
             </div>  
         </div>
     )

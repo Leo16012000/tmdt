@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import TopNavigation from "./components/TopNavigation";
-import React, { Suspense } from "react";
+import React, { Suspense ,Spinner} from "react";
 import Home from "./pages/Home";
 import Account from "./account/Account";
 import Cart from "./pages/Cart";
@@ -30,7 +30,7 @@ function App() {
 				<Router>
 					<TopNavigation />
 					<ReactNotification />
-					<Suspense fallback={<h1>....</h1>}>
+					<Suspense fallback={<Spinner />}>
 						<Switch>
 							<Route exact path="/collections">
 								<Collections />
@@ -55,7 +55,9 @@ function App() {
 								<Form />
 							</Route>
 							<Route path="/detail">
-								<Detail match="/detail"/>
+								<Suspense fallback={<Spinner />}>
+									<Detail />
+								</Suspense>
 							</Route>
 							<Route path="/vnpay_return" component={VPNReturn} />
 							<Route path="/account">
