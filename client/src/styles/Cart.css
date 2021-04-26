@@ -1,0 +1,7 @@
+#cart-table {
+}
+table,
+th,
+td {
+  border: 0.5px solid lightgray;
+}

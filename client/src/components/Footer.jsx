@@ -7,13 +7,15 @@ import {
 	faYoutube,
 	faInstagramSquare,
 } from "@fortawesome/free-brands-svg-icons";
-import { faCopyright } from "@fortawesome/free-regular-svg-icons";
+import logo from "../images/logo.png";
 
 function FooterRight() {
 	return (
 		<div className="FooterRight">
-			<FontAwesomeIcon icon={faCopyright} /> Castle Furniture since 2021.
-			Website by <b>Team6</b>
+			<span>
+				Website by
+				<b> BKTeam</b>
+			</span>
 		</div>
 	);
 }
@@ -73,59 +75,51 @@ function FooterContent() {
 		<div className="FooterContent">
 			<div className="Content">
 				<div className="Contact">
-					<img
-						src="https://theme.hstatic.net/1000360516/1000609234/14/logo.png?v=1451"
-						alt="logo"
-						className="Logo"
-					/>
-					<p>DONGSUH FURNITURE - Nội Thất Hàn Quốc Online Số 1 Tại Việt Nam</p>
+					<img src={logo} alt="logo" />
+					<p>HOME FUNISHINGS - Nội Thất Sang Trọng Dành Cho Căn Nhà Của Bạn</p>
 					<p>94-96 Nguyễn Văn Trỗi, P.8, Q.Phú Nhuận, TP.HCM</p>
 					<a href="/">(+84)938.38.15.13</a>
 					<a href="/">support@dongsuh.com.vn</a>
 				</div>
 				<div className="Nav">
-					<h3>thông tin</h3>
+					<h3>Thông tin</h3>
 					<ul>
 						<li>
-							<a href="/">về chúng tôi</a>
+							<a href="/">Về chúng tôi</a>
 						</li>
 						<li>
-							<a href="/">thông tin liên hệ</a>
+							<a href="/">Thông tin liên hệ</a>
 						</li>
 						<li>
-							<a href="/">hướng dẫn mua hàng</a>
+							<a href="/">Hướng dẫn mua hàng</a>
 						</li>
 						<li>
-							<a href="/">sản phẩm khuyến mãi</a>
+							<a href="/">Sản phẩm khuyến mãi</a>
 						</li>
 						<li>
-							<a href="/">thông tin tuyển dụng</a>
+							<a href="/">Thông tin tuyển dụng</a>
 						</li>
 					</ul>
 				</div>
 				<div className="Nav">
-					<h3>chính sách</h3>
+					<h3>Chính sách</h3>
 					<ul>
 						<li>
-							<a href="/">chính sách thanh toán</a>
+							<a href="/">Chính sách thanh toán</a>
 						</li>
 						<li>
-							<a href="/">chích sách bảo hành</a>
+							<a href="/">Chính sách bảo hành</a>
 						</li>
 						<li>
-							<a href="/">chính sách đổi trả</a>
+							<a href="/">Chính sách đổi trả</a>
 						</li>
 						<li>
-							<a href="/">chính sách vận chuyển</a>
+							<a href="/">Chính sách vận chuyển</a>
 						</li>
 						<li>
-							<a href="/">chính sách bảo mật</a>
+							<a href="/">Chính sách bảo mật</a>
 						</li>
 					</ul>
-				</div>
-				<div className="Method">
-					<h3>Phương thức thanh toán</h3>
-					<ul></ul>
 				</div>
 			</div>
 		</div>

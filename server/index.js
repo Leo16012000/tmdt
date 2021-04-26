@@ -2,7 +2,6 @@ var express = require("express");
 const { v1: uuidv1 } = require("uuid");
 var router = express.Router();
 var path = require("path");
-var favicon = require("serve-favicon");
 var fs = require("fs");
 var logger = require("morgan");
 
@@ -206,15 +205,6 @@ app.get("/vnpay_ipn", function (req, res, next) {
 	}
 });
 
-const PORT = 3001;
-
-const db = mysql.createPool({
-	host: "localhost",
-	user: "root",
-	password: "",
-	database: "tmdt_ass2004",
-});
-
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -228,6 +218,15 @@ app.get("/collections", (req, res) => {
 		}
 		res.send(result);
 	});
+});
+
+const PORT = 3001;
+
+const db = mysql.createPool({
+	host: "localhost",
+	user: "root",
+	password: "",
+	database: "tmdt_ass2004",
 });
 
 app.listen(PORT, () => {

@@ -4,13 +4,18 @@ import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined"
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import "../styles/TopNavigation.css";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { roomFilter, categoryFilter } from "../redux/action";
 import { Button } from "@material-ui/core";
+import logo from "../images/logo.png";
 
 function TopNavigation() {
 	const dispatch = useDispatch();
-
+	const listCart = useSelector((state) => state.listCart);
+	let numberCart = 0;
+	listCart.forEach((item) => {
+		numberCart += item.quantity;
+	});
 	function handleFilter(room, category) {
 		dispatch(room);
 		dispatch(category);
@@ -19,10 +24,7 @@ function TopNavigation() {
 		<header className="TopNavigation">
 			<div className="TopNavigation__container--top">
 				<div className="wrapper">
-					<img
-						src="https://theme.hstatic.net/1000360516/1000609234/14/logo.png?v=1449"
-						alt="logo"
-					/>
+					<img src={logo} alt="logo" />
 					<input placeholder="Tìm kiếm sản phẩm..." />
 					<div className="items">
 						<p>
@@ -34,7 +36,11 @@ function TopNavigation() {
 							</p>
 							<p id="shop">
 								<Link to="/cart">Giỏ hàng</Link>
+								<span class="badge badge-warning" id="lblCartCount">
+									{numberCart}
+								</span>
 							</p>
+
 							<ShoppingCartOutlinedIcon />
 							<PersonOutlineOutlinedIcon />
 						</div>

@@ -1,16 +1,23 @@
 .Footer {
 	background-color: #f2f2f2;
+	margin-bottom: -200px;
 }
 
 .FooterContent {
 	/* display: grid;
     grid-template-columns: 33.3% repeat(2,16.6%) 33.3%; */
+	display: flex;
 	border-top: 1px solid #eee;
 	border-bottom: 1px solid #eee;
 	font-size: 19px;
 	font-family: Montserrat, Helvetica, Arial, sans-serif;
 	background-color: #f2f2f2;
 	line-height: 1.4;
+}
+
+.FooterContent img {
+	width: 200px;
+	height: 200px;
 }
 
 .Contact a,
@@ -26,8 +33,7 @@ p {
 }
 
 .Content {
-	max-width: 1350px;
-	padding: 45px 30px;
+	padding: 0px 30px;
 	margin: 0 auto;
 	text-align: left;
 	display: flex;
@@ -37,10 +43,9 @@ p {
 	flex-wrap: wrap;
 }
 
-.Nav,
-.Method {
-	width: 16.666%;
-	padding-left: 30px;
+.Nav {
+	width: 33.33%;
+	text-align: center;
 }
 
 .Nav h3,
@@ -84,22 +89,26 @@ p {
 }
 
 .FooterSubcribe {
-	margin: 0 auto;
-	max-width: 1350px;
-	padding: 45px 30px;
+	border-top: 1px solid #e4e4e4;
+	border-bottom: 1px solid #e4e4e4;
+	margin-top: 30px;
+	padding: 20px;
+	width: 100%;
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	justify-content: space-evenly;
 }
 
 .FooterRight {
 	margin: 0 auto;
 	max-width: 1350px;
-	padding: 45px 30px;
+	padding: 10px;
 	text-align: left;
 }
 
 .Social {
+	padding-top: 12px;
+	margin-right: 160px;
 	width: 10%;
 	display: flex;
 	flex-direction: row;

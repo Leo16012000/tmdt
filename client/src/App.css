@@ -2,7 +2,11 @@
 	text-align: center;
 	min-height: 100vh;
 	display: flex;
-	flex-flow: column;
+	flex-direction: column;
+}
+
+.main__App {
+	flex: 1;
 }
 
 .App-logo {

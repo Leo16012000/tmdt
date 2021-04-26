@@ -1,13 +1,92 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
-Cart.propTypes = {};
+import "../styles/Cart.css";
+import { useSelector, useDispatch } from "react-redux";
+import {
+	increaseQuantity,
+	decreaseQuantity,
+	removeCart,
+} from "../redux/action";
 
 function Cart(props) {
+	const dispatch = useDispatch();
+	let listCart = useSelector((state) => state.listCart);
+	console.log(listCart);
+	let totalCart = 0;
+	for (let i = 0; i <= listCart.length - 1; i++) {
+		totalCart += listCart[i].quantity * listCart[i].unitCost;
+	}
+	function DeleteCart(key) {
+		dispatch(removeCart(key));
+	}
+	function DecreaseQuantity(key) {
+		dispatch(decreaseQuantity(key));
+	}
+	function IncreaseQuantity(key) {
+		dispatch(increaseQuantity(key));
+	}
 	return (
-		<div>
-			<h1>Cart Page</h1>
-			<Link to="/checkouts">Thanh toán</Link>
+		<div className="row">
+			<div className="col-md-12">
+				<table className="table">
+					<thead>
+						<tr>
+							<th></th>
+							<th>Name</th>
+							<th>Image</th>
+							<th>Price</th>
+							<th>Quantity</th>
+							<th>Total Price</th>
+						</tr>
+					</thead>
+					<tbody>
+						{listCart.map((item, key) => {
+							return (
+								<tr key={key}>
+									<td>
+										<i
+											className="badge badge-danger"
+											onClick={() => DeleteCart(key)}
+										>
+											X
+										</i>
+									</td>
+									<td>{item.name}</td>
+									<td>
+										<img
+											src={item.image}
+											alt="itemCart"
+											style={{ width: "100px", height: "80px" }}
+										/>
+									</td>
+									<td>{item.unitCost}đ</td>
+									<td>
+										<span
+											className="btn btn-primary"
+											style={{ margin: "2px" }}
+											onClick={() => DecreaseQuantity(key)}
+										>
+											-
+										</span>
+										<span className="btn btn-info">{item.quantity}</span>
+										<span
+											className="btn btn-primary"
+											style={{ margin: "2px" }}
+											onClick={() => IncreaseQuantity(key)}
+										>
+											+
+										</span>
+									</td>
+									<td>{item.unitCost * item.quantity}đ</td>
+								</tr>
+							);
+						})}
+						<tr>
+							<td colSpan="5">Total Carts</td>
+							<td>{totalCart}đ</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	);
 }
