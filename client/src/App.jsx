@@ -12,7 +12,7 @@ import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import Footer from "./components/Footer";
 // import Payment from "./pages/Payment";
-// import Product from "./pages/Product";
+import Detail from "./pages/Detail";
 import Form from "./pages/Form";
 import VPNReturn from "./pages/VPNReturn";
 import Collections from "./pages/Collections";
@@ -53,6 +53,9 @@ function App() {
 							</Route>
 							<Route path="/post">
 								<Form />
+							</Route>
+							<Route path="/detail">
+								<Detail match="/detail"/>
 							</Route>
 							<Route path="/vnpay_return" component={VPNReturn} />
 							<Route path="/account">

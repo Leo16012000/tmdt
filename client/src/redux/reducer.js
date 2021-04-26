@@ -43,7 +43,7 @@ const appReducer = (state = initialState, action) => {
 		}
 		case SEARCH_FILTER: {
 			console.log("Enter SEARCH_FILTER")
-			return { ...state,room: 0, category: 'all', priceUpper: 0, priceLower: 0, keyword: action.value };
+			return { ...state,priceUpper: 0, priceLower: 0, keyword: action.value };
 		}
 		default:
 			return state;

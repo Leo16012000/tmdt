@@ -18,11 +18,14 @@ function TopNavigation() {
 		dispatch(room);
 		dispatch(category);
 		dispatch(priceFilter(0,0))
+		dispatch(searchFilter(''))
 	}
 
 	function handleSearchFilter(keyword) {
 		console.log("đã dispatch")
 		dispatch(searchFilter(keyword));
+		dispatch(roomFilter(0));
+		dispatch(categoryFilter('all'));
 	}
 
 	function handleChange(e){

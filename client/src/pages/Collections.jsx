@@ -41,7 +41,12 @@ function ItemList(){
     const priceUpper = useSelector((state) => state.priceUpper);
     const priceLower = useSelector((state) => state.priceLower);
     const keyword = useSelector((state) => state.keyword);
+    
     console.log(keyword)
+    console.log(roomKind)
+    console.log(categoryKind)
+
+
 
     const [item, setItem] = useState([]);
 
