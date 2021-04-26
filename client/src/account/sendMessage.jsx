@@ -10,6 +10,8 @@ const sendMessage = (title, message, type) => {
 		animationIn: ["animate__animated", "animate__fadeIn"],
 		animationOut: ["animate__animated", "animate__fadeOut"],
 		dismiss: {
+			click: true,
+			pauseOnHover: true,
 			duration: 2500,
 			onScreen: true,
 		},
