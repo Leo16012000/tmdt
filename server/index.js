@@ -163,22 +163,13 @@ app.get("/vnpay_return", function (req, res, next) {
 
 	if (secureHash == checkSum) {
 		//Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
-		console.log("giống nhau");
 		res.send({ code: vnp_Params["vnp_ResponseCode"] });
-		console.log(vnp_Params["vnp_ResponseCode"]);
 	} else {
-		console.log("khác nhau");
 		res.send({ code: "97" });
-		console.log("hash: " + secureHash);
-		console.log("checksum " + checkSum);
 	}
 });
 
 app.get("/vnpay_ipn", function (req, res, next) {
-	console.log("---------------------------------");
-	console.log("req.query of ipn: ");
-	console.log(req.query);
-	console.log("---------------------------------");
 	var vnp_Params = req.query;
 	var secureHash = vnp_Params["vnp_SecureHash"];
 
