@@ -1,10 +1,10 @@
-import {React, useState , useEffect,useLayoutEffect, Suspense , Spinner} from "react";
+import {React, useState , Suspense , Spinner} from "react";
 import '../styles/Detail.css'
-import product from '../data.js'
+
 import Button from '../components/Button'
 import QuantityModifier from '../components/QuantityModifier'
-import { Switch, Route, Link , useParams,useLocation} from "react-router-dom";
-import Axios from "axios";
+import { Switch, Route, Link ,useLocation} from "react-router-dom";
+// import Axios from "axios";
 
 
 
@@ -89,14 +89,14 @@ function ProductGallery(props){
     return (
         <div className="gallery">
             <div className="main-img">
-                <img  src={photo} />
+                <img alt="img"  src={photo} />
             </div>
             <ul className="list" >
                 {
                     images.map(image => {
                         return (
                             <li className="image-item" >
-                                <button className="gallery-option-button" onClick={() => setPhoto(image)} > <img src={image} className="img" /></button>
+                                <button className="gallery-option-button" onClick={() => setPhoto(image)} > <img alt="img" src={image} className="img" /></button>
                             </li>                
                         )
                     })
@@ -119,7 +119,7 @@ function ProductContent(props){
         <div className="product-content">
             <div ><p className="product-id">Mã SP: {props.item.id}</p></div>
             <div className="product-name">{props.item.fullname}</div>
-            {/* <div className="product-price">{numberWithCommas(props.item.Price)}đ</div> */}
+            <div className="product-price">{numberWithCommas(props.item.price)}đ</div>
             <div className="product-short-description">{props.item.des}</div>
 
             <div >
@@ -131,8 +131,8 @@ function ProductContent(props){
             <div className="promotion">
                 
            
-            <img src="https://theme.hstatic.net/1000360516/1000609234/14/m02.jpg?v=440" className="social-promotion"/>
-            <img src="https://theme.hstatic.net/1000360516/1000609234/14/m03.jpg?v=440" className="social-promotion"/>
+            <img alt="img" src="https://theme.hstatic.net/1000360516/1000609234/14/m02.jpg?v=440" className="social-promotion"/>
+            <img alt="img" src="https://theme.hstatic.net/1000360516/1000609234/14/m03.jpg?v=440" className="social-promotion"/>
             </div>
         </div>
     )
@@ -148,7 +148,7 @@ function Description() {
             {
                 banners.map(banner=> {
                     return (
-                        <img src={banner}/>
+                        <img alt="img" src={banner}/>
                     )
                 })
             }

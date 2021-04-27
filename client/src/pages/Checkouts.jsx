@@ -100,7 +100,6 @@ function Checkouts(props) {
 				.catch((err) => console.log(err));
 		else if (method === "vnpay") {
 
-			console.log(finalPrice)
 			axios
 				.post("/create_payment_url", { amount: finalPrice , language: "vn",orderDescription: "Thanh toan noi that", orderType: "Noi that"})
 				.then((res) => {
