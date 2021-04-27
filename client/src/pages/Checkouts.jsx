@@ -98,7 +98,20 @@ function Checkouts(props) {
 					else console.log("Something wrong happened!");
 				})
 				.catch((err) => console.log(err));
-		else if (method === "vnpay") console.log("VNPAY");
+		else if (method === "vnpay") {
+
+			console.log(finalPrice)
+			axios
+				.post("/create_payment_url", { amount: finalPrice , language: "vn",orderDescription: "Thanh toan noi that", orderType: "Noi that"})
+				.then((res) => {
+					const dataRes = res;
+					if (dataRes.status === 200)
+						if (!dataRes.errorCode) window.location.href = dataRes.data;
+						else console.log(dataRes.body.localMessage);
+					else console.log("Something wrong happened!");
+				})
+				.catch((err) => console.log(err));
+		};
 	};
 
 	useEffect(() => {
@@ -107,6 +120,9 @@ function Checkouts(props) {
 	}, []);
 
 	return (
+
+
+
 		<div className="Checkouts__container">
 			<div className="Checkouts__info">
 				<header>

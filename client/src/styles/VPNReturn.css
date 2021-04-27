@@ -1,0 +1,20 @@
+.VPNReturn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Message {
+    width: 300px;
+    height: 300px;
+    border-radius: 10px;
+    margin: 20px;
+}
+
+.Message_inner {
+    margin: 100px auto;
+}
+
+.Message_inner > h4 {
+    margin-top: 25px;
+}
