@@ -13,7 +13,6 @@ function VPNReturn(props) {
 
 	const apiURL = "http://localhost:3001/vnpay_return" + props.location.search;
 
-	console.log(apiURL);
 
 	useEffect(() => {
 		Axios.get(apiURL).then((response) => {

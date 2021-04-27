@@ -1,5 +1,5 @@
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { React, useState, useEffect } from "react";
+import { React, useState} from "react";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";

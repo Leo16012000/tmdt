@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import TopNavigation from "./components/TopNavigation";
-import React, { Suspense ,Spinner} from "react";
+import React, { Suspense } from "react";
 import Home from "./pages/Home";
 import Account from "./account/Account";
 import Cart from "./pages/Cart";
