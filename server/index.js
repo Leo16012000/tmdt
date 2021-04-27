@@ -133,8 +133,8 @@ app.post("/create_payment_url", function (req, res, next) {
 	// res.status(200).json({code: '00', data: vnpUrl})
 	//Neu muon dung Redirect thi mo dong ben duoi va dong dong ben tren
 
-	console.log(vnpUrl);
-	res.redirect(vnpUrl);
+	// console.log(vnpUrl);
+	res.send(vnpUrl);
 });
 
 // return URL
@@ -211,10 +211,9 @@ const PORT = 3001;
 const db = mysql.createPool({
 	host: "localhost",
 	user: "root",
-	password: "quan0402",
-	database: "tmdt_ass0204",
+	password: "sanglaso1",
+	database: "tmdt_ass2004",
 });
-
 
 app.use(cors());
 app.use(express.json());
@@ -230,8 +229,6 @@ app.get("/collections", (req, res) => {
 		res.send(result);
 	});
 });
-
-
 
 app.listen(PORT, () => {
 	console.log("running on port ", PORT);

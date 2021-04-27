@@ -93,16 +93,31 @@ function Checkouts(props) {
 				.then((res) => {
 					const dataRes = res.data;
 					if (dataRes.statusCode === 200)
-						if (!dataRes.errorCode) window.location.href = dataRes.body.payUrl;
-						else console.log(dataRes.body.localMessage);
+						if (dataRes.body.errorCode === 0)
+							window.location.href = dataRes.body.payUrl;
+						else if (dataRes.body.errorCode === 4)
+							sendMessage(
+								"Error happened!",
+								"Số tiền thanh toán cần nhỏ hơn 50 triệu, vui lòng cho phương thức khác!",
+								"danger"
+							);
+						else
+							sendMessage(
+								"Error happened!",
+								dataRes.body.localMessage,
+								"danger"
+							);
 					else console.log("Something wrong happened!");
 				})
 				.catch((err) => console.log(err));
 		else if (method === "vnpay") {
-
-			console.log(finalPrice)
 			axios
-				.post("/create_payment_url", { amount: finalPrice , language: "vn",orderDescription: "Thanh toan noi that", orderType: "Noi that"})
+				.post("/create_payment_url", {
+					amount: finalPrice,
+					language: "vn",
+					orderDescription: "Thanh toan noi that",
+					orderType: "Noi that",
+				})
 				.then((res) => {
 					const dataRes = res;
 					if (dataRes.status === 200)
@@ -111,7 +126,7 @@ function Checkouts(props) {
 					else console.log("Something wrong happened!");
 				})
 				.catch((err) => console.log(err));
-		};
+		}
 	};
 
 	useEffect(() => {
@@ -120,9 +135,6 @@ function Checkouts(props) {
 	}, []);
 
 	return (
-
-
-
 		<div className="Checkouts__container">
 			<div className="Checkouts__info">
 				<header>
