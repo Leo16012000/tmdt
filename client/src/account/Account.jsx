@@ -23,74 +23,74 @@ function Account(props) {
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
-		console.log(values);
 	};
 
-	const sendEmailVerification = () => {
-		var user = auth.currentUser;
+	// const sendEmailVerification = () => {
+	// 	var user = auth.currentUser;
 
-		user
-			.sendEmailVerification()
-			.then(() => {
-				console.log("Email sended");
-			})
-			.catch((err) => {
-				window.alert(err);
-			});
-	};
+	// 	user
+	// 		.sendEmailVerification()
+	// 		.then(() => {
+	// 			console.log("Email sended");
+	// 		})
+	// 		.catch((err) => {
+	// 			window.alert(err);
+	// 		});
+	// };
 
 	const onProfileChange = () => {
 		// Xác thực sđt trước
-		window.appVerifier = new firebase.auth.RecaptchaVerifier(
-			"recaptcha-container",
-			{
-				size: "invisible",
-				// Bỏ qua xác thực hình ảnh trước
-				// callback: (res) => {},
-			}
-		);
+		if (!currentUser.phoneNumber) {
+			window.appVerifier = new firebase.auth.RecaptchaVerifier(
+				"recaptcha-container",
+				{
+					size: "invisible",
+					// Bỏ qua xác thực hình ảnh trước
+					// callback: (res) => {},
+				}
+			);
 
-		const appVerifier = window.appVerifier;
+			const appVerifier = window.appVerifier;
 
-		firebase
-			.auth()
-			.currentUser.linkWithPhoneNumber(
-				`+84${values.phoneNumber.slice(1)}`,
-				appVerifier
-			)
-			.then((confirmationResult) => {
-				window.confirmationResult = confirmationResult;
-				// prompt user to entre code
-				let code = window.prompt(
-					"Please enter the 6 digit code from your phone number!"
-				);
+			firebase
+				.auth()
+				.currentUser.linkWithPhoneNumber(
+					`+84${values.phoneNumber.slice(1)}`,
+					appVerifier
+				)
+				.then((confirmationResult) => {
+					window.confirmationResult = confirmationResult;
+					// prompt user to entre code
+					let code = window.prompt(
+						"Please enter the 6 digit code from your phone number!"
+					);
 
-				confirmationResult
-					.confirm(code)
-					.then((result) => {
-						const credential = firebase.auth.PhoneAuthProvider.credential(
-							window.confirmationResult.verificationId,
-							code
-						);
-						firebase.auth().currentUser.linkWithCredential(credential);
-					})
-					.then((res) => {
-						sendMessage("Successfully", "Xác thực thành công!", "success");
-					})
-					.catch((error) => {
-						// reset rechatcha and try again
-						sendMessage("Error happend!", error.toString(), "danger");
-					});
-			})
-			.catch((error) => {
-				// reset rechatcha and try again
-				sendMessage("Error happend!", error.toString(), "danger");
-			});
+					confirmationResult
+						.confirm(code)
+						.then((result) => {
+							const credential = firebase.auth.PhoneAuthProvider.credential(
+								window.confirmationResult.verificationId,
+								code
+							);
+							firebase.auth().currentUser.linkWithCredential(credential);
+						})
+						.then((res) => {
+							sendMessage("Successfully", "Xác thực thành công!", "success");
+						})
+						.catch((error) => {
+							// reset rechatcha and try again
+							sendMessage("Error happend!", error.toString(), "danger");
+						});
+				})
+				.catch((error) => {
+					// reset rechatcha and try again
+					sendMessage("Error happend!", error.toString(), "danger");
+				});
+		}
 
 		auth.currentUser
 			.updateProfile({
-				phoneNumber: values.phoneNumber,
-				photoURL: "/photo",
+				displayName: values.displayName,
 			})
 			.then(() => {
 				sendMessage(
@@ -118,20 +118,21 @@ function Account(props) {
 			<Avatar
 				alt="avatar"
 				style={{ width: "200px", height: "200px" }}
-				src="https://2sao.vietnamnetjsc.vn/images/2021/02/04/10/28/tvn-apologizes-over-chanyeol-s-controversial-subtitle.jpg"
+				src="https://i.pinimg.com/originals/64/aa/4c/64aa4cb31e0a64ec096c41f45c8de878.png"
 			/>
 			<TextField
 				id="input-with-icon-grid"
 				type="email"
 				label="Họ và tên"
-				// placeholder={user.displayName ? user.displayName : ""}
 				onChange={handleChange("displayName")}
+				defaultValue={currentUser ? currentUser.displayName : ""}
 			/>
 			<TextField
 				id="input-with-icon-grid"
 				type="email"
 				label="Số điện thoại"
 				onChange={handleChange("phoneNumber")}
+				defaultValue={currentUser ? currentUser.phoneNumber : ""}
 			/>
 			<Button
 				variant="outlined"

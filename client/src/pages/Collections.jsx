@@ -1,37 +1,48 @@
-import {React, useState , useEffect} from "react";
+import { React, useState, useEffect } from "react";
 import ItemCard from "../components/ItemCard";
-import Accordion from '../components/Accordion'
-import Pagination from '../components/Pagination'
+import Accordion from "../components/Accordion";
+import Pagination from "../components/Pagination";
 import Axios from "axios";
-import '../styles/Collections.css'
+import "../styles/Collections.css";
 import { useSelector } from "react-redux";
 
-function Title(){
-    const roomKind = useSelector((state) => state.room);
+function Title() {
+	const roomKind = useSelector((state) => state.room);
 
-    var title = '';
+	var title = "";
 
-    switch(roomKind){
-        case 1: title = 'Phòng Khách';break;
-        case 2: title = 'Phòng Ngủ';break;
-        case 3: title = 'Phòng Ăn';break;
-        case 4: title = 'Phòng Học/Làm việc';break;
-        default: break;
-    }
+	switch (roomKind) {
+		case 1:
+			title = "Phòng Khách";
+			break;
+		case 2:
+			title = "Phòng Ngủ";
+			break;
+		case 3:
+			title = "Phòng Ăn";
+			break;
+		case 4:
+			title = "Phòng Học/Làm việc";
+			break;
+		default:
+			break;
+	}
 
-    return <div className="Title">
-        <h2>{title}</h2>
-    </div>
+	return (
+		<div className="Title">
+			<h2>{title}</h2>
+		</div>
+	);
 }
 
-function MyAccordion(){
-    return (
-        <div className="MyAccordion">
-            <div className="Accordion">
-                <Accordion />
-            </div>
-        </div>
-    );
+function MyAccordion() {
+	return (
+		<div className="MyAccordion">
+			<div className="Accordion">
+				<Accordion />
+			</div>
+		</div>
+	);
 }
 
 function ItemList(){
@@ -103,20 +114,17 @@ function ItemList(){
 }
 
 function Collections(props) {
+	return (
+		<div className="Sofa">
+			<Title />
+			<div className="Sofa__inner">
+				<MyAccordion />
+				<ItemList category />
+			</div>
 
-    console.log(props)
-
-  return <div className="Sofa">
-
-
-        <Title/>
-        <div className="Sofa__inner">
-            <MyAccordion />
-            <ItemList category/>
-        </div>
-
-        <Pagination />
-  </div>;
+			<Pagination />
+		</div>
+	);
 }
 
 export default Collections;

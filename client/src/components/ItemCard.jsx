@@ -5,6 +5,9 @@ import { Link, Redirect } from "react-router-dom";
 import "../styles/ItemCard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
+import { addCart } from "../redux/action";
+import sendMessage from "../account/sendMessage";
 
 function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -12,9 +15,17 @@ function numberWithCommas(x) {
 
 function ItemCard(props) {
 
-
-
 	const param = '/detail?id=' + props.props.ID + '&fullname=' + props.props.Fullname + '&price=' + props.props.Fullname + '&des=' + props.props.Detail + '&img=' + props.props.Image
+
+	const dispatch = useDispatch();
+	function handleAddCart(id, image, fullName, price) {
+		dispatch(addCart(id, image, fullName, price));
+		sendMessage(
+			"Thêm sản phẩm thành công!",
+			`Đã thêm ${fullName} vào giỏ hàng`,
+			"success"
+		);
+	}
 
 	return (
 		<div className="ItemCard">
@@ -35,10 +46,32 @@ function ItemCard(props) {
 					<button className="ItemCard__ImgBlock__ProductAction__Buy ProductAction__Button Left_Button">
 						<FontAwesomeIcon icon={faSearchPlus} size="1x" />
 					</button>
-					<button className="ItemCard__ImgBlock__ProductAction__Buy ProductAction__Button Center_Button">
+					<button
+						onClick={() => {
+							handleAddCart(
+								//without moving to cart
+								props.props.ID,
+								props.props.Image,
+								props.props.Fullname,
+								props.props.Price
+							);
+						}}
+						className="ItemCard__ImgBlock__ProductAction__Buy ProductAction__Button Center_Button"
+					>
 						Mua ngay
 					</button>
-					<button className="ItemCard__ImgBlock__ProductAction__Buy ProductAction__Button Right_Button">
+					<button
+						onClick={() => {
+							handleAddCart(
+								//moving to cart
+								props.props.ID,
+								props.props.Image,
+								props.props.Fullname,
+								props.props.Price
+							);
+						}}
+						className="ItemCard__ImgBlock__ProductAction__Buy ProductAction__Button Right_Button"
+					>
 						<FontAwesomeIcon icon={faCartPlus} size="1x" />
 					</button>
 				</div>

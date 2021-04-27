@@ -133,9 +133,7 @@ function HomeCollection1() {
 			</div>
 
 			<div className="list">
-				{item
-					.filter((item) => item.ID < 6)
-					.map((item) => {
+				{item.filter((item) => item.ID < 6).map((item) => {
 						return <ItemCard props={item} />;
 					})}
 			</div>
@@ -165,21 +163,16 @@ function HomeCollection2() {
 			</div>
 			<div className="list">
 				{readMore === false
-					? item
-							.filter((item) => item.ID < 10)
-							.map((item) => {
+					? item.filter((item) => item.ID < 10).map((item) => {
 								return <ItemCard props={item} />;
 							})
 					: item.map((item) => <ItemCard props={item} />)}
 			</div>
 
 			<div className="readmore-line">
-				<a>
-					<Button onClick={() => handleClick()}>
-						{" "}
-						{readMore === false ? "Xem them" : "Thu gọn"}
-					</Button>
-				</a>
+				<Button onClick={() => handleClick()}>
+					{readMore === false ? "Xem thêm" : "Thu gọn"}
+				</Button>
 			</div>
 		</div>
 	);

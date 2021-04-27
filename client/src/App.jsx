@@ -16,6 +16,7 @@ import Detail from "./pages/Detail";
 import Form from "./pages/Form";
 import VPNReturn from "./pages/VPNReturn";
 import Collections from "./pages/Collections";
+import Checkouts from "./pages/Checkouts";
 
 // account Auth
 import { AuthProvider } from "./account/Auth";
@@ -26,54 +27,57 @@ import SignUp from "./account/SignUp";
 function App() {
 	return (
 		<div className="App">
-			<AuthProvider>
-				<Router>
-					<TopNavigation />
-					<ReactNotification />
-					<Suspense fallback={<Spinner />}>
-						<Switch>
-							<Route exact path="/collections">
-								<Collections />
-							</Route>
+			<Router>
+				<TopNavigation />
+				<ReactNotification />
+				<AuthProvider>
+					<Suspense fallback={<h1>....</h1>}>
+						<main className="main__App">
+							<Switch>
+								<Route exact path="/collections">
+									<Collections />
+								</Route>
 
-							<Route exact path="/">
-								<Home />
-							</Route>
-							<Route path="/cart">
-								<Cart />
-							</Route>
-							<Route path="/profile">
-								<Profile />
-							</Route>
-							<Route path="/contact">
-								<Contact />
-							</Route>
-							<Route path="/collections">
-								<Collections />
-							</Route>
-							<Route path="/post">
-								<Form />
-							</Route>
-							<Route path="/detail">
-								<Suspense fallback={<Spinner />}>
+								<Route exact path="/">
+									<Home />
+								</Route>
+								<Route path="/cart">
+									<Cart />
+								</Route>
+								<Route path="/profile">
+									<Profile />
+								</Route>
+								<Route path="/contact">
+									<Contact />
+								</Route>
+								<Route path="/collections">
+									<Collections />
+								</Route>
+								<Route path="/post">
+									<Form />
+								</Route>
+								<Route path="/detail">
 									<Detail />
-								</Suspense>
-							</Route>
-							<Route path="/vnpay_return" component={VPNReturn} />
-							<Route path="/account">
-								<Account />
-							</Route>
-							<Route exact path="/login" component={LogIn} />
-							<Route exact path="/signup" component={SignUp} />
-							<Route exact path="/phoneauth" component={PhoneAuth} />
-							<Route>
-								<NotFoundPage />
-							</Route>
-						</Switch>
+								</Route>
+								<Route path="/vnpay_return" component={VPNReturn} />
+								<Route path="/account">
+									<Account />
+								</Route>
+								<Route exact path="/login" component={LogIn} />
+								<Route exact path="/signup" component={SignUp} />
+								<Route exact path="/phoneauth" component={PhoneAuth} />
+								<Route exact path="/checkouts">
+									<Checkouts />
+								</Route>
+								<Route>
+									<NotFoundPage />
+								</Route>
+							</Switch>
+						</main>
 					</Suspense>
-					<Footer/>
-				</Router>
-			</AuthProvider>
+				</AuthProvider>
+				<Footer />
+			</Router>
 		</div>
 	);
 }

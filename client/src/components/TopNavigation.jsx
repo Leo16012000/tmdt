@@ -1,18 +1,25 @@
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { React, useState, useEffect } from "react";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import "../styles/TopNavigation.css";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { roomFilter, categoryFilter,priceFilter,searchFilter } from "../redux/action";
+import { useDispatch, useSelector } from "react-redux";
+import { roomFilter, categoryFilter,searchFilter, priceFilter } from "../redux/action";
 import { Button } from "@material-ui/core";
-import {React, useState , useEffect} from "react";
+import logo from "../images/logo.png";
 
 function TopNavigation() {
 	const dispatch = useDispatch();
+	
+	const listCart = useSelector((state) => state.listCart);
+	let numberCart = 0;
+	listCart.forEach((item) => {
+		numberCart += item.quantity;
+	});
 
-	const [keyword, setKeyword] = useState("");
+	const [keyword, setKeyword] = useState({});
 
 	function handleFilter(room, category) {
 		dispatch(room);
@@ -39,10 +46,7 @@ function TopNavigation() {
 		<header className="TopNavigation">
 			<div className="TopNavigation__container--top">
 				<div className="wrapper">
-					<img
-						src="https://theme.hstatic.net/1000360516/1000609234/14/logo.png?v=1449"
-						alt="logo"
-					/>
+				<img src={logo} alt="logo" />
 					<input placeholder="Tìm kiếm sản phẩm..." onChange={(e) => handleChange(e)} />
 					<Button
 						onClick={() =>
@@ -61,7 +65,11 @@ function TopNavigation() {
 							</p>
 							<p id="shop">
 								<Link to="/cart">Giỏ hàng</Link>
+								<span class="badge badge-warning" id="lblCartCount">
+									{numberCart}
+								</span>
 							</p>
+
 							<ShoppingCartOutlinedIcon />
 							<PersonOutlineOutlinedIcon />
 						</div>

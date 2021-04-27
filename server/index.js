@@ -1,4 +1,10 @@
 var express = require("express");
+const { v1: uuidv1 } = require("uuid");
+var router = express.Router();
+var path = require("path");
+var fs = require("fs");
+var logger = require("morgan");
+
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
@@ -8,6 +14,9 @@ var $ = require("jquery");
 var router = express.Router();
 
 var sortObject = require("sort-object");
+
+// momo requirement
+const { sendPaymentMomo } = require("./sendPaymentMomo");
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,6 +45,21 @@ app.get("/post", function (req, res, next) {
 app.post("/post", (req, res) => {
 	console.log("Connected to React");
 	res.redirect("/");
+});
+
+// Momo Payment
+
+app.post("/api/momo", (req, res) => {
+	const dataReq = { amount: req.body.amount };
+	sendPaymentMomo(req, res, dataReq);
+});
+
+app.get("/callback", (req, res) => {
+	console.log("Callback: " + req);
+});
+
+app.get("/return", (req, res) => {
+	console.log("Return: " + req);
 });
 
 // Create URL payment
@@ -182,7 +206,7 @@ app.get("/vnpay_ipn", function (req, res, next) {
 	}
 });
 
-const PORT = 8080;
+const PORT = 3001;
 
 const db = mysql.createPool({
 	host: "localhost",
@@ -190,6 +214,7 @@ const db = mysql.createPool({
 	password: "quan0402",
 	database: "tmdt_ass0204",
 });
+
 
 app.use(cors());
 app.use(express.json());
@@ -206,19 +231,8 @@ app.get("/collections", (req, res) => {
 	});
 });
 
-// get info of a product for Detail pages
-app.get("/detail/:id", (req, res) => {
-
-	const sqlSelect = "SELECT * FROM `product` WHERE ID = " + req.params.id;
-	db.query(sqlSelect, (err, result) => {
-		if (err) {
-			res.send(err);
-		}
-		res.send(result);
-	});
-});
 
 
-app.listen(3001, () => {
-	console.log("running on port 3001");
+app.listen(PORT, () => {
+	console.log("running on port ", PORT);
 });
