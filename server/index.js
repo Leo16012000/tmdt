@@ -54,12 +54,9 @@ app.post("/api/momo", (req, res) => {
 	sendPaymentMomo(req, res, dataReq);
 });
 
-app.get("/callback", (req, res) => {
-	console.log("Callback: " + req);
-});
-
-app.get("/return", (req, res) => {
-	console.log("Return: " + req);
+app.post("/notifyMomo", (req, res) => {
+	console.log("req notifyMomo: ", req);
+	console.log("res notifyMomo: ", res);
 });
 
 // Create URL payment

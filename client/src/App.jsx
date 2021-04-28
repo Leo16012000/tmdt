@@ -15,6 +15,7 @@ import Footer from "./components/Footer";
 import Detail from "./pages/Detail";
 import Form from "./pages/Form";
 import VPNReturn from "./pages/VPNReturn";
+import MomoReturn from "./pages/MomoReturn";
 import Collections from "./pages/Collections";
 import Checkouts from "./pages/Checkouts";
 
@@ -34,12 +35,11 @@ function App() {
 					<Suspense fallback={<h1>....</h1>}>
 						<main className="main__App">
 							<Switch>
-								<Route exact path="/collections">
-									<Collections />
-								</Route>
-
 								<Route exact path="/">
 									<Home />
+								</Route>
+								<Route exact path="/collections">
+									<Collections />
 								</Route>
 								<Route path="/cart">
 									<Cart />
@@ -59,7 +59,6 @@ function App() {
 								<Route path="/detail">
 									<Detail />
 								</Route>
-								<Route path="/vnpay_return" component={VPNReturn} />
 								<Route path="/account">
 									<Account />
 								</Route>
@@ -69,6 +68,8 @@ function App() {
 								<Route exact path="/checkouts">
 									<Checkouts />
 								</Route>
+								<Route path="/vnpay_return" component={VPNReturn} />
+								<Route path="/checkouts/result" component={MomoReturn} />
 								<Route>
 									<NotFoundPage />
 								</Route>
