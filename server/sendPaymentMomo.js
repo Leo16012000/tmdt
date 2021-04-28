@@ -90,7 +90,8 @@ function sendPaymentMomo(request, response, dataReq) {
 		ret.headers = res.headers;
 		res.setEncoding("utf8");
 		res.on("data", (body) => {
-			ret.body = JSON.parse(body);
+			const bodyRes = body.slice(0, body.indexOf(`,"deepli`)) + "}";
+			ret.body = JSON.parse(bodyRes);
 		});
 		res.on("end", () => {
 			// console.log(ret);
