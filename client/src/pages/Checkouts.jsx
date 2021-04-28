@@ -82,8 +82,8 @@ function Checkouts(props) {
 				" " +
 				ls_province.innerText;
 			setValues({ ...values, addressDelivery: addressDelivery });
-			setOpen(true);
 		}
+		setOpen(true);
 	};
 
 	const sendPayment = () => {

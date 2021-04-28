@@ -11,17 +11,19 @@ var partnerCode = process.env.PARTNER_CODE;
 var accessKey = process.env.ACCESS_KEY;
 var serectkey = process.env.SECRET_KEY;
 var orderInfo = "pay with MoMo";
-var returnUrl = process.env.PROXY + "/callback";
-var notifyurl = process.env.PROXY + "/return";
+var returnUrl = process.env.PROXY1 + "/checkouts/result";
+var notifyurl = process.env.PROXY1 + "/checkouts/result";
 // var amount = "2000000";
-var orderId = uuidv1();
-var requestId = uuidv1();
+// var orderId = uuidv1();
+// var requestId = uuidv1();
 var requestType = "captureMoMoWallet";
-var extraData = "merchantName=RoyalFurniture;merchantId=001"; //pass empty value if your merchant does not have stores else merchantName=[storeName]; merchantId=[storeId] to identify a transaction map with a physical store
+var extraData = "merchantName=RoyalFurniture;merchantId=Merchant001"; //pass empty value if your merchant does not have stores else merchantName=[storeName]; merchantId=[storeId] to identify a transaction map with a physical store
 var ret = {};
 
 function sendPaymentMomo(request, response, dataReq) {
 	const amount = dataReq.amount.toString();
+	var orderId = uuidv1();
+	var requestId = uuidv1();
 	//before sign HMAC SHA256 with format
 	//partnerCode=$partnerCode&accessKey=$accessKey&requestId=$requestId&amount=$amount&orderId=$oderId&orderInfo=$orderInfo&returnUrl=$returnUrl&notifyUrl=$notifyUrl&extraData=$extraData
 	var rawSignature =
@@ -84,7 +86,6 @@ function sendPaymentMomo(request, response, dataReq) {
 	//Send the request and get the response
 	console.log("Sending....");
 	var req = https.request(options, (res) => {
-		console.log(res);
 		ret.statusCode = res.statusCode;
 		ret.headers = res.headers;
 		res.setEncoding("utf8");
@@ -92,7 +93,7 @@ function sendPaymentMomo(request, response, dataReq) {
 			ret.body = JSON.parse(body);
 		});
 		res.on("end", () => {
-			console.log(ret);
+			// console.log(ret);
 			response.status(200).send(ret);
 			console.log("No more data in response.");
 		});
