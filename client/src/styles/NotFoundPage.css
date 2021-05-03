@@ -1,0 +1,8 @@
+.NotFoundPage > img {
+    width: 70%;
+}
+
+.NotFoundPage {
+    width: 100%;
+    background-color: #f8fafb;
+}

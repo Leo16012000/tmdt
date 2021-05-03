@@ -71,7 +71,7 @@ function Cart(props) {
 												style={{ width: "100px", height: "80px" }}
 											/>
 										</td>
-										<td>{numberWithCommas(item.unitCost)}đ</td>
+										{/* <td>{numberWithCommas(item.unitCost)}đ</td> */}
 										<td>
 											<span
 												className="btn btn-primary"

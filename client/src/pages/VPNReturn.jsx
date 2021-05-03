@@ -12,8 +12,10 @@ import {
 import "../styles/VPNReturn.css";
 
 const apiURL =
-	"http://localhost:3001/vnpay_return" +
+	"http://localhost:3001/vnpay_return?" +
 	new URLSearchParams(window.location.search);
+
+
 
 function VPNReturn(props) {
 	const [state, setState] = useState({});
@@ -29,6 +31,8 @@ function VPNReturn(props) {
 	}, []);
 
 	var message = {};
+
+	console.log(state)
 
 	if (state.code === "00") {
 		message = {

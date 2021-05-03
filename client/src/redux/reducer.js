@@ -8,9 +8,11 @@ import {
 	DECREASE_QUANTITY,
 	ADD_CART,
 	REMOVE_CART,
+	QUANTITY_MODIFIER
 } from "./types";
 
 const initialState = {
+	quantity : 0,
 	room: 0,
 	category: "all",
 	priceLower: 0,
@@ -95,7 +97,7 @@ const appReducer = (state = initialState, action) => {
 					isExisten = true;
 					return {
 						...item,
-						quantity: item.quantity + 1,
+						quantity: item.quantity + state.quantity,
 					};
 				} else return item;
 			});
@@ -105,7 +107,7 @@ const appReducer = (state = initialState, action) => {
 					id: action.payload.id,
 					image: action.payload.image,
 					name: action.payload.fullName,
-					quantity: 1,
+					quantity: state.quantity,
 					unitCost: action.payload.price,
 				});
 				console.log("New Item");
@@ -124,6 +126,9 @@ const appReducer = (state = initialState, action) => {
 				listCart: [...state.listCart],
 			};
 		}
+		case QUANTITY_MODIFIER: {
+			return { ...state, quantity: action.value };
+		}
 
 		default:
 			return state;
@@ -131,4 +136,4 @@ const appReducer = (state = initialState, action) => {
 };
 
 export default appReducer;
-// logger to print previsou state + new state
+// logger to print previous state + new state

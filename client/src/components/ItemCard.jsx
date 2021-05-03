@@ -6,7 +6,7 @@ import "../styles/ItemCard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { addCart } from "../redux/action";
+import { addCart,quantityModifier } from "../redux/action";
 import sendMessage from "../account/sendMessage";
 
 // function numberWithCommas(x) {
@@ -18,7 +18,10 @@ function ItemCard(props) {
 	const param = '/detail?id=' + props.props.ID + '&fullname=' + props.props.Fullname + '&price=' + props.props.Price + '&des=' + props.props.Detail + '&img=' + props.props.Image
 
 	const dispatch = useDispatch();
+
+
 	function handleAddCart(id, image, fullName, price) {
+		dispatch(quantityModifier(1))
 		dispatch(addCart(id, image, fullName, price));
 		sendMessage(
 			"Thêm sản phẩm thành công!",

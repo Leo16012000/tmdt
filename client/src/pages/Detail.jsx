@@ -41,6 +41,8 @@ function Detail(props) {
 
     let query = useQuery();
 
+    
+
     const item = {
         id :  query.get("id"),
         fullname :  query.get("fullname"),
@@ -63,11 +65,10 @@ function Detail(props) {
                     <div className="product-info"></div>
                     <div className="seen-product"></div>
                     
-                    <ProductDescription match={props.match}/>
+                    <ProductDescription/>
 
                 </div>
             </div>
-            
         </div>
         </Suspense>
     )
@@ -111,10 +112,6 @@ function ProductContent(props){
 
     var value = 0;
 
-
-    
-    console.log(props)
-
     return (
         <div className="product-content">
             <div ><p className="product-id">Mã SP: {props.item.id}</p></div>
@@ -124,8 +121,8 @@ function ProductContent(props){
 
             <div >
                 <QuantityModifier quantityValue={value}/>
-                <Button name="thêm giỏ hàng" type="Normal"/>
-                <Button name="mua ngay" type="Hightlight"/>
+                <Button name="thêm giỏ hàng" type="Normal" item={props.item}/>
+                <Button name="mua ngay" type="Hightlight" item={props.item}/>
             </div>
 
             <div className="promotion">
@@ -157,26 +154,26 @@ function Description() {
 }
 
 
-const Comments = () => <div></div>;
-const FAQs= () => <div></div>;
+const Comments = () => <div>Comments</div>;
+const FAQs= () => <div>FAQs</div>;
 
 
-function ProductDescription({match}) {
+function ProductDescription() {
 
-    const path  = match;
-    
+    const path = window.location.search
+
     return(
         <div>
         <div className="links">
-          <Link to={`${path}`} className="link left-tab">Mô tả sản phẩm</Link>
-          <Link to={`${path}/faqs`} className="link center-tab">FAQs</Link>
-          <Link to={`${path}/comments`} className="link right-tab">Đánh giá</Link>
+          <Link to={`/detail` + path} className="link left-tab">Mô tả sản phẩm</Link>
+          <Link to={`/detail` + path + `/faqs`} className="link center-tab">FAQs</Link>
+          <Link to={`/detail` + path + `/comments`} className="link right-tab">Đánh giá</Link>
         </div>
         <div className="tabs">
           <Switch>
-            <Route path={`${path}`}  exact component={Description} />
-            <Route path={`${path}/faqs`} component={FAQs} />
-            <Route path={`${path}/comments`} component={Comments} />
+            <Route path={`/detail`}  exact component={Description} />
+            <Route path={`/detail/faqs`} component={FAQs} />
+            <Route path={`/detail/comments`} component={Comments} />
           </Switch>
         </div>
       </div>

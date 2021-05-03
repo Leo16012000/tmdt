@@ -192,6 +192,9 @@ app.get("/vnpay_ipn", function (req, res, next) {
 	} else {
 		res.status(200).json({ RspCode: "97", Message: "Fail checksum" });
 	}
+
+	
+
 });
 
 const PORT = 3001;
@@ -199,8 +202,8 @@ const PORT = 3001;
 const db = mysql.createPool({
 	host: "localhost",
 	user: "root",
-	password: "sanglaso1",
-	database: "tmdt_ass2004",
+	password: "quan0402",
+	database: "tmdt_ass0204",
 });
 
 app.use(cors());
