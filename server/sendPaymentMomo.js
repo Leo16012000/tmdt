@@ -21,92 +21,96 @@ var extraData = "merchantName=RoyalFurniture;merchantId=Merchant001"; //pass emp
 var ret = {};
 
 function sendPaymentMomo(request, response, dataReq) {
-	const amount = dataReq.amount.toString();
-	var orderId = uuidv1();
-	var requestId = uuidv1();
-	//before sign HMAC SHA256 with format
-	//partnerCode=$partnerCode&accessKey=$accessKey&requestId=$requestId&amount=$amount&orderId=$oderId&orderInfo=$orderInfo&returnUrl=$returnUrl&notifyUrl=$notifyUrl&extraData=$extraData
-	var rawSignature =
-		"partnerCode=" +
-		partnerCode +
-		"&accessKey=" +
-		accessKey +
-		"&requestId=" +
-		requestId +
-		"&amount=" +
-		amount +
-		"&orderId=" +
-		orderId +
-		"&orderInfo=" +
-		orderInfo +
-		"&returnUrl=" +
-		returnUrl +
-		"&notifyUrl=" +
-		notifyurl +
-		"&extraData=" +
-		extraData;
-	// //puts raw signature
-	// console.log("--------------------RAW SIGNATURE----------------");
-	// console.log(rawSignature);
-	//signature
-	var signature = crypto
-		.createHmac("sha256", serectkey)
-		.update(rawSignature)
-		.digest("hex");
-	// console.log("--------------------SIGNATURE----------------");
-	// console.log(signature);
+  const amount = dataReq.amount.toString();
+  var orderId = uuidv1();
+  var requestId = uuidv1();
+  //before sign HMAC SHA256 with format
+  //partnerCode=$partnerCode&accessKey=$accessKey&requestId=$requestId&amount=$amount&orderId=$oderId&orderInfo=$orderInfo&returnUrl=$returnUrl&notifyUrl=$notifyUrl&extraData=$extraData
+  var rawSignature =
+    "partnerCode=" +
+    partnerCode +
+    "&accessKey=" +
+    accessKey +
+    "&requestId=" +
+    requestId +
+    "&amount=" +
+    amount +
+    "&orderId=" +
+    orderId +
+    "&orderInfo=" +
+    orderInfo +
+    "&returnUrl=" +
+    returnUrl +
+    "&notifyUrl=" +
+    notifyurl +
+    "&extraData=" +
+    extraData;
+  // //puts raw signature
+  // console.log("--------------------RAW SIGNATURE----------------");
+  // console.log(rawSignature);
+  //signature
+  var signature = crypto
+    .createHmac("sha256", serectkey)
+    .update(rawSignature)
+    .digest("hex");
+  // console.log("--------------------SIGNATURE----------------");
+  // console.log(signature);
 
-	//json object send to MoMo endpoint
-	var body = JSON.stringify({
-		partnerCode: partnerCode,
-		accessKey: accessKey,
-		requestId: requestId,
-		amount: amount,
-		orderId: orderId,
-		orderInfo: orderInfo,
-		returnUrl: returnUrl,
-		notifyUrl: notifyurl,
-		extraData: extraData,
-		requestType: requestType,
-		signature: signature,
-	});
+  //json object send to MoMo endpoint
+  var body = JSON.stringify({
+    partnerCode: partnerCode,
+    accessKey: accessKey,
+    requestId: requestId,
+    amount: amount,
+    orderId: orderId,
+    orderInfo: orderInfo,
+    returnUrl: returnUrl,
+    notifyUrl: notifyurl,
+    extraData: extraData,
+    requestType: requestType,
+    signature: signature,
+  });
 
-	//Create the HTTPS objects
-	var options = {
-		hostname: "test-payment.momo.vn",
-		port: 443,
-		path: "/gw_payment/transactionProcessor",
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			"Content-Length": Buffer.byteLength(body),
-		},
-	};
+  //Create the HTTPS objects
+  var options = {
+    hostname: "test-payment.momo.vn",
+    port: 443,
+    path: "/gw_payment/transactionProcessor",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Content-Length": Buffer.byteLength(body),
+    },
+  };
 
-	//Send the request and get the response
-	console.log("Sending....");
-	var req = https.request(options, (res) => {
-		ret.statusCode = res.statusCode;
-		ret.headers = res.headers;
-		res.setEncoding("utf8");
-		res.on("data", (body) => {
-			const bodyRes = body.slice(0, body.indexOf(`,"deepli`)) + "}";
-			ret.body = JSON.parse(bodyRes);
-		});
-		res.on("end", () => {
-			// console.log(ret);
-			response.status(200).send(ret);
-			console.log("No more data in response.");
-		});
-	});
+  //Send the request and get the response
+  console.log("Sending....");
+  var req = https.request(options, (res) => {
+    ret.statusCode = res.statusCode;
+    ret.headers = res.headers;
+    res.setEncoding("utf8");
+    res.on("data", (body) => {
+      const bodyRes = body.slice(0, body.indexOf(`,"deepli`)) + "}";
+      try {
+        ret.body = JSON.parse(bodyRes);
+      } catch (err) {
+        console.log(err);
+      }
+    });
+    res.on("end", () => {
+      // console.log(ret);
+      response.status(200).send(ret);
+      console.log("No more data in response.");
+    });
+  });
 
-	req.on("error", (e) => {
-		console.log(`problem with request: ${e.message}`);
-	});
+  req.on("error", (e) => {
+    console.log(`problem with request: ${e.message}`);
+  });
 
-	// write data to request body
-	req.write(body);
-	req.end();
+  // write data to request body
+  req.write(body);
+  req.end();
 }
 
 module.exports = { sendPaymentMomo };
