@@ -24,63 +24,69 @@ import { AuthProvider } from "./account/Auth";
 import PhoneAuth from "./account/PhoneAuth";
 import LogIn from "./account/LogIn";
 import SignUp from "./account/SignUp";
+import Orders from "./pages/Orders";
+import UpdateOrder from "./pages/UpdateOrder";
 
 function App() {
-	return (
-		<div className="App">
-			<Router>
-				<TopNavigation />
-				<ReactNotification />
-				<AuthProvider>
-					<Suspense fallback={<h1>....</h1>}>
-						<main className="main__App">
-							<Switch>
-								<Route exact path="/">
-									<Home />
-								</Route>
-								<Route exact path="/collections">
-									<Collections />
-								</Route>
-								<Route path="/cart">
-									<Cart />
-								</Route>
-								<Route path="/profile">
-									<Profile />
-								</Route>
-								<Route path="/contact">
-									<Contact />
-								</Route>
-								<Route path="/collections">
-									<Collections />
-								</Route>
-								<Route path="/post">
-									<Form />
-								</Route>
-								<Route path="/detail">
-									<Detail />
-								</Route>
-								<Route path="/account">
-									<Account />
-								</Route>
-								<Route exact path="/login" component={LogIn} />
-								<Route exact path="/signup" component={SignUp} />
-								<Route exact path="/phoneauth" component={PhoneAuth} />
-								<Route exact path="/checkouts">
-									<Checkouts />
-								</Route>
-								<Route path="/vnpay_return" component={VPNReturn} />
-								<Route path="/checkouts/result" component={MomoReturn} />
-								<Route>
-									<NotFoundPage />
-								</Route>
-							</Switch>
-						</main>
-					</Suspense>
-				</AuthProvider>
-				<Footer />
-			</Router>
-		</div>
-	);
+  return (
+    <div className="App">
+      <Router>
+        <TopNavigation />
+        <ReactNotification />
+        <AuthProvider>
+          <Suspense fallback={<h1>....</h1>}>
+            <main className="main__App">
+              <Switch>
+                <Route exact path="/">
+                  <Home />
+                </Route>
+                <Route exact path="/collections">
+                  <Collections />
+                </Route>
+                <Route exact path="/cart">
+                  <Cart />
+                </Route>
+                <Route exact path="/profile">
+                  <Profile />
+                </Route>
+                <Route exact path="/contact">
+                  <Contact />
+                </Route>
+                <Route exact path="/collections">
+                  <Collections />
+                </Route>
+                <Route exact path="/post">
+                  <Form />
+                </Route>
+                <Route exact path="/detail">
+                  <Detail />
+                </Route>
+                <Route exact path="/account">
+                  <Account />
+                </Route>
+                <Route exact path="/orders">
+                  <Orders />
+                </Route>
+                <Route exact path="/login" component={LogIn} />
+                <Route exact path="/signup" component={SignUp} />
+                <Route exact path="/phoneauth" component={PhoneAuth} />
+                <Route exact path="/checkouts">
+                  <Checkouts />
+                </Route>
+                <Route exact path="/vnpay_return" component={VPNReturn} />
+                <Route exact path="/checkouts/result" component={MomoReturn} />
+                <Route exact path="/update-order" component={UpdateOrder} />
+                <Route>
+                  <NotFoundPage />
+                </Route>
+              </Switch>
+            </main>
+          </Suspense>
+        </AuthProvider>
+        <Footer />
+      </Router>
+    </div>
+  );
 }
 
 export default App;

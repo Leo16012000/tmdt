@@ -218,6 +218,30 @@ app.get("/collections", (req, res) => {
   });
 });
 
+//add order
+app.post("/api/saveOrder", (req, res) => {
+  const sqlInsert =
+    "INSERT INTO orders (ID,PaymentMethod,DeliveryExpectedTime,Address,OrderState,UserEmail,GHNServicePrice,Content,Price,Receiver,TotalPrice) VALUES (?,?,?,?,?,?,?,?,?,?,?);"; //lệnh đúng rồi
+  db.query(
+    sqlInsert,
+    [
+      +req.query.ID,
+      req.query.PaymentMethod,
+      req.query.DeliveryExpectedTime,
+      req.query.Address,
+      req.query.OrderState,
+      req.query.UserEmail,
+      +req.query.GHNServicePrice,
+      req.query.Content,
+      +req.query.Price,
+      req.query.Receiver,
+      +req.query.TotalPrice,
+    ],
+    (err, result) => {}
+  );
+});
+//
+
 app.listen(PORT, () => {
   console.log("running on port ", PORT);
 });
