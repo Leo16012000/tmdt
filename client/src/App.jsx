@@ -25,6 +25,7 @@ import PhoneAuth from "./account/PhoneAuth";
 import LogIn from "./account/LogIn";
 import SignUp from "./account/SignUp";
 import Orders from "./pages/Orders";
+import UpdateOrder from "./pages/UpdateOrder";
 
 function App() {
   return (
@@ -42,28 +43,28 @@ function App() {
                 <Route exact path="/collections">
                   <Collections />
                 </Route>
-                <Route path="/cart">
+                <Route exact path="/cart">
                   <Cart />
                 </Route>
-                <Route path="/profile">
+                <Route exact path="/profile">
                   <Profile />
                 </Route>
-                <Route path="/contact">
+                <Route exact path="/contact">
                   <Contact />
                 </Route>
-                <Route path="/collections">
+                <Route exact path="/collections">
                   <Collections />
                 </Route>
-                <Route path="/post">
+                <Route exact path="/post">
                   <Form />
                 </Route>
-                <Route path="/detail">
+                <Route exact path="/detail">
                   <Detail />
                 </Route>
-                <Route path="/account">
+                <Route exact path="/account">
                   <Account />
                 </Route>
-                <Route path="/orders">
+                <Route exact path="/orders">
                   <Orders />
                 </Route>
                 <Route exact path="/login" component={LogIn} />
@@ -72,8 +73,9 @@ function App() {
                 <Route exact path="/checkouts">
                   <Checkouts />
                 </Route>
-                <Route path="/vnpay_return" component={VPNReturn} />
-                <Route path="/checkouts/result" component={MomoReturn} />
+                <Route exact path="/vnpay_return" component={VPNReturn} />
+                <Route exact path="/checkouts/result" component={MomoReturn} />
+                <Route exact path="/update-order" component={UpdateOrder} />
                 <Route>
                   <NotFoundPage />
                 </Route>

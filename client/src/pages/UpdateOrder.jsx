@@ -7,7 +7,11 @@ import { useSelector } from "react-redux";
 
 function UpdateOrder(props) {
   const axios = require("axios");
+  let orderInfo = useSelector((state) => state.orderInfo);
+  console.log("orderInfo:", orderInfo);
   const listCart = useSelector((state) => state.listCart);
+  const addressDelivery = useSelector((state) => state.addressDelivery);
+  console.log(addressDelivery);
   // change name of object
   listCart.map((item) => {
     item.code = item.id.toString();
@@ -20,33 +24,33 @@ function UpdateOrder(props) {
   // console.log(items); done
   const bodyParameter = {
     payment_type_id: 2,
-    note: "Tintest 123",
+    note: addressDelivery,
     required_note: "KHONGCHOXEMHANG",
     return_phone: "0353323643",
     return_address: "39 NTT",
     return_district_id: null,
     return_ward_code: "",
     client_order_code: "",
-    to_name: "TinTest124", //
-    to_phone: "0987654321", //
-    to_address: "72 Thành Thái, Phường 14, Quận 10, Hồ Chí Minh, Vietnam", //
+    to_name: orderInfo.displayName, // here
+    to_phone: orderInfo.phoneNumber, // here
+    to_address: orderInfo.address, // here
     to_ward_code: "20308", //
     to_district_id: 1444, //
-    cod_amount: 200000, //
+    cod_amount: 200000, // tổng tiền trả
     content: "Theo New York Times",
-    weight: 200,
-    length: 1,
-    width: 19,
-    height: 10,
+    weight: 200000, //200 ký
+    length: 100, //1m
+    width: 100, //1m
+    height: 100, //1m
     pick_station_id: 1444,
     deliver_station_id: null,
     insurance_value: 10000000,
-    service_id: 0,
+    service_id: 0, //express standard saving
     service_type_id: 2,
-    order_value: 130000,
+    order_value: 130000, //???
     coupon: null,
     pick_shift: [2],
-    items,
+    items, //done
   };
   const config = {
     headers: {

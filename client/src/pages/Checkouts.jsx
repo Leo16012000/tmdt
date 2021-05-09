@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { sendOrderInfo } from "../redux/action";
 import { AuthContext } from "../account/Auth";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Typography from "@material-ui/core/Typography";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
@@ -30,6 +31,8 @@ function numberWithCommas(x) {
 }
 
 function Checkouts(props) {
+  let history = useHistory();
+  const dispatch = useDispatch();
   const { currentUser } = useContext(AuthContext);
   const defaultInfo = currentUser
     ? {
@@ -53,7 +56,7 @@ function Checkouts(props) {
     setOpen(!open);
   };
 
-  const moveNextStep = () => {
+  function moveNextStep(isCOD) {
     var errors = [];
 
     const ls_province = document.getElementById("ls_province")
@@ -81,12 +84,23 @@ function Checkouts(props) {
         ls_province.dataset.level +
         " " +
         ls_province.innerText;
-      setValues({ ...values, addressDelivery: addressDelivery });
-      setOpen(true);
+      console.log("addressDelivery: ", addressDelivery);
+      // // dispatch order info
+      // dispatch(sendOrderInfo(values)); //late for a value
+      // console.log(values);
+      //open dialog?
+      setOpen(!isCOD);
+      console.log(values);
+      dispatch(sendOrderInfo(values, addressDelivery, isCOD)); //late for a value
+      if (isCOD) history.push("/update-order");
     }
-  };
+  }
 
-  const sendPayment = () => {
+  const SendPayment = () => {
+    // send order infomation into redux
+    console.log(values);
+    dispatch(sendOrderInfo(values));
+    //
     if (method === "momo")
       axios
         .post("/api/momo", { amount: finalPrice })
@@ -219,12 +233,12 @@ function Checkouts(props) {
                 </div>
               </AccordionDetails>
             </Accordion>
-            <Accordion
+            {/* <Accordion
               expanded={expanded === "panel2"}
               onChange={() => setExpanded("panel2")}
             >
               <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
+                expandIcon={<ExpandMoreIcon />} 
                 aria-controls="panel2a-content"
                 id="panel2a-header"
               >
@@ -237,7 +251,7 @@ function Checkouts(props) {
                   eget.
                 </Typography>
               </AccordionDetails>
-            </Accordion>
+            </Accordion> */}
           </div>
         </main>
         <footer>
@@ -248,8 +262,15 @@ function Checkouts(props) {
             </div>
           </Link>
 
-          <div className="methodPayment" onClick={() => moveNextStep()}>
-            <p>Phương thức thanh toán</p>
+          {/* Thanh toán thành công */}
+
+          <div className="methodPayment" onClick={() => moveNextStep(1)}>
+            <p>Thanh toán tiền mặt</p>
+          </div>
+          {/*  */}
+
+          <div className="methodPayment" onClick={() => moveNextStep(0)}>
+            <p>Thanh toán trực tuyến</p>
           </div>
           <Dialog
             open={open}
@@ -313,7 +334,7 @@ function Checkouts(props) {
               <Button autoFocus onClick={handleClickDialog} color="primary">
                 Bỏ qua
               </Button>
-              <Button onClick={() => sendPayment()} color="primary" autoFocus>
+              <Button onClick={() => SendPayment()} color="primary" autoFocus>
                 Thanh toán
               </Button>
             </DialogActions>

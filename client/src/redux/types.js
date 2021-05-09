@@ -8,3 +8,4 @@ export const DECREASE_QUANTITY = "DECREASE_QUANTITY";
 export const ADD_CART = "ADD_CART";
 export const REMOVE_CART = "REMOVE_CART";
 export const QUANTITY_MODIFIER = "QUANTITY_MODIFIER";
+export const SEND_ORDER_INFO = "SEND_ORDER_INFO";
