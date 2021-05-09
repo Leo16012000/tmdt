@@ -218,6 +218,30 @@ app.get("/collections", (req, res) => {
   });
 });
 
+//add order
+app.post("/api/saveOrder", (req, res) => {
+  const sqlInsert =
+    "INSERT INTO orders (ID,PaymentMethod,DeliveryExpectedTime,Address,OrderState,UserEmail,GHNServicePrice,Content,Price,Receiver,TotalPrice) VALUES (?,?,?,?,?,?,?,?,?,?,?);"; //lệnh đúng rồi
+  db.query(
+    sqlInsert,
+    [
+      +req.query.orderDetail.ID,
+      req.query.orderDetail.PaymentMethod,
+      req.query.orderDetail.DeliveryExpectedTime,
+      req.query.orderDetail.Address,
+      req.query.orderDetail.OrderState,
+      req.query.orderDetail.UserEmail,
+      +req.query.orderDetail.GHNServicePrice,
+      req.query.orderDetail.Content,
+      +req.query.orderDetail.Price,
+      req.query.orderDetail.Receiver,
+      +req.query.orderDetail.TotalPrice,
+    ],
+    (err, result) => {}
+  );
+});
+//
+
 app.listen(PORT, () => {
   console.log("running on port ", PORT);
 });

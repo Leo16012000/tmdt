@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import sendMessage from "../account/sendMessage";
 import { Button } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import { AuthContext } from "../account/Auth";
 
 function UpdateOrder(props) {
   const axios = require("axios");
+  const { currentUser } = useContext(AuthContext);
   let orderInfo = useSelector((state) => state.orderInfo);
   console.log("orderInfo:", orderInfo);
   const listCart = useSelector((state) => state.listCart);
   const addressDelivery = useSelector((state) => state.addressDelivery);
+  const paymentMethod = useSelector((state) => state.isCOD);
+  let createDataReturn = {};
+  let dataInfoReturn = {};
+
+  // calculate totalCart
+  let totalCart = 0;
+  for (let i = 0; i <= listCart.length - 1; i++) {
+    totalCart += listCart[i].quantity * listCart[i].unitCost;
+  }
+  //
   console.log(addressDelivery);
   // change name of object
   listCart.map((item) => {
@@ -22,7 +34,7 @@ function UpdateOrder(props) {
   //
   const items = [...listCart];
   // console.log(items); done
-  const bodyParameter = {
+  let bodyParameter = {
     payment_type_id: 2,
     note: addressDelivery,
     required_note: "KHONGCHOXEMHANG",
@@ -38,7 +50,7 @@ function UpdateOrder(props) {
     to_district_id: 1444, //
     cod_amount: 200000, // tổng tiền trả
     content: "Theo New York Times",
-    weight: 200000, //200 ký
+    weight: 150000, //150 ký
     length: 100, //1m
     width: 100, //1m
     height: 100, //1m
@@ -52,6 +64,7 @@ function UpdateOrder(props) {
     pick_shift: [2],
     items, //done
   };
+
   const config = {
     headers: {
       token: "69ace0ab-ac82-11eb-8be2-c21e19fc6803",
@@ -66,10 +79,52 @@ function UpdateOrder(props) {
         config
       )
       .then((res) => {
-        console.log(res.data, "run into here");
+        console.log(res.data, "create data reponse");
+        createDataReturn = res.data.data;
+        saveOrder();
       })
       .catch((err) => console.log(err));
     return <div>Run Update Order</div>;
+  }
+  function saveOrder() {
+    console.log("createDataReturn", createDataReturn.order_code);
+    bodyParameter = {
+      order_code: createDataReturn.order_code,
+    };
+    let orderDetail = {};
+    axios
+      .post(
+        "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/detail",
+        bodyParameter,
+        config
+      )
+      .then((res) => {
+        dataInfoReturn = { ...res.data.data };
+        orderDetail = {
+          ID: createDataReturn.order_code,
+          PaymentMethod: paymentMethod ? "chưa thanh toán" : "đã thanh toán",
+          DeliveryExpectedTime: createDataReturn.expected_delivery_time,
+          Address: dataInfoReturn.note,
+          OrderState: dataInfoReturn.status,
+          UserEmail: currentUser.email,
+          GHNServicePrice: createDataReturn.total_fee,
+          Content: dataInfoReturn.content,
+          Price: totalCart,
+          Receiver: dataInfoReturn.to_name,
+          TotalPrice: totalCart + createDataReturn.total_fee,
+        };
+        console.log("Order Detail", orderDetail);
+      });
+
+    axios
+      .post(`http://localhost:3001/api/saveOrder?orderDetail=${orderDetail}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    alert("successful insert");
   }
   orderCreate();
   return <div></div>;

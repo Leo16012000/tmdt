@@ -43,48 +43,6 @@ function Orders(props) {
         <p class="order-id">Đơn hàng {order.ID}</p>
         <p>Đặt vào lúc {order.orderDate}</p>
       </div>
-      <div className="row tableCart">
-        <div className="col-md-12">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Image</th>
-                <th>Unit Cost</th>
-                <th>Quantity</th>
-                <th>Total Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {listCart &&
-                listCart.map((item, key) => {
-                  return (
-                    <tr key={key}>
-                      <td>{item.name}</td>
-                      <td>
-                        <img
-                          src={item.image}
-                          alt="itemCart"
-                          style={{ width: "100px", height: "80px" }}
-                        />
-                      </td>
-                      {/* <td>{numberWithCommas(item.unitCost)}đ</td> */}
-                      <td>{numberWithCommas(item.unitCost)}đ</td>
-                      <td>{item.quantity}</td>
-                      <td>
-                        {numberWithCommas(item.unitCost * item.quantity)}đ
-                      </td>
-                    </tr>
-                  );
-                })}
-              <tr>
-                <td colSpan="4">Total Carts</td>
-                <td>{numberWithCommas(totalCart)}đ</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   );
 }
