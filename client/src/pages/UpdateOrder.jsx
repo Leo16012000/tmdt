@@ -117,7 +117,9 @@ function UpdateOrder(props) {
       });
 
     axios
-      .post(`http://localhost:3001/api/saveOrder?orderDetail=${orderDetail}`)
+      .post(
+        `http://localhost:3001/api/saveOrder?ID=${orderDetail.ID}&PaymentMethod=${orderDetail.PaymentMethod}&DeliveryExpectedTime=${orderDetail.DeliveryExpectedTime}&Address=${orderDetail.Address}&OrderState=${orderDetail.OrderState}&UserEmail=${orderDetail.UserEmail}&GHNServicePrice=${orderDetail.GHNServicePrice}&Content=${orderDetail.Content}&Price=${orderDetail.Price}&Receiver=${orderDetail.Receiver}&TotalPrice=${orderDetail.TotalPrice}`
+      )
       .then((res) => {
         console.log(res);
       })

@@ -225,17 +225,17 @@ app.post("/api/saveOrder", (req, res) => {
   db.query(
     sqlInsert,
     [
-      +req.query.orderDetail.ID,
-      req.query.orderDetail.PaymentMethod,
-      req.query.orderDetail.DeliveryExpectedTime,
-      req.query.orderDetail.Address,
-      req.query.orderDetail.OrderState,
-      req.query.orderDetail.UserEmail,
-      +req.query.orderDetail.GHNServicePrice,
-      req.query.orderDetail.Content,
-      +req.query.orderDetail.Price,
-      req.query.orderDetail.Receiver,
-      +req.query.orderDetail.TotalPrice,
+      +req.query.ID,
+      req.query.PaymentMethod,
+      req.query.DeliveryExpectedTime,
+      req.query.Address,
+      req.query.OrderState,
+      req.query.UserEmail,
+      +req.query.GHNServicePrice,
+      req.query.Content,
+      +req.query.Price,
+      req.query.Receiver,
+      +req.query.TotalPrice,
     ],
     (err, result) => {}
   );
