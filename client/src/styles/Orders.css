@@ -1,15 +1,25 @@
 .order {
-  background-color: #a8dadc;
+	background-color: #a8dadc;
 }
 .order .order-info {
-  text-align: left;
-  padding-left: 2%;
+	text-align: left;
+	padding-left: 2%;
 }
 .order .order-id {
-  font-size: 1.5rem;
-  color: #003566;
+	font-size: 1.5rem;
+	color: #003566;
 }
 
 .order th {
-  color: #003566;
+	color: #003566;
+}
+
+.tableOrder {
+	margin-top: 20px;
+	width: 100%;
+}
+
+.tableOrder > .fix {
+	max-width: 1350px;
+	margin: 0 auto !important;
 }

@@ -238,6 +238,17 @@ app.get("/getAllOrders", (req, res) => {
 	});
 });
 
+app.get("/getOrderEmail", (req, res) => {
+	console.log(req.query);
+	const sqlSelect = "SELECT * FROM `orders` where UserEmail=?";
+	db.query(sqlSelect, [req.query.UserEmail], (err, result) => {
+		if (err) {
+			res.send(err);
+		}
+		res.send(result);
+	});
+});
+
 //add order
 app.post("/api/saveOrder", (req, res) => {
 	const sqlInsert =

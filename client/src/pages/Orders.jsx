@@ -1,50 +1,74 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../account/Auth";
+import { Redirect } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 import "../styles/Orders.css";
-
-Orders.propTypes = {};
-const order = {
-  ID: 32133434,
-  paymentMethod: "momo",
-  orderDate: "11:30 12/5/2021",
-  address:
-    "Ký túc xá khu A phường Linh Trung thành phố Thủ Đức thành phố Hồ Chí Minh",
-  state: "Chờ xác nhận",
-};
-const listCart = [
-  {
-    name: "Tủ quần áo",
-    image:
-      "https://product.hstatic.net/1000360516/product/tt002_3_60f52d1fc120475788c060538c6bbc26_4736ccc3c330476aa2addf3dfa710216_master.jpg",
-    unitCost: 749000,
-    quantity: 2,
-  },
-  {
-    name: "DP001 - GỐI ÔM CHỮ U BODY PILLOW",
-    image:
-      "https://product.hstatic.net/1000360516/product/4_f72ee0c78cd04785a49101bb01ad5c10_master.jpg",
-    unitCost: 490000,
-    quantity: 2,
-  },
-];
+import axios from "axios";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 
 function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function Orders(props) {
-  let totalCart = 0;
-  for (let i = 0; i <= listCart.length - 1; i++) {
-    totalCart += listCart[i].quantity * listCart[i].unitCost;
-  }
-  return (
-    <div class="order">
-      <div class="order-info">
-        <p class="order-id">Đơn hàng {order.ID}</p>
-        <p>Đặt vào lúc {order.orderDate}</p>
-      </div>
-    </div>
-  );
+const useStyles = makeStyles({
+	table: {
+		minWidth: 650,
+	},
+});
+
+function Orders() {
+	const { currentUser } = useContext(AuthContext);
+	const [item, setItem] = useState([]);
+	const classes = useStyles();
+
+	useEffect(() => {
+		axios
+			.get(`http://localhost:3001/getOrderEmail?UserEmail=${currentUser.email}`)
+			.then((response) => {
+				setItem(response.data);
+			});
+	}, []);
+
+	if (!currentUser) return <Redirect to="/account" />;
+
+	return (
+		<TableContainer className="tableOrder" component={Paper}>
+			<Table className="fix" aria-label="simple table">
+				<TableHead>
+					<TableRow>
+						<TableCell>ID</TableCell>
+						<TableCell align="right">Địa chỉ nhận hàng</TableCell>
+						<TableCell align="right">Giá tiền</TableCell>
+						<TableCell align="right">Thời gian giao hàng</TableCell>
+						<TableCell align="right">Trạng thái đơn hàng</TableCell>
+					</TableRow>
+				</TableHead>
+				<TableBody>
+					{item.map((row) => (
+						<TableRow key={row.ID}>
+							<TableCell component="th" scope="row">
+								{row.ID}
+							</TableCell>
+							<TableCell align="right">{row.Address}</TableCell>
+							<TableCell align="right">
+								{numberWithCommas(row.TotalPrice)}đ
+							</TableCell>
+							<TableCell align="right">
+								{row.DeliveryExpectedTime.slice(0, -5).replace("T", " ")}
+							</TableCell>
+							<TableCell align="right">{row.OrderState}</TableCell>
+						</TableRow>
+					))}
+				</TableBody>
+			</Table>
+		</TableContainer>
+	);
 }
 
 export default Orders;
