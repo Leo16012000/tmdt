@@ -37,9 +37,11 @@ function OrdersData() {
   const [item, setItem] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/getAllOrders`).then((response) => {
-      setItem(response.data);
-    });
+    axios
+      .get(`http://localhost:3001/getOrderCustomer?UserEmail=${UserEmail}`)
+      .then((response) => {
+        setItem(response.data);
+      });
   });
 
   return (
