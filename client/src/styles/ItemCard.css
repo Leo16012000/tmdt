@@ -48,6 +48,7 @@
     bottom: 10px;
 }
 .ItemCard__InfoBlock {
+
 	padding-top: 15px ;
 	padding-bottom: 10px;
     z-index: 4;
@@ -92,7 +93,7 @@
 }
 
 .ItemCard__InfoBlock__Info {
-    display: inline-block;
+    display: block;
     
     line-height: 1.6em;
     padding-bottom: 5px;
@@ -107,6 +108,7 @@
     
 }
 .ItemCard__InfoBlock__Price {
+    text-align: left;
     color: #adadad;
     font-size: 17px;
     font-weight: 300;

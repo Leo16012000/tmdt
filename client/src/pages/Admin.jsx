@@ -7,6 +7,7 @@ import {
 	Redirect,
 } from "react-router-dom";
 import { AuthContext } from "../account/Auth";
+import { Form, Input, InputNumber, Button , Select} from 'antd';
 import "antd/dist/antd.css";
 import "../styles/Admin.css";
 import { Layout, Menu, Breadcrumb } from "antd";
@@ -22,6 +23,27 @@ const { Column, ColumnGroup } = Table;
 
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
+const { Option } = Select;
+const layout = {
+    labelCol: {
+      span: 8,
+    },
+    wrapperCol: {
+      span: 16,
+    },
+  };
+  /* eslint-disable no-template-curly-in-string */
+  
+  const validateMessages = {
+    required: '${label} is required!',
+    types: {
+      email: '${label} is not a valid email!',
+      number: '${label} is not a valid number!',
+    },
+    number: {
+      range: '${label} must be between ${min} and ${max}',
+    },
+  };
 
 function Admin() {
 	const { currentUser } = useContext(AuthContext);
@@ -62,7 +84,11 @@ function Admin() {
 											Danh sách thông tin sản phẩm
 										</Link>
 									</Menu.Item>
-									<Menu.Item key="6">Thêm sản phẩm mới</Menu.Item>
+									<Menu.Item key="6">
+                                        <Link to="/admin/add-item">
+											Thêm sản phẩm mới
+										</Link>
+                                    </Menu.Item>
 								</SubMenu>
 								<SubMenu
 									key="sub3"
@@ -86,7 +112,7 @@ function Admin() {
 									minHeight: 280,
 								}}
 							>
-								Danh sách sản phẩm
+								
 								<Suspense fallback={<h1>....</h1>}>
 									<Switch>
 										<Route exact path="/admin/users">
@@ -99,6 +125,10 @@ function Admin() {
 
 										<Route exact path="/admin/orders">
 											<OrdersData />
+										</Route>
+
+                                        <Route exact path="/admin/add-item">
+											<AddItem />
 										</Route>
 									</Switch>
 								</Suspense>
@@ -175,6 +205,125 @@ function UserData() {
 			<Column title="Email" dataIndex="Email" key="Email" />
 			<Column title="Address" dataIndex="Address" key="Address" />
 		</Table>
+	);
+}
+
+function AddItem() {
+    const [form] = Form.useForm();
+
+    function handleSubmit(values){
+        console.log(values)
+        Axios.post("/add-item", {
+            values
+      })
+      .then((res) => {
+        if (res.status == 200) console.log("success");
+      })
+      .catch((err) => {
+        console.log("fail");
+      });
+    }
+
+	return (
+        <div>
+            Thêm sản phẩm mới
+            <Form {...layout} form={form} name="nest-messages" action="/add-item" method="post" onFinish={handleSubmit} validateMessages={validateMessages} labelCol={{
+          span: 4,
+        }}
+        wrapperCol={{
+          span: 14,
+        }}
+        layout="horizontal">
+                <Form.Item
+                name="name"
+                label="Tên sản phẩm"
+                rules={[
+                    {
+                    required: true,
+                    },
+                ]}
+                >
+                    <Input />
+                </Form.Item>
+                
+                <Form.Item
+                name="image"
+                label="Link ảnh "
+                rules={[
+                    {
+                    required: true,
+                    },
+                ]}
+                >
+                    <Input />
+                </Form.Item>
+
+                <Form.Item
+                name="price"
+                label="Giá sản phẩm"
+                rules={[
+                    {
+                    required: true,
+                    type: 'number',
+                    min: 0,
+                    },
+                ]}
+                >
+                    <InputNumber />
+                </Form.Item>
+
+                <Form.Item
+                name="category"
+                label="Loại sản phẩm"
+                rules={[
+                    {
+                    required: true,
+                    },
+                ]}
+                >
+                    <Select placeholder="Chọn loại sản phẩm">
+                        <Option value="bàn">Bàn</Option>
+                        <Option value="giá">Giá</Option>
+                        <Option value="giường">Giường</Option>
+                        <Option value="gối">Gối</Option>
+                        <Option value="kệ">Kệ</Option>
+                        <Option value="tủ">Tủ</Option>
+                    </Select>
+                </Form.Item>
+
+                <Form.Item
+                name="kindOfRoom"
+                label="Loại phòng"
+                rules={[
+                    {
+                    required: true,
+                    },
+                ]}
+                >
+                    <Select placeholder="Chọn loại phòng">
+                        <Option value="1">Phòng khách</Option>
+                        <Option value="2">Phòng ngủ</Option>
+                        <Option value="3">Phòng ăn</Option>
+                        <Option value="4">Phòng học/làm việc</Option>
+                    </Select>
+                </Form.Item>
+
+                <Form.Item name="detail" label="Mô tả sản phẩm" rules={[
+                    {
+                    required: true,
+                    },
+                ]}>
+                    <Input.TextArea />
+                </Form.Item>
+
+                <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+                    <Button type="primary" htmlType="submit" >
+                        Submit
+                    </Button>
+                </Form.Item>
+            </Form>
+        </div>
+        
 	);
 }
 
