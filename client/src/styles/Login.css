@@ -1,0 +1,15 @@
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    text-align: right;
+}
+
+.Login__Form {
+    margin-top:50px ;
+}
+
+.Login__Form > h6 {
+    font-size: 30px ;
+    padding-bottom: 20px;
+}
