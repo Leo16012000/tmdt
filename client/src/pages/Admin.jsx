@@ -64,10 +64,6 @@ function Admin() {
                         minHeight: 280,
                     }}
                     >
-
-                    Danh sách sản phẩm
-
-                    
                         <Suspense fallback={<h1>....</h1>}>
                             <Switch>
                                 <Route exact path="/admin/collections" >
@@ -99,13 +95,15 @@ function CollectionData(){
     });
 
     return (
-        <Table dataSource={item}>
-                            <Column title="ID" dataIndex="ID" key="ID" />
-                            <Column title="Name" dataIndex="Fullname" key="Fullname" />
-                            <Column title="Price" dataIndex="Price" key="Price" />
-                            <Column title="State" dataIndex="State" key="State" />
-                          
-                        </Table>
+        <div>
+            Danh sách thông tin sản phẩm
+            <Table dataSource={item}>
+                <Column title="ID" dataIndex="ID" key="ID" />
+                <Column title="Name" dataIndex="Fullname" key="Fullname" />
+                <Column title="Price" dataIndex="Price" key="Price" />
+                <Column title="State" dataIndex="State" key="State" />                 
+            </Table>
+        </div>
     )
 }
 
@@ -119,14 +117,17 @@ function UserData(){
     });
 
     return (
-        <Table dataSource={item}>
-            <Column title="ID" dataIndex="ID" key="ID" />
-            <Column title="Name" dataIndex="Fullname" key="Fullname" />
-            <Column title="Phone Number" dataIndex="PhoneNum" key="PhoneNum" />
-            <Column title="Email" dataIndex="Email" key="Email" />
-            <Column title="Address" dataIndex="Address" key="Address" />
-                
-        </Table>
+        <div>
+            Danh sách thông tin khách hàng
+            <Table dataSource={item}>
+                <Column title="ID" dataIndex="ID" key="ID" />
+                <Column title="Name" dataIndex="Fullname" key="Fullname" />
+                <Column title="Phone Number" dataIndex="PhoneNum" key="PhoneNum" />
+                <Column title="Email" dataIndex="Email" key="Email" />
+                <Column title="Address" dataIndex="Address" key="Address" />    
+            </Table>
+        </div>
+        
     )
 }
 

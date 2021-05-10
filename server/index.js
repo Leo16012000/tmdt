@@ -199,7 +199,7 @@ const PORT = 3001;
 const db = mysql.createPool({
 	host: "localhost",
 	user: "root",
-	password: "sanglaso1",
+	password: "quan0402",
 	database: "tmdt_ass2004",
 });
 
@@ -210,6 +210,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //get all product
 app.get("/collections", (req, res) => {
 	const sqlSelect = "SELECT * FROM `product`";
+	db.query(sqlSelect, (err, result) => {
+		if (err) {
+			res.send(err);
+		}
+		res.send(result);
+	});
+});
+
+app.get("/users", (req, res) => {
+	const sqlSelect = "SELECT * FROM `user`";
 	db.query(sqlSelect, (err, result) => {
 		if (err) {
 			res.send(err);
