@@ -174,12 +174,12 @@ function OrdersData() {
 			<Column title="Email" dataIndex="UserEmail" key="UserEmail" />
 			<Column title="Địa chỉ" dataIndex="Address" key="Address" />
 			<Column title="Tổng tiền" dataIndex="TotalPrice" key="TotalPrice" />
-            <Column title="Trạng thái đơn hàng" dataIndex="OrderState" key="OrderState" />
-            <Cascader
-                options={orderState}
-                onChange={onChange}
-                placeholder="Please select"
-              />
+            <Column title="Trạng thái đơn hàng" dataIndex="OrderState" key="OrderState" render={(OrderState) => {
+                switch(OrderState){
+                    case "ready_to_pick" : return "Đang được vận chuyển";
+                    default : return "Đang được vận chuyển"
+                }
+            }}/>
 		</Table>
 	);
 }
