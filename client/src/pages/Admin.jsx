@@ -16,6 +16,10 @@ const { Column, ColumnGroup } = Table;
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
+function numberWithCommas(x) {
+	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 function Admin() {
 	return (
 		<div className="Admin">
@@ -77,12 +81,12 @@ function Admin() {
 								Danh sách sản phẩm
 								<Suspense fallback={<h1>....</h1>}>
 									<Switch>
-										<Route exact path="/admin/collections">
-											<CollectionData />
-										</Route>
-
 										<Route exact path="/admin/users">
 											<UserData />
+										</Route>
+
+										<Route exact path="/admin/collections">
+											<CollectionData />
 										</Route>
 
 										<Route exact path="/admin/orders">
@@ -123,7 +127,7 @@ function CollectionData() {
 
 	useEffect(() => {
 		Axios.get(`http://localhost:3001/collections`).then((response) => {
-			setItem(response.data);
+			setItem(...response.data);
 		});
 	});
 
