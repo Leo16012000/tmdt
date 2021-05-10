@@ -35,7 +35,7 @@ function Admin() {
                   title="Tài khoản khách hàng"
                 >
                   <Menu.Item key="1">
-                    <Link exact to="/admin/users">
+                    <Link to="/admin/users">
                       Danh sách thông tin khách hàng
                     </Link>
                   </Menu.Item>
@@ -46,7 +46,7 @@ function Admin() {
                   title="Thông tin sản phẩm"
                 >
                   <Menu.Item key="5">
-                    <Link exact to="/admin/collections">
+                    <Link to="/admin/collections">
                       Danh sách thông tin sản phẩm
                     </Link>
                   </Menu.Item>
@@ -57,9 +57,9 @@ function Admin() {
                   icon={<NotificationOutlined />}
                   title="Đơn hàng"
                 >
-                  <Menu.Item key="9">Đã hoàn tất</Menu.Item>
-                  <Menu.Item key="10">Đang giao hàng</Menu.Item>
-                  <Menu.Item key="11">Đã hủy</Menu.Item>
+                  <Menu.Item key="7">
+                    <Link to="/admin/orders">Quản lý đơn hàng</Link>
+                  </Menu.Item>
                 </SubMenu>
               </Menu>
             </Sider>
@@ -77,12 +77,16 @@ function Admin() {
                 Danh sách sản phẩm
                 <Suspense fallback={<h1>....</h1>}>
                   <Switch>
+                    <Route exact path="/admin/users">
+                      <UserData />
+                    </Route>
+
                     <Route exact path="/admin/collections">
                       <CollectionData />
                     </Route>
 
-                    <Route exact path="/admin/users">
-                      <UserData />
+                    <Route exact path="/admin/orders">
+                      <OrdersData />
                     </Route>
                   </Switch>
                 </Suspense>
@@ -95,8 +99,31 @@ function Admin() {
   );
 }
 
+function OrdersData() {
+  const [item, setItem] = useState([]);
+
+  useEffect(() => {
+    Axios.get(`http://localhost:3001/getAllOrders`).then((response) => {
+      setItem(response.data);
+    });
+  });
+
+  return (
+    <Table dataSource={item}>
+      <Column title="Mã đơn hàng" dataIndex="ID" key="ID" />
+      <Column title="Email" dataIndex="UserEmail" key="UserEmail" />
+      <Column title="Địa chỉ" dataIndex="Address" key="Address" />
+      <Column title="Tổng tiền" dataIndex="TotalPrice" key="TotalPrice" />
+    </Table>
+  );
+}
+
 function CollectionData() {
   const [item, setItem] = useState([]);
+
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
 
   useEffect(() => {
     Axios.get(`http://localhost:3001/collections`).then((response) => {
@@ -108,7 +135,12 @@ function CollectionData() {
     <Table dataSource={item}>
       <Column title="ID" dataIndex="ID" key="ID" />
       <Column title="Name" dataIndex="Fullname" key="Fullname" />
-      <Column title="Price" dataIndex="Price" key="Price" />
+      <Column
+        title="Price"
+        dataIndex="Price"
+        key="Price"
+        render={(Price) => numberWithCommas(Price)}
+      />
       <Column title="State" dataIndex="State" key="State" />
     </Table>
   );

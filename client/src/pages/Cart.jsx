@@ -44,11 +44,11 @@ function Cart(props) {
           <thead>
             <tr>
               <th></th>
-              <th>Name</th>
-              <th>Image</th>
-              <th>Unit Cost</th>
-              <th>Quantity</th>
-              <th>Total Price</th>
+              <th>Tên sản phẩm</th>
+              <th>Hình ảnh</th>
+              <th>Đơn giá</th>
+              <th>Số lượng</th>
+              <th>Tổng tiền</th>
             </tr>
           </thead>
           <tbody>
@@ -96,7 +96,7 @@ function Cart(props) {
                 );
               })}
             <tr>
-              <td colSpan="5">Total Carts</td>
+              <td colSpan="5">Tổng đơn hàng</td>
               <td>{numberWithCommas(totalCart)}đ</td>
             </tr>
           </tbody>
