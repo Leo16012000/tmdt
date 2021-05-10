@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import "./App.css";
 import TopNavigation from "./components/TopNavigation";
 import React, { Suspense } from "react";
@@ -26,6 +26,7 @@ import LogIn from "./account/LogIn";
 import SignUp from "./account/SignUp";
 import Orders from "./pages/Orders";
 import UpdateOrder from "./pages/UpdateOrder";
+import Admin from './pages/Admin'
 
 function App() {
   return (
@@ -66,6 +67,9 @@ function App() {
                 </Route>
                 <Route exact path="/orders">
                   <Orders />
+                </Route>
+                <Route path="/admin">
+                  <Admin />
                 </Route>
                 <Route exact path="/login" component={LogIn} />
                 <Route exact path="/signup" component={SignUp} />

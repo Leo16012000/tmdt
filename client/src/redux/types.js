@@ -9,3 +9,4 @@ export const ADD_CART = "ADD_CART";
 export const REMOVE_CART = "REMOVE_CART";
 export const QUANTITY_MODIFIER = "QUANTITY_MODIFIER";
 export const SEND_ORDER_INFO = "SEND_ORDER_INFO";
+export const RESET_CART = "RESET_CART";
