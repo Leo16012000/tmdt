@@ -16,17 +16,90 @@ function Account(props) {
 	console.log("user ", currentUser);
 
 	const [values, setValues] = useState({
-		Email: "",
-		Fullname: "",
-		PhoneNum: "",
-		Address: "",
+		displayName: "",
+		phoneNumber: "",
+		photoUrl: "",
 	});
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
 	};
 
+	// const sendEmailVerification = () => {
+	// 	var user = auth.currentUser;
+
+	// 	user
+	// 		.sendEmailVerification()
+	// 		.then(() => {
+	// 			console.log("Email sended");
+	// 		})
+	// 		.catch((err) => {
+	// 			window.alert(err);
+	// 		});
+	// };
+
 	const onProfileChange = () => {
+		// Xác thực sđt trước
+		if (!currentUser.phoneNumber) {
+			window.appVerifier = new firebase.auth.RecaptchaVerifier(
+				"recaptcha-container",
+				{
+					size: "invisible",
+					// Bỏ qua xác thực hình ảnh trước
+					// callback: (res) => {},
+				}
+			);
+
+			const appVerifier = window.appVerifier;
+
+			firebase
+				.auth()
+				.currentUser.linkWithPhoneNumber(
+					`+84${values.phoneNumber.slice(1)}`,
+					appVerifier
+				)
+				.then((confirmationResult) => {
+					window.confirmationResult = confirmationResult;
+					// prompt user to entre code
+					let code = window.prompt(
+						"Please enter the 6 digit code from your phone number!"
+					);
+
+					confirmationResult
+						.confirm(code)
+						.then((result) => {
+							const credential = firebase.auth.PhoneAuthProvider.credential(
+								window.confirmationResult.verificationId,
+								code
+							);
+							firebase.auth().currentUser.linkWithCredential(credential);
+						})
+						.then((res) => {
+							sendMessage("Successfully", "Xác thực thành công!", "success");
+						})
+						.catch((error) => {
+							// reset rechatcha and try again
+							sendMessage("Error happend!", error.toString(), "danger");
+						});
+				})
+				.catch((error) => {
+					// reset rechatcha and try again
+					sendMessage("Error happend!", error.toString(), "danger");
+				});
+		}
+
+		auth.currentUser
+			.updateProfile({
+				displayName: values.displayName,
+			})
+			.then(() => {
+				sendMessage(
+					"Cập nhật thông tin thành công!",
+					"Successfully",
+					"success"
+				);
+			});
+
 		console.log("user:", currentUser);
 	};
 
@@ -52,21 +125,14 @@ function Account(props) {
 				type="email"
 				label="Họ và tên"
 				onChange={handleChange("displayName")}
-				defaultValue={currentUser ? currentUser.Fullname : ""}
+				defaultValue={currentUser ? currentUser.displayName : ""}
 			/>
 			<TextField
 				id="input-with-icon-grid"
 				type="email"
 				label="Số điện thoại"
 				onChange={handleChange("phoneNumber")}
-				defaultValue={currentUser ? currentUser.PhoneNum : ""}
-			/>
-			<TextField
-				id="input-with-icon-grid"
-				type="email"
-				label="Địa chỉ"
-				onChange={handleChange("phoneNumber")}
-				defaultValue={currentUser ? currentUser.Address : ""}
+				defaultValue={currentUser ? currentUser.phoneNumber : ""}
 			/>
 			<Button
 				variant="outlined"
