@@ -16,40 +16,17 @@ function Account(props) {
 	console.log("user ", currentUser);
 
 	const [values, setValues] = useState({
-		displayName: "",
-		phoneNumber: "",
+		Email: "",
+		Fullname: "",
+		PhoneNum: "",
+		Address: "",
 	});
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
 	};
 
-	// const sendEmailVerification = () => {
-	// 	var user = auth.currentUser;
-
-	// 	user
-	// 		.sendEmailVerification()
-	// 		.then(() => {
-	// 			console.log("Email sended");
-	// 		})
-	// 		.catch((err) => {
-	// 			window.alert(err);
-	// 		});
-	// };
-
 	const onProfileChange = () => {
-		auth.currentUser
-			.updateProfile({
-				displayName: values.displayName,
-			})
-			.then(() => {
-				sendMessage(
-					"Cập nhật thông tin thành công!",
-					"Successfully",
-					"success"
-				);
-			});
-
 		console.log("user:", currentUser);
 	};
 
@@ -75,14 +52,21 @@ function Account(props) {
 				type="email"
 				label="Họ và tên"
 				onChange={handleChange("displayName")}
-				defaultValue={currentUser ? currentUser.displayName : ""}
+				defaultValue={currentUser ? currentUser.Fullname : ""}
 			/>
 			<TextField
 				id="input-with-icon-grid"
 				type="email"
 				label="Số điện thoại"
 				onChange={handleChange("phoneNumber")}
-				defaultValue={currentUser ? currentUser.phoneNumber : ""}
+				defaultValue={currentUser ? currentUser.PhoneNum : ""}
+			/>
+			<TextField
+				id="input-with-icon-grid"
+				type="email"
+				label="Địa chỉ"
+				onChange={handleChange("phoneNumber")}
+				defaultValue={currentUser ? currentUser.Address : ""}
 			/>
 			<Button
 				variant="outlined"
