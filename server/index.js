@@ -218,16 +218,6 @@ app.get("/collections", (req, res) => {
   });
 });
 
-app.get("/users", (req, res) => {
-  const sqlSelect = "SELECT * FROM `user`";
-  db.query(sqlSelect, (err, result) => {
-    if (err) {
-      res.send(err);
-    }
-    res.send(result);
-  });
-});
-
 app.get("/getAllOrders", (req, res) => {
   const sqlSelect = "SELECT * FROM `orders`";
   db.query(sqlSelect, (err, result) => {
