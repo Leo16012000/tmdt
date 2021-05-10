@@ -1,5 +1,12 @@
-import { React, useState, useEffect, Suspense } from "react";
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import { React, useState, useEffect, Suspense, useContext } from "react";
+import {
+	BrowserRouter as Router,
+	Link,
+	Route,
+	Switch,
+	Redirect,
+} from "react-router-dom";
+import { AuthContext } from "../account/Auth";
 import "antd/dist/antd.css";
 import "../styles/Admin.css";
 import { Layout, Menu, Breadcrumb } from "antd";
@@ -16,8 +23,12 @@ const { Column, ColumnGroup } = Table;
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
-
 function Admin() {
+	const { currentUser } = useContext(AuthContext);
+
+	if (!currentUser || currentUser.email !== "admin@gmail.com")
+		return <Redirect to="/account" />;
+
 	return (
 		<div className="Admin">
 			<Router>
@@ -122,10 +133,9 @@ function OrdersData() {
 function CollectionData() {
 	const [item, setItem] = useState([]);
 
-
-    function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
+	function numberWithCommas(x) {
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 
 	useEffect(() => {
 		Axios.get(`http://localhost:3001/collections`).then((response) => {
@@ -137,7 +147,12 @@ function CollectionData() {
 		<Table dataSource={item}>
 			<Column title="ID" dataIndex="ID" key="ID" />
 			<Column title="Name" dataIndex="Fullname" key="Fullname" />
-			<Column title="Price" dataIndex="Price" key="Price" render={(Price) => numberWithCommas(Price)}/>
+			<Column
+				title="Price"
+				dataIndex="Price"
+				key="Price"
+				render={(Price) => numberWithCommas(Price)}
+			/>
 			<Column title="State" dataIndex="State" key="State" />
 		</Table>
 	);
