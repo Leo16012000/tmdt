@@ -85,20 +85,20 @@ function ItemList() {
   console.log("Key");
   console.log(keyword);
 
-  // if(keyword !== "" ){
-  //     console.log(keyword)
-  //     const words = keyword.split(' ');
-  //     itemList = itemList.filter((i) => {
-  //         for(var word of words){
-  //             if( word !== ""){
-  //                 if(i.Fullname.includes(word.toUpperCase()) === true){
-  //                     return true;
-  //                 }
-  //             }
-  //         }
-  //         return false;
-  //     });
-  // }
+  if(keyword !== "" ){
+      console.log(keyword)
+      const words = keyword.split(' ');
+      itemList = itemList.filter((i) => {
+          for(var word of words){
+              if( word !== ""){
+                  if(i.Fullname.includes(word.toUpperCase()) === true){
+                      return true;
+                  }
+              }
+          }
+          return false;
+      });
+  }
 
   console.log(itemList);
 
