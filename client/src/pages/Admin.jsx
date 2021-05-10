@@ -33,21 +33,21 @@ const layout = {
 };
 /* eslint-disable no-template-curly-in-string */
 
-const orderState = [
-	{
-		value: "Hoàn tất",
-	},
-	{
-		value: "Đang thực hiện ...",
-	},
-	{
-		value: "Hủy",
-	},
-];
+// const orderState = [
+// 	{
+// 		value: "Hoàn tất",
+// 	},
+// 	{
+// 		value: "Đang thực hiện ...",
+// 	},
+// 	{
+// 		value: "Hủy",
+// 	},
+// ];
 
-function onChange(value, selectedOptions) {
-	console.log(value, selectedOptions);
-}
+// function onChange(value, selectedOptions) {
+// 	console.log(value, selectedOptions);
+// }
 
 const validateMessages = {
 	required: "${label} is required!",
@@ -197,7 +197,6 @@ function SearchOrder() {
 	const [item, setItem] = useState([]);
 
 	async function getOrders(e) {
-		var listOrders = [];
 		var lst1 = await Axios.get(
 			`http://localhost:3001/getOrderLadingCode?ID=${e}`
 		).then((response) => {
@@ -306,7 +305,7 @@ function AddItem() {
 			values,
 		})
 			.then((res) => {
-				if (res.status == 200) console.log("success");
+				if (res.status === 200) console.log("success");
 			})
 			.catch((err) => {
 				console.log("fail");

@@ -65,6 +65,7 @@ function Cart(props) {
 												src={item.image}
 												width="100"
 												height="100"
+												alt={`item picture ` + key}
 												style={{ borderRadius: "10px" }}
 											/>
 											<div className="info">

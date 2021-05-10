@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../account/Auth";
 import { Redirect } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 import "../styles/Orders.css";
 import axios from "axios";
 import Table from "@material-ui/core/Table";
@@ -16,16 +15,9 @@ function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const useStyles = makeStyles({
-	table: {
-		minWidth: 650,
-	},
-});
-
 function Orders() {
 	const { currentUser } = useContext(AuthContext);
 	const [item, setItem] = useState([]);
-	const classes = useStyles();
 
 	useEffect(() => {
 		axios
@@ -33,7 +25,7 @@ function Orders() {
 			.then((response) => {
 				setItem(response.data);
 			});
-	}, []);
+	}, [currentUser]);
 
 	if (!currentUser) return <Redirect to="/account" />;
 

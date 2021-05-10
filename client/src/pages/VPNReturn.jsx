@@ -4,7 +4,7 @@ import { React, useState, useEffect } from "react";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
 	faCheckCircle,
 	faExclamationCircle,
@@ -17,13 +17,11 @@ const apiURL =
 	"http://localhost:3001/vnpay_return?" +
 	new URLSearchParams(window.location.search);
 
-
-
 function VPNReturn(props) {
 	const [state, setState] = useState({});
 	const dispatch = useDispatch();
 
-	function handleResetCart(){
+	function handleResetCart() {
 		console.log("handle2");
 		dispatch(resetCart());
 	}
@@ -40,7 +38,7 @@ function VPNReturn(props) {
 
 	var message = {};
 
-	console.log(state)
+	console.log(state);
 
 	if (state.code === "00") {
 		message = {
@@ -65,11 +63,10 @@ function VPNReturn(props) {
 		};
 	}
 
-	if(state.code === "00") {
+	if (state.code === "00") {
 		console.log("handle");
 		handleResetCart();
 	}
-	
 
 	return (
 		<div className="VPNReturn">
