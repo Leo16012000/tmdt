@@ -12,20 +12,13 @@ const { Column, ColumnGroup } = Table;
 
 
 const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
+const {  Content, Sider } = Layout;
 
 function Admin() {
 
-    const [item, setItem] = useState([]);
-
-    useEffect(() => {
-        Axios.get(`http://localhost:3001/collections`).then((response) => {
-        setItem(response.data);
-        });
-    }, []);
-
     return (
         <div className="Admin">
+        <Router>
         <Layout>
                 <Layout>
                 <Sider width={300} className="site-layout-background">
@@ -36,11 +29,15 @@ function Admin() {
                     style={{ height: '100%', borderRight: 0 }}
                     >
                     <SubMenu key="sub1" icon={<UserOutlined />} title="Tài khoản khách hàng">
-                        <Menu.Item key="1">Danh sách khách hàng</Menu.Item>
+                        <Menu.Item key="1">
+                            <Link exact to="/admin/users">
+                                Danh sách thông tin khách hàng
+                            </Link>
+                        </Menu.Item>
                     </SubMenu>
                     <SubMenu key="sub2" icon={<LaptopOutlined />} title="Thông tin sản phẩm">
                         <Menu.Item key="5">
-                            <Link to="/admin/collections">
+                            <Link exact to="/admin/collections">
                                 Danh sách thông tin sản phẩm
                             </Link>
                             
@@ -70,25 +67,23 @@ function Admin() {
 
                     Danh sách sản phẩm
 
-                    <Router>
+                    
                         <Suspense fallback={<h1>....</h1>}>
                             <Switch>
-                                <Route exact path="admin/collections" >
+                                <Route exact path="/admin/collections" >
                                     <CollectionData />
                                 </Route>
 
-                                <Route exact path="admin/collections" >
+                                <Route exact path="/admin/users" >
                                     <UserData />
                                 </Route>
                             </Switch>
-                        </Suspense>
-                    </Router>
-                    
-                    
+                        </Suspense>                   
                     </Content>
                 </Layout>
                 </Layout>
             </Layout>
+            </Router>
         </div>
     )
 }
@@ -101,7 +96,7 @@ function CollectionData(){
         Axios.get(`http://localhost:3001/collections`).then((response) => {
         setItem(response.data);
         });
-    }, []);
+    });
 
     return (
         <Table dataSource={item}>
@@ -109,30 +104,7 @@ function CollectionData(){
                             <Column title="Name" dataIndex="Fullname" key="Fullname" />
                             <Column title="Price" dataIndex="Price" key="Price" />
                             <Column title="State" dataIndex="State" key="State" />
-                            {/* <Column 
-                            title="Tags"
-                            dataIndex="tags"
-                            key="tags"
-                            render={tags => (
-                                <>
-                                {tags.map(tag => (
-                                    <Tag color="blue" key={tag}>
-                                    {tag}
-                                    </Tag>
-                                ))}
-                                </>
-                            )}
-                            />
-                            <Column
-                            title="Action"
-                            key="action"
-                            render={(text, record) => (
-                                <Space size="middle">
-                                <a>Invite {record.lastName}</a>
-                                <a>Delete</a>
-                                </Space>
-                            )}
-                            /> */}
+                          
                         </Table>
     )
 }
@@ -144,38 +116,16 @@ function UserData(){
         Axios.get(`http://localhost:3001/users`).then((response) => {
         setItem(response.data);
         });
-    }, []);
+    });
 
     return (
         <Table dataSource={item}>
             <Column title="ID" dataIndex="ID" key="ID" />
             <Column title="Name" dataIndex="Fullname" key="Fullname" />
-            <Column title="Price" dataIndex="Price" key="Price" />
-            <Column title="State" dataIndex="State" key="State" />
-                            {/* <Column 
-                            title="Tags"
-                            dataIndex="tags"
-                            key="tags"
-                            render={tags => (
-                                <>
-                                {tags.map(tag => (
-                                    <Tag color="blue" key={tag}>
-                                    {tag}
-                                    </Tag>
-                                ))}
-                                </>
-                            )}
-                            />
-                            <Column
-                            title="Action"
-                            key="action"
-                            render={(text, record) => (
-                                <Space size="middle">
-                                <a>Invite {record.lastName}</a>
-                                <a>Delete</a>
-                                </Space>
-                            )}
-                            /> */}
+            <Column title="Phone Number" dataIndex="PhoneNum" key="PhoneNum" />
+            <Column title="Email" dataIndex="Email" key="Email" />
+            <Column title="Address" dataIndex="Address" key="Address" />
+                
         </Table>
     )
 }

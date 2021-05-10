@@ -68,7 +68,7 @@ function App() {
                 <Route exact path="/orders">
                   <Orders />
                 </Route>
-                <Route exact path="/admin">
+                <Route path="/admin">
                   <Admin />
                 </Route>
                 <Route exact path="/login" component={LogIn} />
