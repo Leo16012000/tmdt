@@ -30,7 +30,8 @@ function UpdateOrder(props) {
     item.code = item.id.toString();
     item.price = item.unitCost;
   });
-  // console.log(listCart); done
+
+  console.log(listCart);
 
   //
   const items = [...listCart];
@@ -146,8 +147,8 @@ function UpdateOrder(props) {
   orderCreate();
   return (
     <div>
-      <p>Tiền sản phẩm: {totalCart}</p>
-      <p>Phí vận chuyển: {orderDetail.GHNServicePrice}</p>
+      {/* <p>Tiền sản phẩm: {totalCart}</p>
+      <p>Phí vận chuyển: {orderDetail.GHNServicePrice}</p> */}
     </div>
   );
 }
