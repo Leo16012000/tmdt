@@ -18,7 +18,6 @@ function Account(props) {
 	const [values, setValues] = useState({
 		displayName: "",
 		phoneNumber: "",
-		photoUrl: "",
 	});
 
 	const handleChange = (prop) => (event) => {
@@ -39,55 +38,6 @@ function Account(props) {
 	// };
 
 	const onProfileChange = () => {
-		// Xác thực sđt trước
-		if (!currentUser.phoneNumber) {
-			window.appVerifier = new firebase.auth.RecaptchaVerifier(
-				"recaptcha-container",
-				{
-					size: "invisible",
-					// Bỏ qua xác thực hình ảnh trước
-					// callback: (res) => {},
-				}
-			);
-
-			const appVerifier = window.appVerifier;
-
-			firebase
-				.auth()
-				.currentUser.linkWithPhoneNumber(
-					`+84${values.phoneNumber.slice(1)}`,
-					appVerifier
-				)
-				.then((confirmationResult) => {
-					window.confirmationResult = confirmationResult;
-					// prompt user to entre code
-					let code = window.prompt(
-						"Please enter the 6 digit code from your phone number!"
-					);
-
-					confirmationResult
-						.confirm(code)
-						.then((result) => {
-							const credential = firebase.auth.PhoneAuthProvider.credential(
-								window.confirmationResult.verificationId,
-								code
-							);
-							firebase.auth().currentUser.linkWithCredential(credential);
-						})
-						.then((res) => {
-							sendMessage("Successfully", "Xác thực thành công!", "success");
-						})
-						.catch((error) => {
-							// reset rechatcha and try again
-							sendMessage("Error happend!", error.toString(), "danger");
-						});
-				})
-				.catch((error) => {
-					// reset rechatcha and try again
-					sendMessage("Error happend!", error.toString(), "danger");
-				});
-		}
-
 		auth.currentUser
 			.updateProfile({
 				displayName: values.displayName,
