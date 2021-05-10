@@ -16,9 +16,6 @@ const { Column, ColumnGroup } = Table;
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
-function numberWithCommas(x) {
-	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
 
 function Admin() {
 	return (
@@ -125,9 +122,14 @@ function OrdersData() {
 function CollectionData() {
 	const [item, setItem] = useState([]);
 
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
 	useEffect(() => {
 		Axios.get(`http://localhost:3001/collections`).then((response) => {
-			setItem(...response.data);
+			setItem(response.data);
 		});
 	});
 
@@ -135,7 +137,7 @@ function CollectionData() {
 		<Table dataSource={item}>
 			<Column title="ID" dataIndex="ID" key="ID" />
 			<Column title="Name" dataIndex="Fullname" key="Fullname" />
-			<Column title="Price" dataIndex="Price" key="Price" />
+			<Column title="Price" dataIndex="Price" key="Price" render={(Price) => numberWithCommas(Price)}/>
 			<Column title="State" dataIndex="State" key="State" />
 		</Table>
 	);
