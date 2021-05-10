@@ -1,10 +1,12 @@
-import React from 'react'
+import { React, useState, useEffect } from "react";
 import 'antd/dist/antd.css';
 import '../styles/Admin.css'
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import Axios from "axios";
 import { Table, Tag, Space } from 'antd';
 const { Column, ColumnGroup } = Table;
+
 
 
 const { SubMenu } = Menu;
@@ -12,32 +14,13 @@ const { Header, Content, Sider } = Layout;
 
 function Admin() {
 
-    const data = [
-        {
-          key: '1',
-          firstName: 'John',
-          lastName: 'Brown',
-          age: 32,
-          address: 'New York No. 1 Lake Park',
-          tags: ['nice', 'developer'],
-        },
-        {
-          key: '2',
-          firstName: 'Jim',
-          lastName: 'Green',
-          age: 42,
-          address: 'London No. 1 Lake Park',
-          tags: ['loser'],
-        },
-        {
-          key: '3',
-          firstName: 'Joe',
-          lastName: 'Black',
-          age: 32,
-          address: 'Sidney No. 1 Lake Park',
-          tags: ['cool', 'teacher'],
-        },
-      ];
+    const [item, setItem] = useState([]);
+
+    useEffect(() => {
+        Axios.get(`http://localhost:3001/collections`).then((response) => {
+        setItem(response.data);
+        });
+    }, []);
 
     return (
         <div className="Admin">
@@ -77,11 +60,12 @@ function Admin() {
                         minHeight: 280,
                     }}
                     >
-                    <Table dataSource={data}>
+                    <Table dataSource={item}>
                             <Column title="ID" dataIndex="id" key="id" />
-                            <Column title="Age" dataIndex="age" key="age" />
-                            <Column title="Address" dataIndex="address" key="address" />
-                            <Column
+                            <Column title="Name" dataIndex="name" key="name" />
+                            <Column title="Price" dataIndex="price" key="price" />
+                            <Column title="Price" dataIndex="price" key="price" />
+                            <Column 
                             title="Tags"
                             dataIndex="tags"
                             key="tags"
