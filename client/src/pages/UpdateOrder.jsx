@@ -16,6 +16,7 @@ function UpdateOrder(props) {
   const paymentMethod = useSelector((state) => state.isCOD);
   let createDataReturn = {};
   let dataInfoReturn = {};
+  let OrderDetail = {};
 
   // calculate totalCart
   let totalCart = 0;
@@ -88,10 +89,10 @@ function UpdateOrder(props) {
   }
   function saveOrder() {
     console.log("createDataReturn", createDataReturn.order_code);
+    let orderDetail = {};
     bodyParameter = {
       order_code: createDataReturn.order_code,
     };
-    let orderDetail = {};
     axios
       .post(
         "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/detail",
@@ -114,6 +115,7 @@ function UpdateOrder(props) {
           TotalPrice: totalCart + createDataReturn.total_fee,
         };
         console.log("Order Detail", orderDetail);
+        OrderDetail = { ...orderDetail };
       });
 
     axios
@@ -129,7 +131,12 @@ function UpdateOrder(props) {
     alert("successful insert");
   }
   orderCreate();
-  return <div></div>;
+  return (
+    <div>
+      <p>Tiền sản phẩm: {totalCart}</p>
+      <p>Phí vận chuyển: {}</p>
+    </div>
+  );
 }
 
 export default UpdateOrder;
