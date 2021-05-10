@@ -16,7 +16,7 @@ function UpdateOrder(props) {
   const paymentMethod = useSelector((state) => state.isCOD);
   let createDataReturn = {};
   let dataInfoReturn = {};
-  let OrderDetail = {};
+  let orderDetail = {};
 
   // calculate totalCart
   let totalCart = 0;
@@ -30,7 +30,8 @@ function UpdateOrder(props) {
     item.code = item.id.toString();
     item.price = item.unitCost;
   });
-  // console.log(listCart); done
+
+  console.log(listCart);
 
   //
   const items = [...listCart];
@@ -87,54 +88,67 @@ function UpdateOrder(props) {
       .catch((err) => console.log(err));
     return <div>Run Update Order</div>;
   }
-  function saveOrder() {
+
+  async function saveOrder() {
     console.log("createDataReturn", createDataReturn.order_code);
     let orderDetail = {};
     bodyParameter = {
       order_code: createDataReturn.order_code,
     };
-    axios
-      .post(
-        "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/detail",
-        bodyParameter,
-        config
-      )
-      .then((res) => {
-        dataInfoReturn = { ...res.data.data };
-        orderDetail = {
-          ID: createDataReturn.order_code,
-          PaymentMethod: paymentMethod ? "chưa thanh toán" : "đã thanh toán",
-          DeliveryExpectedTime: createDataReturn.expected_delivery_time,
-          Address: dataInfoReturn.note,
-          OrderState: dataInfoReturn.status,
-          UserEmail: currentUser.email,
-          GHNServicePrice: createDataReturn.total_fee,
-          Content: dataInfoReturn.content,
-          Price: totalCart,
-          Receiver: dataInfoReturn.to_name,
-          TotalPrice: totalCart + createDataReturn.total_fee,
-        };
-        console.log("Order Detail", orderDetail);
-        OrderDetail = { ...orderDetail };
-      });
 
-    axios
-      .post(
-        `http://localhost:3001/api/saveOrder?ID=${orderDetail.ID}&PaymentMethod=${orderDetail.PaymentMethod}&DeliveryExpectedTime=${orderDetail.DeliveryExpectedTime}&Address=${orderDetail.Address}&OrderState=${orderDetail.OrderState}&UserEmail=${orderDetail.UserEmail}&GHNServicePrice=${orderDetail.GHNServicePrice}&Content=${orderDetail.Content}&Price=${orderDetail.Price}&Receiver=${orderDetail.Receiver}&TotalPrice=${orderDetail.TotalPrice}`
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    alert("successful insert");
+    async function firstPost() {
+      var resDetail = await axios
+        .post(
+          "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/detail",
+          bodyParameter,
+          config
+        )
+        .then((res) => {
+          dataInfoReturn = { ...res.data.data };
+          orderDetail = {
+            ID: createDataReturn.order_code,
+            PaymentMethod: paymentMethod ? "chưa thanh toán" : "đã thanh toán",
+            DeliveryExpectedTime: createDataReturn.expected_delivery_time,
+            Address: dataInfoReturn.note,
+            OrderState: dataInfoReturn.status,
+            UserEmail: currentUser.email,
+            GHNServicePrice: createDataReturn.total_fee,
+            Content: dataInfoReturn.content,
+            Price: totalCart,
+            Receiver: dataInfoReturn.to_name,
+            TotalPrice: totalCart + createDataReturn.total_fee,
+          };
+          console.log("Order Detail", orderDetail);
+          return orderDetail;
+        });
+
+      orderDetail = resDetail;
+    }
+
+    async function secondPost() {
+      console.log("secondPost", orderDetail);
+      await axios
+        .get(
+          `http://localhost:3001/api/saveOrder?ID=${orderDetail.ID}&PaymentMethod=${orderDetail.PaymentMethod}&DeliveryExpectedTime=${orderDetail.DeliveryExpectedTime}&Address=${orderDetail.Address}&OrderState=${orderDetail.OrderState}&UserEmail=${orderDetail.UserEmail}&GHNServicePrice=${orderDetail.GHNServicePrice}&Content=${orderDetail.Content}&Price=${orderDetail.Price}&Receiver=${orderDetail.Receiver}&TotalPrice=${orderDetail.TotalPrice}`
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      alert("successful insert");
+    }
+
+    await firstPost();
+    await secondPost();
   }
+
   orderCreate();
   return (
     <div>
-      <p>Tiền sản phẩm: {totalCart}</p>
-      <p>Phí vận chuyển: {}</p>
+      {/* <p>Tiền sản phẩm: {totalCart}</p>
+      <p>Phí vận chuyển: {orderDetail.GHNServicePrice}</p> */}
     </div>
   );
 }
