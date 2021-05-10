@@ -4,11 +4,13 @@ import { React, useState, useEffect } from "react";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDispatch, useSelector } from "react-redux";
 import {
 	faCheckCircle,
 	faExclamationCircle,
 	faExclamationTriangle,
 } from "@fortawesome/free-solid-svg-icons";
+import { resetCart } from "../redux/action";
 import "../styles/VPNReturn.css";
 
 const apiURL =
@@ -19,6 +21,12 @@ const apiURL =
 
 function VPNReturn(props) {
 	const [state, setState] = useState({});
+	const dispatch = useDispatch();
+
+	function handleResetCart(){
+		console.log("handle2");
+		dispatch(resetCart());
+	}
 
 	useEffect(() => {
 		const getApiUrl = () => {
@@ -56,6 +64,12 @@ function VPNReturn(props) {
 			icon: faExclamationCircle,
 		};
 	}
+
+	if(state.code === "00") {
+		console.log("handle");
+		handleResetCart();
+	}
+	
 
 	return (
 		<div className="VPNReturn">

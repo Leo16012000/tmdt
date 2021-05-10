@@ -10,6 +10,7 @@ import {
   REMOVE_CART,
   QUANTITY_MODIFIER,
   SEND_ORDER_INFO,
+  RESET_CART,
 } from "./types";
 
 export const roomFilter = (value) => {
@@ -60,4 +61,8 @@ export const quantityModifier = (value) => {
 };
 export const sendOrderInfo = (orderInfo, addressDelivery, isCOD) => {
   return { type: SEND_ORDER_INFO, orderInfo, addressDelivery, isCOD };
+};
+
+export const resetCart = () => {
+  return { type: RESET_CART};
 };

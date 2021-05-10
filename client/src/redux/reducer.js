@@ -10,6 +10,7 @@ import {
   REMOVE_CART,
   QUANTITY_MODIFIER,
   SEND_ORDER_INFO,
+  RESET_CART
 } from "./types";
 
 const initialState = {
@@ -139,6 +140,12 @@ const appReducer = (state = initialState, action) => {
         orderInfo: action.orderInfo,
         addressDelivery: action.addressDelivery,
         isCOD: action.isCOD,
+      };
+    }
+    case RESET_CART: {
+      return {
+        ...state,
+          listCart : []
       };
     }
 
