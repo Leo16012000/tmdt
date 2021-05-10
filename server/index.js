@@ -240,7 +240,28 @@ app.post("/api/saveOrder", (req, res) => {
     (err, result) => {}
   );
 });
-//
+// add product
+app.post("/api/addProduct", (req, res) => {
+  const sqlInsert =
+    "INSERT INTO orders (ID,Price,Fullname,Detail,PostingDate,State,Image,RatingPoint,SellerId,Category,KindOfRoom) VALUES (?,?,?,?,?,?,?,?,?,?,?);"; //lệnh đúng rồi
+  db.query(
+    sqlInsert,
+    [
+      +req.query.ID,
+      +req.query.Price,
+      req.query.Fullname,
+      req.query.Detail,
+      req.query.PostingDate,
+      req.query.State,
+      req.query.Image,
+      +req.query.RatingPoint,
+      +req.query.SellerId,
+      req.query.Category,
+      +req.query.KindOfRoom,
+    ],
+    (err, result) => {}
+  );
+});
 
 app.listen(PORT, () => {
   console.log("running on port ", PORT);
