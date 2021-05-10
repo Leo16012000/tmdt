@@ -199,8 +199,8 @@ const PORT = 3001;
 const db = mysql.createPool({
   host: "localhost",
   user: "root",
-  password: "quan0402",
-  database: "tmdt_ass0204",
+  password: "",
+  database: "tmdt_ass2004",
 });
 
 app.use(cors());
@@ -226,7 +226,7 @@ app.get("/api/saveOrder", (req, res) => {
   db.query(
     sqlInsert,
     [
-      +req.query.ID,
+      req.query.ID,
       req.query.PaymentMethod,
       req.query.DeliveryExpectedTime,
       req.query.Address,
@@ -238,7 +238,10 @@ app.get("/api/saveOrder", (req, res) => {
       req.query.Receiver,
       +req.query.TotalPrice,
     ],
-    (err, result) => {}
+    (err, result) => {
+      if (err) console.log(err);
+      console.log(result);
+    }
   );
 });
 // add product
@@ -260,7 +263,10 @@ app.post("/api/addProduct", (req, res) => {
       req.query.Category,
       +req.query.KindOfRoom,
     ],
-    (err, result) => {}
+    (err, result) => {
+      if (err) res.send(err);
+      res.send(result);
+    }
   );
 });
 
