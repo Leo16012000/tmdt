@@ -250,7 +250,7 @@ app.get("/getOrderEmail", (req, res) => {
 });
 
 //add order
-app.post("/api/saveOrder", (req, res) => {
+app.get("/api/saveOrder", (req, res) => {
   console.log(req.query);
   const sqlInsert =
     "INSERT INTO orders (ID,PaymentMethod,DeliveryExpectedTime,Address,OrderState,UserEmail,GHNServicePrice,Content,Price,Receiver,TotalPrice) VALUES (?,?,?,?,?,?,?,?,?,?,?);"; //lệnh đúng rồi
