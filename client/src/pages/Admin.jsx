@@ -16,6 +16,7 @@ import {
 	LaptopOutlined,
 	NotificationOutlined,
 } from "@ant-design/icons";
+import { Cascader } from 'antd';
 import Axios from "axios";
 import { Table, Tag, Space } from "antd";
 import Collections from "./Collections";
@@ -34,6 +35,23 @@ const layout = {
   };
   /* eslint-disable no-template-curly-in-string */
   
+  const orderState = [
+    {
+      value: 'Hoàn tất',
+      
+    },
+    {
+      value: 'Đang thực hiện ...',
+    },
+    {
+        value: 'Hủy',
+      },
+  ];
+
+  function onChange(value, selectedOptions) {
+    console.log(value, selectedOptions);
+  }
+
   const validateMessages = {
     required: '${label} is required!',
     types: {
@@ -156,6 +174,12 @@ function OrdersData() {
 			<Column title="Email" dataIndex="UserEmail" key="UserEmail" />
 			<Column title="Địa chỉ" dataIndex="Address" key="Address" />
 			<Column title="Tổng tiền" dataIndex="TotalPrice" key="TotalPrice" />
+            <Column title="Trạng thái đơn hàng" dataIndex="OrderState" key="OrderState" />
+            <Cascader
+                options={orderState}
+                onChange={onChange}
+                placeholder="Please select"
+              />
 		</Table>
 	);
 }
