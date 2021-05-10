@@ -243,7 +243,18 @@ app.get("/getOrderEmail", (req, res) => {
 	const sqlSelect = "SELECT * FROM `orders` where UserEmail=?";
 	db.query(sqlSelect, [req.query.UserEmail], (err, result) => {
 		if (err) {
-			res.send(err);
+			console.log(err);
+		}
+		res.send(result);
+	});
+});
+
+app.get("/getOrderLadingCode", (req, res) => {
+	console.log(req.query);
+	const sqlSelect = "SELECT * FROM `orders` where ID=?";
+	db.query(sqlSelect, [req.query.ID], (err, result) => {
+		if (err) {
+			console.log(err);
 		}
 		res.send(result);
 	});

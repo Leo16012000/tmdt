@@ -7,7 +7,7 @@ import {
 	Redirect,
 } from "react-router-dom";
 import { AuthContext } from "../account/Auth";
-import { Form, Input, InputNumber, Button , Select} from 'antd';
+import { Form, Input, InputNumber, Button, Select } from "antd";
 import "antd/dist/antd.css";
 import "../styles/Admin.css";
 import { Layout, Menu, Breadcrumb } from "antd";
@@ -16,52 +16,49 @@ import {
 	LaptopOutlined,
 	NotificationOutlined,
 } from "@ant-design/icons";
-import { Cascader } from 'antd';
 import Axios from "axios";
-import { Table, Tag, Space } from "antd";
-import Collections from "./Collections";
-const { Column, ColumnGroup } = Table;
-
+import { Table } from "antd";
+const { Column } = Table;
+const { Search } = Input;
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 const { Option } = Select;
 const layout = {
-    labelCol: {
-      span: 8,
-    },
-    wrapperCol: {
-      span: 16,
-    },
-  };
-  /* eslint-disable no-template-curly-in-string */
-  
-  const orderState = [
-    {
-      value: 'Hoàn tất',
-      
-    },
-    {
-      value: 'Đang thực hiện ...',
-    },
-    {
-        value: 'Hủy',
-      },
-  ];
+	labelCol: {
+		span: 8,
+	},
+	wrapperCol: {
+		span: 16,
+	},
+};
+/* eslint-disable no-template-curly-in-string */
 
-  function onChange(value, selectedOptions) {
-    console.log(value, selectedOptions);
-  }
+const orderState = [
+	{
+		value: "Hoàn tất",
+	},
+	{
+		value: "Đang thực hiện ...",
+	},
+	{
+		value: "Hủy",
+	},
+];
 
-  const validateMessages = {
-    required: '${label} is required!',
-    types: {
-      email: '${label} is not a valid email!',
-      number: '${label} is not a valid number!',
-    },
-    number: {
-      range: '${label} must be between ${min} and ${max}',
-    },
-  };
+function onChange(value, selectedOptions) {
+	console.log(value, selectedOptions);
+}
+
+const validateMessages = {
+	required: "${label} is required!",
+	types: {
+		email: "${label} is not a valid email!",
+		number: "${label} is not a valid number!",
+	},
+	number: {
+		range: "${label} must be between ${min} and ${max}",
+	},
+};
 
 function Admin() {
 	const { currentUser } = useContext(AuthContext);
@@ -103,10 +100,8 @@ function Admin() {
 										</Link>
 									</Menu.Item>
 									<Menu.Item key="6">
-                                        <Link to="/admin/add-item">
-											Thêm sản phẩm mới
-										</Link>
-                                    </Menu.Item>
+										<Link to="/admin/add-item">Thêm sản phẩm mới</Link>
+									</Menu.Item>
 								</SubMenu>
 								<SubMenu
 									key="sub3"
@@ -115,6 +110,10 @@ function Admin() {
 								>
 									<Menu.Item key="7">
 										<Link to="/admin/orders">Quản lý đơn hàng</Link>
+									</Menu.Item>
+
+									<Menu.Item key="8">
+										<Link to="/admin/searchOrder">Tra cứu đơn hàng</Link>
 									</Menu.Item>
 								</SubMenu>
 							</Menu>
@@ -130,7 +129,6 @@ function Admin() {
 									minHeight: 280,
 								}}
 							>
-								
 								<Suspense fallback={<h1>....</h1>}>
 									<Switch>
 										<Route exact path="/admin/users">
@@ -145,7 +143,11 @@ function Admin() {
 											<OrdersData />
 										</Route>
 
-                                        <Route exact path="/admin/add-item">
+										<Route exact path="/admin/searchOrder">
+											<SearchOrder />
+										</Route>
+
+										<Route exact path="/admin/add-item">
 											<AddItem />
 										</Route>
 									</Switch>
@@ -174,13 +176,76 @@ function OrdersData() {
 			<Column title="Email" dataIndex="UserEmail" key="UserEmail" />
 			<Column title="Địa chỉ" dataIndex="Address" key="Address" />
 			<Column title="Tổng tiền" dataIndex="TotalPrice" key="TotalPrice" />
-            <Column title="Trạng thái đơn hàng" dataIndex="OrderState" key="OrderState" render={(OrderState) => {
-                switch(OrderState){
-                    case "ready_to_pick" : return "Đang được vận chuyển";
-                    default : return "Đang được vận chuyển"
-                }
-            }}/>
+			<Column
+				title="Trạng thái đơn hàng"
+				dataIndex="OrderState"
+				key="OrderState"
+				render={(OrderState) => {
+					switch (OrderState) {
+						case "ready_to_pick":
+							return "Đang được vận chuyển";
+						default:
+							return "Đang được vận chuyển";
+					}
+				}}
+			/>
 		</Table>
+	);
+}
+
+function SearchOrder() {
+	const [item, setItem] = useState([]);
+
+	async function getOrders(e) {
+		var listOrders = [];
+		var lst1 = await Axios.get(
+			`http://localhost:3001/getOrderLadingCode?ID=${e}`
+		).then((response) => {
+			return response.data;
+		});
+
+		var lst2 = await Axios.get(
+			`http://localhost:3001/getOrderEmail?UserEmail=${e}`
+		).then((response) => {
+			return response.data;
+		});
+
+		setItem(lst1.concat(lst2));
+	}
+
+	function onSearch(e) {
+		getOrders(e);
+	}
+
+	return (
+		<div>
+			<div style={{ marginBottom: "10px", marginRight: "10px" }}>
+				<Search
+					placeholder="Mã vận đơn / Email"
+					onSearch={(e) => onSearch(e)}
+					enterButton
+				/>
+			</div>
+			<Table dataSource={item}>
+				<Column title="Mã đơn hàng" dataIndex="ID" key="ID" />
+				<Column title="Email" dataIndex="UserEmail" key="UserEmail" />
+				<Column title="Địa chỉ" dataIndex="Address" key="Address" />
+				<Column title="Tổng tiền" dataIndex="TotalPrice" key="TotalPrice" />
+				<Column
+					title="Trạng thái đơn hàng"
+					dataIndex="OrderState"
+					key="OrderState"
+					render={(OrderState) => {
+						switch (OrderState) {
+							case "ready_to_pick":
+								return "Đang được vận chuyển";
+							default:
+								return "Đang được vận chuyển";
+						}
+					}}
+				/>
+			</Table>
+		</div>
 	);
 }
 
@@ -233,121 +298,133 @@ function UserData() {
 }
 
 function AddItem() {
-    const [form] = Form.useForm();
+	const [form] = Form.useForm();
 
-    function handleSubmit(values){
-        console.log(values)
-        Axios.post("/add-item", {
-            values
-      })
-      .then((res) => {
-        if (res.status == 200) console.log("success");
-      })
-      .catch((err) => {
-        console.log("fail");
-      });
-    }
+	function handleSubmit(values) {
+		console.log(values);
+		Axios.post("/add-item", {
+			values,
+		})
+			.then((res) => {
+				if (res.status == 200) console.log("success");
+			})
+			.catch((err) => {
+				console.log("fail");
+			});
+	}
 
 	return (
-        <div>
-            Thêm sản phẩm mới
-            <Form {...layout} form={form} name="nest-messages" action="/add-item" method="post" onFinish={handleSubmit} validateMessages={validateMessages} labelCol={{
-          span: 4,
-        }}
-        wrapperCol={{
-          span: 14,
-        }}
-        layout="horizontal">
-                <Form.Item
-                name="name"
-                label="Tên sản phẩm"
-                rules={[
-                    {
-                    required: true,
-                    },
-                ]}
-                >
-                    <Input />
-                </Form.Item>
-                
-                <Form.Item
-                name="image"
-                label="Link ảnh "
-                rules={[
-                    {
-                    required: true,
-                    },
-                ]}
-                >
-                    <Input />
-                </Form.Item>
+		<div>
+			Thêm sản phẩm mới
+			<Form
+				{...layout}
+				form={form}
+				name="nest-messages"
+				action="/add-item"
+				method="post"
+				onFinish={handleSubmit}
+				validateMessages={validateMessages}
+				labelCol={{
+					span: 4,
+				}}
+				wrapperCol={{
+					span: 14,
+				}}
+				layout="horizontal"
+			>
+				<Form.Item
+					name="name"
+					label="Tên sản phẩm"
+					rules={[
+						{
+							required: true,
+						},
+					]}
+				>
+					<Input />
+				</Form.Item>
 
-                <Form.Item
-                name="price"
-                label="Giá sản phẩm"
-                rules={[
-                    {
-                    required: true,
-                    type: 'number',
-                    min: 0,
-                    },
-                ]}
-                >
-                    <InputNumber />
-                </Form.Item>
+				<Form.Item
+					name="image"
+					label="Link ảnh "
+					rules={[
+						{
+							required: true,
+						},
+					]}
+				>
+					<Input />
+				</Form.Item>
 
-                <Form.Item
-                name="category"
-                label="Loại sản phẩm"
-                rules={[
-                    {
-                    required: true,
-                    },
-                ]}
-                >
-                    <Select placeholder="Chọn loại sản phẩm">
-                        <Option value="bàn">Bàn</Option>
-                        <Option value="giá">Giá</Option>
-                        <Option value="giường">Giường</Option>
-                        <Option value="gối">Gối</Option>
-                        <Option value="kệ">Kệ</Option>
-                        <Option value="tủ">Tủ</Option>
-                    </Select>
-                </Form.Item>
+				<Form.Item
+					name="price"
+					label="Giá sản phẩm"
+					rules={[
+						{
+							required: true,
+							type: "number",
+							min: 0,
+						},
+					]}
+				>
+					<InputNumber />
+				</Form.Item>
 
-                <Form.Item
-                name="kindOfRoom"
-                label="Loại phòng"
-                rules={[
-                    {
-                    required: true,
-                    },
-                ]}
-                >
-                    <Select placeholder="Chọn loại phòng">
-                        <Option value="1">Phòng khách</Option>
-                        <Option value="2">Phòng ngủ</Option>
-                        <Option value="3">Phòng ăn</Option>
-                        <Option value="4">Phòng học/làm việc</Option>
-                    </Select>
-                </Form.Item>
+				<Form.Item
+					name="category"
+					label="Loại sản phẩm"
+					rules={[
+						{
+							required: true,
+						},
+					]}
+				>
+					<Select placeholder="Chọn loại sản phẩm">
+						<Option value="bàn">Bàn</Option>
+						<Option value="giá">Giá</Option>
+						<Option value="giường">Giường</Option>
+						<Option value="gối">Gối</Option>
+						<Option value="kệ">Kệ</Option>
+						<Option value="tủ">Tủ</Option>
+					</Select>
+				</Form.Item>
 
-                <Form.Item name="detail" label="Mô tả sản phẩm" rules={[
-                    {
-                    required: true,
-                    },
-                ]}>
-                    <Input.TextArea />
-                </Form.Item>
+				<Form.Item
+					name="kindOfRoom"
+					label="Loại phòng"
+					rules={[
+						{
+							required: true,
+						},
+					]}
+				>
+					<Select placeholder="Chọn loại phòng">
+						<Option value="1">Phòng khách</Option>
+						<Option value="2">Phòng ngủ</Option>
+						<Option value="3">Phòng ăn</Option>
+						<Option value="4">Phòng học/làm việc</Option>
+					</Select>
+				</Form.Item>
 
-                <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-                    <Button type="primary" htmlType="submit" >
-                        Submit
-                    </Button>
-                </Form.Item>
-            </Form>
-        </div>
-        
+				<Form.Item
+					name="detail"
+					label="Mô tả sản phẩm"
+					rules={[
+						{
+							required: true,
+						},
+					]}
+				>
+					<Input.TextArea />
+				</Form.Item>
+
+				<Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+					<Button type="primary" htmlType="submit">
+						Submit
+					</Button>
+				</Form.Item>
+			</Form>
+		</div>
 	);
 }
 
