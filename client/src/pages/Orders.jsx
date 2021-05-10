@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "../styles/Orders.css";
+import axios from "axios";
+import { Table } from "@material-ui/core";
 
 Orders.propTypes = {};
 const order = {
@@ -31,7 +33,24 @@ const listCart = [
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+function OrdersData() {
+  const [item, setItem] = useState([]);
 
+  useEffect(() => {
+    axios.get(`http://localhost:3001/getAllOrders`).then((response) => {
+      setItem(response.data);
+    });
+  });
+
+  return (
+    <Table dataSource={item}>
+      <Column title="Mã đơn hàng" dataIndex="ID" key="ID" />
+      <Column title="Email" dataIndex="UserEmail" key="UserEmail" />
+      <Column title="Địa chỉ" dataIndex="Address" key="Address" />
+      <Column title="Tổng tiền" dataIndex="TotalPrice" key="TotalPrice" />
+    </Table>
+  );
+}
 function Orders(props) {
   let totalCart = 0;
   for (let i = 0; i <= listCart.length - 1; i++) {
