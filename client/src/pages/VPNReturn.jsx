@@ -48,7 +48,9 @@ function VPNReturn(props) {
       type: "success",
       icon: faCheckCircle,
     };
-    history.push("/update-order");
+    setTimeout(function () {
+      history.push("/update-order");
+    }, 5000);
   } else if (state.code === "01") {
     message = {
       msg: "Giao dịch đã tồn tại",
@@ -67,7 +69,7 @@ function VPNReturn(props) {
 
   if (state.code === "00") {
     console.log("handle");
-    handleResetCart();
+    // handleResetCart();
   }
 
   return (

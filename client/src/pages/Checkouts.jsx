@@ -91,7 +91,7 @@ function Checkouts(props) {
       //open dialog?
       console.log(values);
       dispatch(sendOrderInfo(values, addressDelivery, isCOD)); //late for a value
-      console.log("vnpay run into here");
+      console.log("vnpay run into here", values, addressDelivery, isCOD);
       setOpen(!isCOD);
       if (isCOD) history.push("/update-order");
     }
@@ -100,7 +100,7 @@ function Checkouts(props) {
   const SendPayment = () => {
     // send order infomation into redux
     console.log(values);
-    dispatch(sendOrderInfo(values));
+    // dispatch(sendOrderInfo(values));
     //
     if (method === "momo")
       axios

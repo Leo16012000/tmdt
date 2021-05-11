@@ -14,6 +14,7 @@ function UpdateOrder(props) {
   let orderInfo = useSelector((state) => state.orderInfo);
   console.log("orderInfo:", orderInfo);
   const listCart = useSelector((state) => state.listCart);
+  console.log(listCart);
   const addressDelivery = useSelector((state) => state.addressDelivery);
   const paymentMethod = useSelector((state) => state.isCOD);
   let createDataReturn = {};
@@ -112,7 +113,7 @@ function UpdateOrder(props) {
             PaymentMethod: paymentMethod ? "chưa thanh toán" : "đã thanh toán",
             DeliveryExpectedTime: createDataReturn.expected_delivery_time,
             Address: dataInfoReturn.note,
-            OrderState: dataInfoReturn.status,
+            OrderState: dataInfoReturn.st atus,
             UserEmail: currentUser.email,
             GHNServicePrice: createDataReturn.total_fee,
             Content: dataInfoReturn.content,
