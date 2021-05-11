@@ -4,7 +4,7 @@ import { React, useState, useEffect } from "react";
 import { Button } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   faCheckCircle,
   faExclamationCircle,

@@ -36,6 +36,7 @@ function UpdateOrder(props) {
   listCart.map((item) => {
     item.code = item.id.toString();
     item.price = item.unitCost;
+    return 0;
   });
 
   console.log(listCart);

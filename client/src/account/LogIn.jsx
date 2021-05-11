@@ -3,33 +3,26 @@ import { AuthContext } from "./Auth";
 import { Redirect } from "react-router-dom";
 import { auth } from "../firebase";
 import { Link } from "react-router-dom";
-import '../styles/Login.css'
-
+import "../styles/Login.css";
 
 import "firebase/auth";
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button } from "antd";
 import sendMessage from "./sendMessage";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-// import Button from "@material-ui/core/Button";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import VpnKeyRoundedIcon from "@material-ui/icons/VpnKeyRounded";
 
 const layout = {
 	labelCol: {
-	  span: 8,
+		span: 8,
 	},
 	wrapperCol: {
-	  span: 16,
+		span: 16,
 	},
-  };
-  const tailLayout = {
+};
+const tailLayout = {
 	wrapperCol: {
-	  offset: 8,
-	  span: 16,
+		offset: 8,
+		span: 16,
 	},
-}
-
+};
 
 const LogIn = () => {
 	const { currentUser } = useContext(AuthContext);
@@ -61,59 +54,55 @@ const LogIn = () => {
 
 	return (
 		<div className="Login__Form">
-
 			<h6> Đăng Nhập </h6>
 
 			<Form
-			{...layout}
-			name="basic"
-			initialValues={{
-				remember: true,
-			}}
-			onFinish={() => onLogin()}
-			onFinishFailed=""
+				{...layout}
+				name="basic"
+				initialValues={{
+					remember: true,
+				}}
+				onFinish={() => onLogin()}
+				onFinishFailed=""
 			>
-			<Form.Item
-				label="Username"
-				type="email"
-				name="username"
-				rules={[
-				{
-					required: true,
-					message: 'Please input your username!',
-				},
-				]}
-				onChange={handleChange("username")}
-			>
-				<Input />
-			</Form.Item>
+				<Form.Item
+					label="Username"
+					type="email"
+					name="username"
+					rules={[
+						{
+							required: true,
+							message: "Please input your username!",
+						},
+					]}
+					onChange={handleChange("username")}
+				>
+					<Input />
+				</Form.Item>
 
-			<Form.Item
-				label="Password"
-				name="password"
-				rules={[
-				{
-					required: true,
-					message: 'Please input your password!',
-				},
-				]}
+				<Form.Item
+					label="Password"
+					name="password"
+					rules={[
+						{
+							required: true,
+							message: "Please input your password!",
+						},
+					]}
+					onChange={handleChange("password")}
+				>
+					<Input.Password />
+				</Form.Item>
+				<div className="column">
+					<Link to="/signup">Sign up?</Link>
+					<Link to="/phoneauth">Login with Phone number?</Link>
+				</div>
 
-				onChange={handleChange("password")}
-			>
-				<Input.Password />
-			</Form.Item>
-			<div className="column">
-				<Link to="/signup">Sign up?</Link>
-				<Link to="/phoneauth">Login with Phone number?</Link>
-			</div>
-			
-			
-
-			<Form.Item {...tailLayout}>
-				<Button type="primary" htmlType="submit">
-				Submit
-				</Button>
-			</Form.Item>
+				<Form.Item {...tailLayout}>
+					<Button type="primary" htmlType="submit">
+						Submit
+					</Button>
+				</Form.Item>
 			</Form>
 		</div>
 	);
