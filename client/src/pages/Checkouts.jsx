@@ -45,7 +45,6 @@ function Checkouts(props) {
   const [values, setValues] = useState(defaultInfo);
   const [expanded, setExpanded] = useState("panel1");
   const [method, setMethod] = useState("momo");
-  const [fee, setFee] = useState(1387600);
   const [open, setOpen] = useState(false);
   var finalPrice = 0;
 
@@ -97,6 +96,7 @@ function Checkouts(props) {
       if (isCOD) history.push("/update-order");
     }
   }
+<<<<<<< HEAD
   const getFee = () => {
     const config = {
       headers: {
@@ -129,6 +129,9 @@ function Checkouts(props) {
       })
       .catch((err) => console.log(err));
   };
+=======
+
+>>>>>>> parent of a2698aa (update fee + cart interface +)
   const SendPayment = () => {
     // send order infomation into redux
     console.log(values);
@@ -377,25 +380,10 @@ function Checkouts(props) {
           })}
         </div>
         <div className="finalPrice">
-          <p>Tạm tính</p>
+          <p>Tổng tiền</p>
           <div>
             <p>VND</p>
             <h4>{numberWithCommas(finalPrice)}₫</h4>
-          </div>
-        </div>
-        <div className="finalPrice">
-          <p>Phí vận chuyển</p>
-          <div>
-            <p>VND</p>
-            <h4>{numberWithCommas(fee)}₫</h4>
-          </div>
-        </div>
-
-        <div className="finalPrice">
-          <p>Thành tiền</p>
-          <div>
-            <p>VND</p>
-            <h4>{numberWithCommas(fee + finalPrice)}₫</h4>
           </div>
         </div>
       </div>
