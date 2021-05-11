@@ -118,7 +118,7 @@ function Checkouts(props) {
       coupon: null,
     };
     axios
-      .post(
+      .get(
         "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
         bodyParameter,
         config
