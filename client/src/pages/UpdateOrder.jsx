@@ -145,6 +145,7 @@ function UpdateOrder(props) {
 
     await firstPost();
     await secondPost();
+    dispatch(resetCart()); 
   }
 
   orderCreate();
