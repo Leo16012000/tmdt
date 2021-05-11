@@ -1,16 +1,114 @@
-#cart-table {
-	max-width: 100%;
-}
-table,
-th,
-td {
-	border: 0.5px solid lightgray;
+.Cart__Container {
+	width: 100%;
+	font-family: "Itim", cursive;
 }
 
-.tableCart {
-	max-width: 100%;
+.Cart__Wrapper {
+	max-width: 1350px;
+	height: 90%;
+	margin: 20px auto;
+	display: flex;
+	color: #000;
+	border: 1px solid #ddd;
+	border-radius: 20px;
+	-webkit-box-shadow: -5px 7px 18px -3px rgba(0, 0, 0, 0.69);
+	-moz-box-shadow: -5px 7px 18px -3px rgba(0, 0, 0, 0.69);
+	box-shadow: -5px 7px 18px -3px rgba(0, 0, 0, 0.69);
 }
 
-i.badge {
+.Cart__Wrapper > section:first-child {
+	flex: 2;
+	padding: 10px 40px;
+	border-top-left-radius: 20px;
+	border-bottom-left-radius: 20px;
+	background-color: #e6d6d6;
+}
+
+.Cart__Wrapper > section:last-child {
+	flex: 1;
+	position: relative;
+	padding: 10px 40px;
+	border-top-right-radius: 20px;
+	border-bottom-right-radius: 20px;
+	background-color: #bdbdbd;
+}
+
+.Cart__Wrapper > section:first-child > .title {
+	padding: 20px 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.Cart__Wrapper > section:first-child > .items {
+	display: flex;
+	max-height: 700px;
+	flex-direction: column;
+	border-top: 2px solid #fff;
+	overflow-y: scroll;
+}
+
+.Cart__Wrapper > section:first-child > .items::-webkit-scrollbar {
+	display: none;
+}
+
+.Cart__Wrapper .items > .item {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	padding: 20px 0;
+	border-bottom: 2px solid #fff;
+	justify-content: space-between;
+}
+
+.Cart__Wrapper .items > .item > .info {
+	display: flex;
+	padding-left: 20px;
+	margin-right: 0;
+	flex-direction: column;
+	align-items: start;
+}
+
+.Cart__Wrapper .items > .item > .quantity {
+	display: flex;
+	align-items: center;
+}
+
+.Cart__Wrapper .items > .item > .quantity > * {
 	cursor: pointer;
+}
+
+.Cart__Wrapper .items > .item > .quantity > span {
+	font-size: 20px;
+}
+
+/* right component */
+.Cart__Wrapper > section:last-child > .title {
+	padding-left: 30px;
+	padding-top: 50px;
+	display: flex;
+	color: #fff;
+	justify-self: start;
+}
+
+.Cart__Wrapper > section:last-child > .content {
+	display: flex;
+	width: 100%;
+	padding: 20px;
+	font-size: 25px;
+	flex-direction: column;
+	align-items: flex-start;
+	border-top: 2px solid #ddd;
+}
+
+.Cart__Wrapper > section:last-child > a {
+	width: 80%;
+	left: 10%;
+	bottom: 10%;
+	text-decoration: none;
+	color: #fff;
+	line-height: 2.2rem;
+	position: absolute;
+	text-transform: uppercase;
+	background-color: #000;
 }
