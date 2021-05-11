@@ -91,7 +91,7 @@ function Cart(props) {
         </section>
         <section>
           <div className="title">
-            <h2>Tổng kết</h2>
+            <h2>Tiến hành đặt hàng</h2>
           </div>
           <div className="content">
             <p>Đơn vị vận chuyển</p>
@@ -103,7 +103,9 @@ function Cart(props) {
             <p>Tổng giá tiền</p>
             <h1>{numberWithCommas(totalCart)}đ</h1>
           </div>
-          <Link to="checkouts">Thanh toán</Link>
+          <div className="link-to-checkout">
+            <Link to="checkouts">Thanh toán</Link>
+          </div>
         </section>
       </div>
     </div>
