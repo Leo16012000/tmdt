@@ -2,9 +2,11 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import sendMessage from "../account/sendMessage";
-import { Button } from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { AuthContext } from "../account/Auth";
+import { Alert, AlertTitle } from "@material-ui/lab";
+import "../styles/UpdateOrder.scss";
 
 function UpdateOrder(props) {
   const axios = require("axios");
@@ -147,8 +149,7 @@ function UpdateOrder(props) {
   orderCreate();
   return (
     <div>
-      {/* <p>Tiền sản phẩm: {totalCart}</p>
-      <p>Phí vận chuyển: {orderDetail.GHNServicePrice}</p> */}
+      <CircularProgress />
     </div>
   );
 }

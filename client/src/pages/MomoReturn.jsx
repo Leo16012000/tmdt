@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 // import Alert from '@material-ui/lab/Alert';
 import { Button } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
@@ -10,6 +10,7 @@ import {
 import "../styles/VPNReturn.css";
 
 function MomoReturn(props) {
+  let history = useHistory();
   const [state, setState] = useState({});
 
   useEffect(() => {
@@ -17,7 +18,7 @@ function MomoReturn(props) {
     const localMessage = urlParams.get("localMessage");
     const errorCode = urlParams.get("errorCode");
 
-    if (errorCode === "0")
+    if (errorCode === "0") {
       setState({
         localMessage,
         message: {
@@ -27,7 +28,10 @@ function MomoReturn(props) {
           icon: faCheckCircle,
         },
       });
-    else
+      setTimeout(function () {
+        history.push("/update-order");
+      }, 5000);
+    } else
       setState({
         localMessage,
         message: {

@@ -53,11 +53,11 @@ function Orders() {
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>
-            <TableCell align="right">Nội dung</TableCell>
-            <TableCell align="right">Địa chỉ nhận hàng</TableCell>
-            <TableCell align="right">Thành tiền</TableCell>
-            <TableCell align="right">Thời gian giao hàng</TableCell>
-            <TableCell align="right">Trạng thái đơn hàng</TableCell>
+            <TableCell align="center">Nội dung</TableCell>
+            <TableCell align="center">Địa chỉ nhận hàng</TableCell>
+            <TableCell align="center">Thành tiền</TableCell>
+            <TableCell align="center">Thời gian giao hàng</TableCell>
+            <TableCell align="center">Trạng thái đơn hàng</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
