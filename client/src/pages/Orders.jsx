@@ -16,7 +16,15 @@ function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const stateGHN = { ready_to_pick: "Chờ xác nhận" };
+const stateGHN = {
+  ready_to_pick: "Chờ xác nhận",
+  picking: "Đang lấy hàng",
+  picked: "Đã lấy hàng",
+  delivering: "Shiper đang giao hàng cho khách",
+  delivered: "Shiper đã giao hàng cho khách",
+  delivery_fail: "Giao hàng thất bại",
+  cancel: "Đơn hàng bị hủy",
+};
 
 const useStyles = makeStyles({
   table: {
@@ -66,7 +74,7 @@ function Orders() {
               <TableCell align="right">
                 {row.DeliveryExpectedTime.slice(0, -5).replace("T", " ")}
               </TableCell>
-              <TableCell align="right">{row.OrderState}</TableCell>
+              <TableCell align="right">{stateGHN[row.OrderState]}</TableCell>
             </TableRow>
           ))}
         </TableBody>
