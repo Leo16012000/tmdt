@@ -96,7 +96,6 @@ function Checkouts(props) {
       if (isCOD) history.push("/update-order");
     }
   }
-<<<<<<< HEAD
   const getFee = () => {
     const config = {
       headers: {
@@ -125,13 +124,10 @@ function Checkouts(props) {
       )
       .then((res) => {
         console.log(res.data, "get fee data");
-        setFee(res.data.total);
+        // setFee(res.data.total);
       })
       .catch((err) => console.log(err));
   };
-=======
-
->>>>>>> parent of a2698aa (update fee + cart interface +)
   const SendPayment = () => {
     // send order infomation into redux
     console.log(values);
