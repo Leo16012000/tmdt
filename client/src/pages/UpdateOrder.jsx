@@ -94,7 +94,6 @@ function UpdateOrder(props) {
         saveOrder();
       })
       .catch((err) => console.log(err));
-    return <div>Run Update Order</div>;
   }
 
   async function saveOrder() {
