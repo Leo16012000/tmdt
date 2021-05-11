@@ -180,7 +180,7 @@ function Checkouts(props) {
     // Load Location
     LocalPicker();
   }, []);
-
+  //   getFee();
   return (
     <div className="Checkouts__container">
       <div className="Checkouts__info">
