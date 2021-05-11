@@ -1,5 +1,6 @@
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../account/Auth";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import PersonOutlineOutlinedIcon from "@material-ui/icons/PersonOutlineOutlined";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
@@ -17,7 +18,7 @@ import logo from "../images/logo.png";
 
 function TopNavigation() {
 	// get user info
-
+	const { currentUser } = useContext(AuthContext);
 	const dispatch = useDispatch();
 
 	const listCart = useSelector((state) => state.listCart);
@@ -74,7 +75,15 @@ function TopNavigation() {
 							</p>
 
 							<p id="orders">
-								<Link to="/orders">Đơn hàng</Link>
+								<Link
+									to={
+										currentUser?.email === "admin@gmail.com"
+											? "/admin"
+											: "/orders"
+									}
+								>
+									Đơn hàng
+								</Link>
 							</p>
 
 							<ShoppingCartOutlinedIcon />

@@ -32,9 +32,9 @@ function App() {
 	return (
 		<div className="App">
 			<Router>
-				<TopNavigation />
-				<ReactNotification />
 				<AuthProvider>
+					<TopNavigation />
+					<ReactNotification />
 					<Suspense fallback={<h1>....</h1>}>
 						<main className="main__App">
 							<Switch>
