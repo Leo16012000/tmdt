@@ -96,38 +96,6 @@ function Checkouts(props) {
       if (isCOD) history.push("/update-order");
     }
   }
-  const getFee = () => {
-    const config = {
-      headers: {
-        token: "69ace0ab-ac82-11eb-8be2-c21e19fc6803",
-        ShopId: 79749,
-      },
-    };
-    const bodyParameter = {
-      from_district_id: 1444,
-      service_id: 53320,
-      service_type_id: 2,
-      to_district_id: 1444,
-      to_ward_code: "20308",
-      height: 50,
-      length: 20,
-      weight: 200,
-      width: 20,
-      insurance_fee: 1000000,
-      coupon: null,
-    };
-    axios
-      .get(
-        "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
-        bodyParameter,
-        config
-      )
-      .then((res) => {
-        console.log(res.data, "get fee data");
-        // setFee(res.data.total);
-      })
-      .catch((err) => console.log(err));
-  };
   const SendPayment = () => {
     // send order infomation into redux
     console.log(values);
