@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import sendMessage from "../account/sendMessage";
 import { Button, CircularProgress } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AuthContext } from "../account/Auth";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import "../styles/UpdateOrder.scss";
 
 function UpdateOrder(props) {
+  const dispatch = useDispatch();
   const axios = require("axios");
   const { currentUser } = useContext(AuthContext);
   let orderInfo = useSelector((state) => state.orderInfo);
@@ -113,7 +114,7 @@ function UpdateOrder(props) {
             PaymentMethod: paymentMethod ? "chưa thanh toán" : "đã thanh toán",
             DeliveryExpectedTime: createDataReturn.expected_delivery_time,
             Address: dataInfoReturn.note,
-            OrderState: dataInfoReturn.st atus,
+            OrderState: dataInfoReturn.status,
             UserEmail: currentUser.email,
             GHNServicePrice: createDataReturn.total_fee,
             Content: dataInfoReturn.content,
@@ -145,7 +146,7 @@ function UpdateOrder(props) {
 
     await firstPost();
     await secondPost();
-    dispatch(resetCart()); 
+    dispatch(resetCart());
   }
 
   orderCreate();
