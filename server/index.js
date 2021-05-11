@@ -283,6 +283,7 @@ app.get("/api/saveOrder", (req, res) => {
     (err, result) => {
       if (err) console.log(err);
       console.log(result);
+      res.send(result);
     }
   );
 });

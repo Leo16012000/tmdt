@@ -7,8 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { AuthContext } from "../account/Auth";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import "../styles/UpdateOrder.scss";
+import { resetCart } from "../redux/action";
+import { useHistory } from "react-router";
 
 function UpdateOrder(props) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const axios = require("axios");
   const { currentUser } = useContext(AuthContext);
@@ -141,12 +144,13 @@ function UpdateOrder(props) {
         .catch((err) => {
           console.log(err);
         });
-      alert("successful insert");
     }
 
     await firstPost();
     await secondPost();
-    dispatch(resetCart());
+    // alert("successful insert");
+    // dispatch(resetCart());
+    history.push("/Orders");
   }
 
   orderCreate();
