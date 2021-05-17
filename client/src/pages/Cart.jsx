@@ -38,7 +38,7 @@ function Cart(props) {
   }
 
   function DecreaseQuantity(key) {
-    if (listCart[key].quantity === 0) return;
+    if (listCart[key].quantity === 1) return;
     else dispatch(decreaseQuantity(key));
   }
 
