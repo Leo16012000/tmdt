@@ -58,35 +58,32 @@ function Cart(props) {
           </div>
           <div className="items">
             {listCart &&
-              listCart.map(
-                (item, key) =>
-                  item.quantity > 0 && (
-                    <div className="item" key={key}>
-                      <img
-                        src={item.image}
-                        width="100"
-                        height="100"
-                        style={{ borderRadius: "10px" }}
-                      />
-                      <div className="info">
-                        <span>Sản phẩm</span>
-                        <p>{item.name}</p>
-                      </div>
-                      <div className="quantity">
-                        <RemoveIcon onClick={() => DecreaseQuantity(key)} />
-                        <span className="btn btn-disable">{item.quantity}</span>
-                        <AddIcon onClick={() => IncreaseQuantity(key)} />
-                      </div>
-                      <p>{numberWithCommas(item.unitCost * item.quantity)}đ</p>
-                      <Button
-                        color="secondary"
-                        onClick={() => DeleteCart(key, item.name)}
-                      >
-                        X
-                      </Button>
-                    </div>
-                  )
-              )}
+              listCart.map((item, key) => (
+                <div className="item" key={key}>
+                  <img
+                    src={item.image}
+                    width="100"
+                    height="100"
+                    style={{ borderRadius: "10px" }}
+                  />
+                  <div className="info">
+                    <span>Sản phẩm</span>
+                    <p>{item.name}</p>
+                  </div>
+                  <div className="quantity">
+                    <RemoveIcon onClick={() => DecreaseQuantity(key)} />
+                    <span className="btn btn-disable">{item.quantity}</span>
+                    <AddIcon onClick={() => IncreaseQuantity(key)} />
+                  </div>
+                  <p>{numberWithCommas(item.unitCost * item.quantity)}đ</p>
+                  <Button
+                    color="secondary"
+                    onClick={() => DeleteCart(key, item.name)}
+                  >
+                    X
+                  </Button>
+                </div>
+              ))}
           </div>
         </section>
         <section>

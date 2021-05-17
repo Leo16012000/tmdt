@@ -60,8 +60,8 @@ function Checkouts(props) {
   function moveNextStep(isCOD) {
     var errors = [];
 
-    const ls_province = document.getElementById("ls_province")
-      .selectedOptions[0];
+    const ls_province =
+      document.getElementById("ls_province").selectedOptions[0];
 
     const ls_district = document.getElementById("ls_district");
 

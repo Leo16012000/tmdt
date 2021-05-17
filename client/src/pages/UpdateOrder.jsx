@@ -18,7 +18,8 @@ function UpdateOrder(props) {
   let orderInfo = useSelector((state) => state.orderInfo);
   console.log("orderInfo:", orderInfo);
   const listCart = useSelector((state) => state.listCart);
-  console.log(listCart);
+  const realListCart = listCart.filter((cart) => cart.quantity > 0); //realListCart have quanity>0
+  console.log(realListCart);
   const addressDelivery = useSelector((state) => state.addressDelivery);
   const paymentMethod = useSelector((state) => state.isCOD);
   let createDataReturn = {};
@@ -27,22 +28,20 @@ function UpdateOrder(props) {
 
   // calculate totalCart
   let totalCart = 0;
-  for (let i = 0; i <= listCart.length - 1; i++) {
-    totalCart += listCart[i].quantity * listCart[i].unitCost;
+  for (let i = 0; i <= realListCart.length - 1; i++) {
+    totalCart += realListCart[i].quantity * realListCart[i].unitCost;
   }
   //
   console.log(addressDelivery);
   // change name of object
-  listCart.map((item) => {
+  realListCart.map((item) => {
     item.code = item.id.toString();
     item.price = item.unitCost;
     return 0;
   });
 
-  console.log(listCart);
-
   //
-  const items = [...listCart];
+  const items = [...realListCart];
   // console.log(items); done
   let bodyParameter = {
     payment_type_id: 2,

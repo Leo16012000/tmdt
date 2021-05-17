@@ -83,21 +83,21 @@ function ItemList() {
   }
 
   console.log("Key");
-  console.log(keyword);
+  console.log("keyword", keyword);
 
-  if(keyword !== "" ){
-      console.log(keyword)
-      const words = keyword.split(' ');
-      itemList = itemList.filter((i) => {
-          for(var word of words){
-              if( word !== ""){
-                  if(i.Fullname.includes(word.toUpperCase()) === true){
-                      return true;
-                  }
-              }
+  if (keyword !== "") {
+    console.log(keyword);
+    const words = keyword.split(" ");
+    itemList = itemList.filter((i) => {
+      for (var word of words) {
+        if (word !== "") {
+          if (i.Fullname.includes(word.toUpperCase()) === true) {
+            return true;
           }
-          return false;
-      });
+        }
+      }
+      return false;
+    });
   }
 
   console.log(itemList);
