@@ -84,6 +84,7 @@ function Account(props) {
           // Upload completed successfully, now we can get the download URL
           uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
             console.log("File available at", downloadURL);
+            setValues({ ...values, photoUrl: downloadURL });
           });
         }
       );
@@ -272,14 +273,18 @@ function Account(props) {
           <input
             type="file"
             name="myImage"
+            id="changeAvatar"
+            style={{ display: "none" }}
             onChange={(e) => onImageChange(e)}
           />
 
           <Button
             variant="outlined"
-            color="secondary"
-            onClick={() => auth.signOut()}>
-            Đăng xuất
+            color="primary"
+            onClick={() => {
+              document.getElementById("changeAvatar").click();
+            }}>
+            Thay đổi avatar
           </Button>
         </div>
         <div className="Account__info">
@@ -313,14 +318,23 @@ function Account(props) {
             onChange={handleChange("address")}
             value={values.address}
           />
-          <Button
-            variant="outlined"
-            color="primary"
-            id="recaptcha-container"
-            onClick={() => onProfileChange()}>
-            Lưu thông tin
-          </Button>
         </div>
+      </div>
+      <div className="btn-action">
+        <Button
+          variant="outlined"
+          color="primary"
+          id="recaptcha-container"
+          onClick={() => onProfileChange()}>
+          Lưu thông tin
+        </Button>
+
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={() => auth.signOut()}>
+          Đăng xuất
+        </Button>
       </div>
     </div>
   );

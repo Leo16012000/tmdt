@@ -22,7 +22,12 @@
   margin-top: 30px !important;
 }
 
+.Account__profile {
+  margin: 25px auto;
+}
+
 .Account__profile .container {
+  margin-top: 30px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -33,8 +38,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 15px;
 }
 
-.Account__info {
-  gap: 15px;
+.Account__profile .btn-action {
+  gap: 5px;
+  max-width: 200px;
+  margin: 30px auto 0 auto;
+  display: flex;
+  flex-direction: column;
 }
