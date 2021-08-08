@@ -176,7 +176,10 @@ function Account(props) {
     const docRef = db.collection("Infos").doc(currentUser.email);
 
     // Xác thực sđt trước
-    if (values.phoneNumber) {
+    if (
+      values.phoneNumber &&
+      currentUser.phoneNumber.substr(3) !== values.phoneNumber.substr(1)
+    ) {
       window.appVerifier = new firebase.auth.RecaptchaVerifier(
         "recaptcha-container",
         {
