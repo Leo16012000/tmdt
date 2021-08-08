@@ -59,10 +59,10 @@ function UpdateOrder(props) {
     to_district_id: 1444, //
     cod_amount: 200000, // tổng tiền trả
     content: "Theo New York Times",
-    weight: 150000, //150 ký
-    length: 100, //1m
-    width: 100, //1m
-    height: 100, //1m
+    weight: 1500, //150g
+    length: 10, //10cm
+    width: 10, //10cm
+    height: 10, //10cm
     pick_station_id: 1444,
     deliver_station_id: null,
     insurance_value: 10000000,
