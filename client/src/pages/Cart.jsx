@@ -78,8 +78,7 @@ function Cart(props) {
                   <p>{numberWithCommas(item.unitCost * item.quantity)}đ</p>
                   <Button
                     color="secondary"
-                    onClick={() => DeleteCart(key, item.name)}
-                  >
+                    onClick={() => DeleteCart(key, item.name)}>
                     X
                   </Button>
                 </div>
@@ -101,7 +100,11 @@ function Cart(props) {
             <h1>{numberWithCommas(totalCart)}đ</h1>
           </div>
           <div className="link-to-checkout">
-            <Link to="checkouts">Thanh toán</Link>
+            {totalCart ? (
+              <Link to="/checkouts">Thanh toán</Link>
+            ) : (
+              <Link to="/">Mua sắm</Link>
+            )}
           </div>
         </section>
       </div>
