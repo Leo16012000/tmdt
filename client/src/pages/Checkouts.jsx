@@ -18,10 +18,11 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-
 import sendMessage from "../account/sendMessage";
 import LocalPicker from "../vietnamlocalselector";
+import { Select } from 'antd';
 
+import { AddressService } from "../service/GHN/AddressService";
 import "../styles/Checkouts.css";
 
 const axios = require("axios");
@@ -45,9 +46,55 @@ function Checkouts(props) {
   const [values, setValues] = useState(defaultInfo);
   const [expanded, setExpanded] = useState("panel1");
   const [method, setMethod] = useState("momo");
-  const [fee, setFee] = useState(1387600);
+  const [fee, setFee] = useState(0);
   const [open, setOpen] = useState(false);
+  const { Option } = Select;
+
+  const [province,setProvince]= useState(null);
+  const [district,setDistrict]= useState(null);
+  const [ward,setWard]= useState(null);
+  const [address,setAddress] = useState({province:null,district:null,ward:null});
+
   var finalPrice = 0;
+
+  useEffect(() => {
+    async function getProvince() {
+      // You can await here
+      const res = await AddressService.getProvince();
+      setProvince(res.data);   
+    }
+    getProvince();
+  }, []);
+
+  const handleChangeProvince=(e,o)=>{
+    console.log("e",e);
+    setAddress({...address,province:e.children});
+    async function getDistrict() {
+      // You can await here
+      const res = await AddressService.getDistrict(e.value);
+      setDistrict(res.data);   
+    }
+    getDistrict();
+  }
+  const handleChangeDistrict=(e)=>{
+    setAddress({...address,district:e.children});
+    async function getWard() {
+      // You can await here
+      const res = await AddressService.getWard(e.value);
+      setWard(res.data);   
+    }
+    getWard();
+  }
+  const handleChangeWard=(e)=>{
+    setAddress({...address,ward:e.children});
+    async function calculateFee() {
+      // You can await here
+      const res = await AddressService.calculateFee(e.value);
+      setFee(res.data);   
+    }
+    calculateFee();  }
+
+  useEffect(()=>{console.log(address);},[address])
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -60,31 +107,32 @@ function Checkouts(props) {
   function moveNextStep(isCOD) {
     var errors = [];
 
-    const ls_province =
-      document.getElementById("ls_province").selectedOptions[0];
+    // const ls_province =
+    //   document.getElementById("ls_province").selectedOptions[0];
 
-    const ls_district = document.getElementById("ls_district");
+    // const ls_district = document.getElementById("ls_district");
 
-    const ls_ward = document.getElementById("ls_ward");
+    // const ls_ward = document.getElementById("ls_ward");
 
     if (!values.displayName) errors.push("Tên không được để trống!");
     if (!values.phoneNumber) errors.push("Số điện thoại không được để trống!");
     if (!values.address) errors.push("Địa chỉ không được để trống!");
 
-    if (expanded === "panel1" && !ls_ward.value)
+    if (expanded === "panel1" && !address.ward)
       errors.push("Vui lòng chọn địa chỉ giao hàng!");
 
     if (errors?.length)
       errors.map((err) => sendMessage("Error happened!", err, "danger"));
     else {
-      const addressDelivery =
-        ls_ward.selectedOptions[0].innerText +
-        ", " +
-        ls_district.selectedOptions[0].innerText +
-        ", " +
-        ls_province.dataset.level +
-        " " +
-        ls_province.innerText;
+      // const addressDelivery =
+      //   ls_ward.selectedOptions[0].innerText +
+      //   ", " +
+      //   ls_district.selectedOptions[0].innerText +
+      //   ", " +
+      //   ls_province.dataset.level +
+      //   " " +
+      //   ls_province.innerText;
+      const addressDelivery=address.province+" "+address.district+" "+address.ward;
       console.log("addressDelivery: ", addressDelivery);
       // // dispatch order info
       // dispatch(sendOrderInfo(values)); //late for a value
@@ -97,38 +145,6 @@ function Checkouts(props) {
       if (isCOD) history.push("/update-order");
     }
   }
-  const getFee = () => {
-    const config = {
-      headers: {
-        token: "69ace0ab-ac82-11eb-8be2-c21e19fc6803",
-        ShopId: 79749,
-      },
-    };
-    const bodyParameter = {
-      from_district_id: 1444,
-      service_id: 53320,
-      service_type_id: 2,
-      to_district_id: 1444,
-      to_ward_code: "20308",
-      height: 1,
-      length: 1,
-      weight: 1,
-      width: 1,
-      insurance_fee: 1000000,
-      coupon: null,
-    };
-    axios
-      .post(
-        "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
-        bodyParameter,
-        config
-      )
-      .then((res) => {
-        console.log(res.data, "get fee data");
-        setFee(res.data.total);
-      })
-      .catch((err) => console.log(err));
-  };
   const SendPayment = () => {
     // send order infomation into redux
     console.log(values);
@@ -255,15 +271,15 @@ function Checkouts(props) {
                 <Typography>Giao hàng</Typography>
               </AccordionSummary>
               <AccordionDetails className="selectContainer">
-                <div class="select">
-                  <select id="ls_province" />
-                </div>
-                <div class="select">
-                  <select id="ls_district" />
-                </div>
-                <div class="select">
-                  <select id="ls_ward" />
-                </div>
+              <Select defaultValue="Chọn tỉnh,thành phố" style={{ width: 150 }} onChange={(value,e)=>handleChangeProvince(e)}>
+                {province? province.map(item=><Option value={item.ProvinceID}>{item.ProvinceName}</Option>):<></>}
+              </Select>
+              <Select defaultValue="Chọn quận,huyện" style={{ width: 150 }} onChange={(value,e)=>handleChangeDistrict(e)}>
+                {district? district.map(item=><Option value={item.DistrictID}>{item.DistrictName}</Option>):<></>}
+              </Select>
+              <Select defaultValue="Chọn xã,phường" style={{ width: 150 }} onChange={(value,e)=>handleChangeWard(e)}>
+                {ward? ward.map(item=><Option value={item.WardCode}>{item.WardName}</Option>):<></>}
+              </Select>
               </AccordionDetails>
             </Accordion>
           </div>
