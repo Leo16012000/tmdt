@@ -178,6 +178,7 @@ function Account(props) {
     // Xác thực sđt trước
     if (
       values.phoneNumber &&
+      currentUser.phoneNumber &&
       currentUser.phoneNumber.substr(3) !== values.phoneNumber.substr(1)
     ) {
       window.appVerifier = new firebase.auth.RecaptchaVerifier(
