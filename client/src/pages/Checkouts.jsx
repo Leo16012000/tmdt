@@ -114,6 +114,7 @@ function Checkouts(props) {
       res = await FeeService.calculateFee(values).catch((error)=>{
         err = "Chưa có dịch vụ vận chuyển đến địa điểm này,xin thứ lỗi";				
         sendMessage("Chưa có dịch vụ vận chuyển đến địa điểm này,xin thứ lỗi",error.toString(), "danger");
+        setWardId(null);setDistrictId(null);
     });
     console.log(err);
       if(!err) setFee(res.data.total);   
