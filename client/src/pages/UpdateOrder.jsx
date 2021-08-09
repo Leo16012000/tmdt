@@ -1,30 +1,24 @@
 import React, { useContext } from "react";
-import PropTypes from "prop-types";
-import axios from "axios";
-import sendMessage from "../account/sendMessage";
-import { Button, CircularProgress } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
+import { CircularProgress } from "@material-ui/core";
+import {useSelector,useDispatch } from "react-redux";
 import { AuthContext } from "../account/Auth";
-import { Alert, AlertTitle } from "@material-ui/lab";
 import "../styles/UpdateOrder.scss";
-import { resetCart } from "../redux/action";
 import { useHistory } from "react-router";
 
 function UpdateOrder(props) {
   const history = useHistory();
-  const dispatch = useDispatch();
   const axios = require("axios");
   const { currentUser } = useContext(AuthContext);
   let orderInfo = useSelector((state) => state.orderInfo);
-  console.log("orderInfo:", orderInfo);
   const listCart = useSelector((state) => state.listCart);
+  const districtId=useSelector(state=>state.toDistrictId);
+  const wardId=useSelector(state=>state.toWardId);
   const realListCart = listCart.filter((cart) => cart.quantity > 0); //realListCart have quanity>0
   console.log(realListCart);
   const addressDelivery = useSelector((state) => state.addressDelivery);
   const paymentMethod = useSelector((state) => state.isCOD);
   let createDataReturn = {};
   let dataInfoReturn = {};
-  let orderDetail = {};
 
   // calculate totalCart
   let totalCart = 0;
@@ -47,27 +41,27 @@ function UpdateOrder(props) {
     payment_type_id: 2,
     note: addressDelivery,
     required_note: "KHONGCHOXEMHANG",
-    return_phone: "0353323643",
+    return_phone: "0983098604",
     return_address: "39 NTT",
-    return_district_id: null,
-    return_ward_code: "",
+    return_district_id: 3695,
+    return_ward_code: "90743",
     client_order_code: "",
     to_name: orderInfo.displayName, // here
     to_phone: orderInfo.phoneNumber, // here
     to_address: orderInfo.address, // here
-    to_ward_code: "20308", //
-    to_district_id: 1444, //
+    to_ward_code: wardId, //
+    to_district_id: districtId, //
     cod_amount: 200000, // tổng tiền trả
     content: "Theo New York Times",
-    weight: 1500, //150g
-    length: 10, //10cm
-    width: 10, //10cm
-    height: 10, //10cm
-    pick_station_id: 1444,
+    weight: 200, //150g
+    length: 20, //10cm
+    width: 20, //10cm
+    height: 50, //10cm
+    pick_station_id: 1370,
     deliver_station_id: null,
-    insurance_value: 10000000,
-    service_id: 0, //express standard saving
-    service_type_id: 2,
+    insurance_value: 10000,
+    service_id: 53320, //express standard saving
+    service_type_id: null,
     order_value: 130000, //???
     coupon: null,
     pick_shift: [2],

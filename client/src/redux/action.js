@@ -11,6 +11,7 @@ import {
   QUANTITY_MODIFIER,
   SEND_ORDER_INFO,
   RESET_CART,
+  TO_ADDRESS,
 } from "./types";
 
 export const roomFilter = (value) => {
@@ -65,4 +66,7 @@ export const sendOrderInfo = (orderInfo, addressDelivery, isCOD) => {
 
 export const resetCart = () => {
   return { type: RESET_CART};
+};
+export const toAddress = (districtId,wardId) => {
+  return { type: TO_ADDRESS,districtId,wardId};
 };

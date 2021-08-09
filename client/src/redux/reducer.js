@@ -10,7 +10,8 @@ import {
   REMOVE_CART,
   QUANTITY_MODIFIER,
   SEND_ORDER_INFO,
-  RESET_CART
+  RESET_CART,
+  TO_ADDRESS
 } from "./types";
 
 const initialState = {
@@ -24,32 +25,9 @@ const initialState = {
   orderInfo: {},
   addressDelivery: "",
   isCOD: 1,
-  listCart: [
-    {
-      id: 1,
-      image:
-        "https://product.hstatic.net/1000360516/product/7_a484fc6a967b4ffb83b65a51046c2bb4_master.jpg",
-      name: "BỘ BÀN ĂN CABIN 4 GHẾ XUẤT KHẨU",
-      quantity: 1,
-      unitCost: 2850000,
-    },
-    {
-      id: 2,
-      image:
-        "https://product.hstatic.net/1000360516/product/cover_ke-da-nang_600-_01__2a141d8a90804058930083a7a4c8646b_master.jpg",
-      name: "KỆ TRANG TRÍ ĐA NĂNG 3 TẦNG",
-      quantity: 2,
-      unitCost: 2600000,
-    },
-    {
-      id: 3,
-      image:
-        "https://product.hstatic.net/1000360516/product/3_6af68c1787fe43d5af687508793262f0_master.jpg",
-      name: "TỦ TRANG TRÍ SUNNY 1000",
-      quantity: 2,
-      unitCost: 7264000,
-    },
-  ],
+  listCart: [],
+  toDistrictId:null,
+  toWardId:null
 };
 
 const appReducer = (state = initialState, action) => {
@@ -146,6 +124,13 @@ const appReducer = (state = initialState, action) => {
       return {
         ...state,
           listCart : []
+      };
+    }
+    case TO_ADDRESS: {
+      return {
+        ...state,
+        toDistrictId:action.districtId,
+        toWardId:action.wardId,
       };
     }
 

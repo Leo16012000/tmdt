@@ -1,6 +1,6 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { sendOrderInfo } from "../redux/action";
+import { sendOrderInfo, toAddress } from "../redux/action";
 import { AuthContext } from "../account/Auth";
 import { Link, useHistory } from "react-router-dom";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
@@ -94,10 +94,10 @@ function Checkouts(props) {
     getWard();
   }
   const handleChangeWard=(e)=>{
-    setAddress({...address,ward:e.children});
     setWardId(e.value);
+    setAddress({...address,ward:e.children});
     const values={
-      from_district_id:1454,
+      from_district_id:3695,
       service_id:53320,
       service_type_id:null,
       to_district_id:districtId,
@@ -117,13 +117,11 @@ function Checkouts(props) {
         setWardId(null);setDistrictId(null);
     });
     console.log(err);
-      if(!err) setFee(res.data.total);   
+      if(!err) {setFee(res.data.total);console.log("test:",districtId,wardId);}   
     }
     calculateFee();  }
 
-  useEffect(() => {
-    console.log(address);
-  }, [address]);
+  useEffect(() => {dispatch(toAddress(districtId,wardId))}, [wardId]);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -161,7 +159,7 @@ function Checkouts(props) {
     //
     if (method === "momo")
       axios
-        .post("/api/momo", { amount: finalPrice })
+        .post("/api/momo", { amount: fee+finalPrice })
         .then((res) => {
           const dataRes = res.data;
           if (dataRes.statusCode === 200)
@@ -185,7 +183,7 @@ function Checkouts(props) {
     else if (method === "vnpay") {
       axios
         .post("/create_payment_url", {
-          amount: finalPrice,
+          amount: fee+finalPrice,
           language: "vn",
           orderDescription: "Thanh toan noi that",
           orderType: "Noi that",
