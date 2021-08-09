@@ -55,12 +55,9 @@ function Checkouts(props) {
   const [district,setDistrict]= useState(null);
   const [ward,setWard]= useState(null);
   const [districtId,setDistrictId]= useState(null);
+  const [wardId,setWardId]= useState(null);
   const [address,setAddress] = useState({province:null,district:null,ward:null});
 
-
-  const districtSelect = useRef();
-  const districtElement = document.getElementById("district");
-  const wardElement = document.getElementById("ward");
   var finalPrice = 0;
 
   useEffect(() => {
@@ -70,11 +67,10 @@ function Checkouts(props) {
     }
     getProvince();
   }, []);
-
+  useEffect(()=>console.log(districtId,wardId),[districtId,wardId])
   const handleChangeProvince=(e)=>{
     setAddress({...address,province:e.children});
-    console.log(districtElement);
-    console.log(districtSelect.current);
+    setDistrictId(null);setWardId(null);
     // wardElement.children="Chọn xã,phường";
     async function getDistrict() {
       const res = await AddressService.getDistrict(e.value);
@@ -84,6 +80,7 @@ function Checkouts(props) {
   }
   const handleChangeDistrict=(e)=>{
     setAddress({...address,district:e.children});
+    setWardId(null);
     setDistrictId(e.value);
     async function getWard() {
       const res = await AddressService.getWard(e.value);
@@ -93,6 +90,7 @@ function Checkouts(props) {
   }
   const handleChangeWard=(e)=>{
     setAddress({...address,ward:e.children});
+    setWardId(e.value);
     const values={
       from_district_id:1454,
       service_id:53320,
@@ -131,7 +129,7 @@ function Checkouts(props) {
     if (!values.phoneNumber) errors.push("Số điện thoại không được để trống!");
     if (!values.address) errors.push("Địa chỉ không được để trống!");
 
-    if (expanded === "panel1" && !address.ward)
+    if (expanded === "panel1" && !wardId)
       errors.push("Vui lòng chọn địa chỉ giao hàng!");
 
     if (errors?.length)
@@ -271,16 +269,14 @@ function Checkouts(props) {
                 <Typography>Giao hàng</Typography>
               </AccordionSummary>
               <AccordionDetails className="selectContainer">
-              <Select  defaultValue="Chọn tỉnh,thành phố" style={{ width: 150 }} onChange={(value,e)=>handleChangeProvince(e)}>
+              <Select placeholder="Chọn tỉnh,thành phố" style={{ width: 150 }} onChange={(value,e)=>handleChangeProvince(e)}>
               <Option value={0}>Chọn tỉnh,thành phố</Option>
                 {province? province.map(item=><Option value={item.ProvinceID}>{item.ProvinceName}</Option>):<></>}
               </Select>
-              <Select ref={districtSelect} id="district" defaultValue="Chọn quận,huyện" style={{ width: 150 }} onChange={(value,e)=>handleChangeDistrict(e)}>
-              <Option value={0}>Chọn quận,huyện</Option>
+              <Select value={districtId} id="district" placeholder="Chọn quận,huyện" style={{ width: 150 }} onChange={(value,e)=>handleChangeDistrict(e)}>
                 {district? district.map(item=><Option value={item.DistrictID}>{item.DistrictName}</Option>):<></>}
               </Select>
-              <Select id="ward" defaultValue="Chọn xã,phường" style={{ width: 150 }} onChange={(value,e)=>handleChangeWard(e)}>
-              <Option value={0}>Chọn xã,phường</Option>
+              <Select value={wardId} id="ward" placeholder="Chọn xã,phường" style={{ width: 150 }} onChange={(value,e)=>handleChangeWard(e)}>
                 {ward? ward.map(item=><Option value={item.WardCode}>{item.WardName}</Option>):<></>}
               </Select>
               </AccordionDetails>
