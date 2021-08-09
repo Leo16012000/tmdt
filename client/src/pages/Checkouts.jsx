@@ -22,6 +22,7 @@ import sendMessage from "../account/sendMessage";
 import LocalPicker from "../vietnamlocalselector";
 import { Select } from 'antd';
 
+
 import { AddressService } from "../service/GHN/AddressService";
 import "../styles/Checkouts.css";
 import { FeeService } from "../service/GHN/FeeService";
@@ -57,6 +58,8 @@ function Checkouts(props) {
   const [districtId,setDistrictId]= useState(null);
   const [wardId,setWardId]= useState(null);
   const [address,setAddress] = useState({province:null,district:null,ward:null});
+
+  let err=null;
 
   var finalPrice = 0;
 
@@ -106,9 +109,12 @@ function Checkouts(props) {
       }
     async function calculateFee() {
       let res={};
-      res = await FeeService.calculateFee(values);
-      console.log("res:",res.data.total);
-      setFee(res.data.total);   
+      res = await FeeService.calculateFee(values).catch((error)=>{
+        err = "Chưa có dịch vụ vận chuyển đến địa điểm này,xin thứ lỗi";				
+        sendMessage("Chưa có dịch vụ vận chuyển đến địa điểm này,xin thứ lỗi",error.toString(), "danger");
+    });
+    console.log(err);
+      if(!err) setFee(res.data.total);   
     }
     calculateFee();  }
 
@@ -270,7 +276,6 @@ function Checkouts(props) {
               </AccordionSummary>
               <AccordionDetails className="selectContainer">
               <Select placeholder="Chọn tỉnh,thành phố" style={{ width: 150 }} onChange={(value,e)=>handleChangeProvince(e)}>
-              <Option value={0}>Chọn tỉnh,thành phố</Option>
                 {province? province.map(item=><Option value={item.ProvinceID}>{item.ProvinceName}</Option>):<></>}
               </Select>
               <Select value={districtId} id="district" placeholder="Chọn quận,huyện" style={{ width: 150 }} onChange={(value,e)=>handleChangeDistrict(e)}>
