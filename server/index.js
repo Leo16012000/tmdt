@@ -200,7 +200,7 @@ const PORT = 3001;
 const db = mysql.createPool({
     host: "localhost",
     user: "root",
-    password: "sanglaso1",
+    password: "123456",
     database: "tmdt_ass2004",
 });
 

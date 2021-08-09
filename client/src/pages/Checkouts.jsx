@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOrderInfo } from "../redux/action";
 import { AuthContext } from "../account/Auth";
@@ -25,8 +25,10 @@ import sendMessage from "../account/sendMessage";
 import LocalPicker from "../vietnamlocalselector";
 import { Select } from "antd";
 
+
 import { AddressService } from "../service/GHN/AddressService";
 import "../styles/Checkouts.css";
+import { FeeService } from "../service/GHN/FeeService";
 
 const axios = require("axios");
 const db = firebase.firestore();
@@ -52,54 +54,72 @@ function Checkouts(props) {
   const [open, setOpen] = useState(false);
   const { Option } = Select;
 
-  const [province, setProvince] = useState(null);
-  const [district, setDistrict] = useState(null);
-  const [ward, setWard] = useState(null);
-  const [address, setAddress] = useState({
-    province: null,
-    district: null,
-    ward: null,
-  });
+  const [province,setProvince]= useState(null);
+  const [district,setDistrict]= useState(null);
+  const [ward,setWard]= useState(null);
+  const [districtId,setDistrictId]= useState(null);
+  const [wardId,setWardId]= useState(null);
+  const [address,setAddress] = useState({province:null,district:null,ward:null});
+
+  let err=null;
 
   var finalPrice = 0;
 
   useEffect(() => {
     async function getProvince() {
-      // You can await here
       const res = await AddressService.getProvince();
       setProvince(res.data);
     }
     getProvince();
   }, []);
-
-  const handleChangeProvince = (e, o) => {
-    console.log("e", e);
-    setAddress({ ...address, province: e.children });
+  useEffect(()=>console.log(districtId,wardId),[districtId,wardId])
+  const handleChangeProvince=(e)=>{
+    setAddress({...address,province:e.children});
+    setDistrictId(null);setWardId(null);
+    // wardElement.children="Chọn xã,phường";
     async function getDistrict() {
-      // You can await here
       const res = await AddressService.getDistrict(e.value);
       setDistrict(res.data);
     }
     getDistrict();
-  };
-  const handleChangeDistrict = (e) => {
-    setAddress({ ...address, district: e.children });
+  }
+  const handleChangeDistrict=(e)=>{
+    setAddress({...address,district:e.children});
+    setWardId(null);
+    setDistrictId(e.value);
     async function getWard() {
-      // You can await here
       const res = await AddressService.getWard(e.value);
       setWard(res.data);
     }
     getWard();
-  };
-  const handleChangeWard = (e) => {
-    setAddress({ ...address, ward: e.children });
-    // async function calculateFee() {
-    //   // You can await here
-    //   const res = await AddressService.calculateFee(e.value);
-    //   setFee(res.data);
-    // }
-    // calculateFee();
-  };
+  }
+  const handleChangeWard=(e)=>{
+    setAddress({...address,ward:e.children});
+    setWardId(e.value);
+    const values={
+      from_district_id:1454,
+      service_id:53320,
+      service_type_id:null,
+      to_district_id:districtId,
+      to_ward_code:e.value,
+      height:50,
+      length:20,
+      weight:200,
+      width:20,
+      insurance_fee:10000,
+      coupon: null
+      }
+    async function calculateFee() {
+      let res={};
+      res = await FeeService.calculateFee(values).catch((error)=>{
+        err = "Chưa có dịch vụ vận chuyển đến địa điểm này,xin thứ lỗi";				
+        sendMessage("Chưa có dịch vụ vận chuyển đến địa điểm này,xin thứ lỗi",error.toString(), "danger");
+        setWardId(null);setDistrictId(null);
+    });
+    console.log(err);
+      if(!err) setFee(res.data.total);   
+    }
+    calculateFee();  }
 
   useEffect(() => {
     console.log(address);
@@ -116,39 +136,18 @@ function Checkouts(props) {
   function moveNextStep(isCOD) {
     var errors = [];
 
-    // const ls_province =
-    //   document.getElementById("ls_province").selectedOptions[0];
-
-    // const ls_district = document.getElementById("ls_district");
-
-    // const ls_ward = document.getElementById("ls_ward");
-
     if (!values.displayName) errors.push("Tên không được để trống!");
     if (!values.phoneNumber) errors.push("Số điện thoại không được để trống!");
     if (!values.address) errors.push("Địa chỉ không được để trống!");
 
-    if (expanded === "panel1" && !address.ward)
+    if (expanded === "panel1" && !wardId)
       errors.push("Vui lòng chọn địa chỉ giao hàng!");
 
     if (errors?.length)
       errors.map((err) => sendMessage("Error happened!", err, "danger"));
     else {
-      // const addressDelivery =
-      //   ls_ward.selectedOptions[0].innerText +
-      //   ", " +
-      //   ls_district.selectedOptions[0].innerText +
-      //   ", " +
-      //   ls_province.dataset.level +
-      //   " " +
-      //   ls_province.innerText;
-      const addressDelivery =
-        address.province + " " + address.district + " " + address.ward;
+      const addressDelivery=address.ward+" "+address.district+" "+address.province;
       console.log("addressDelivery: ", addressDelivery);
-      // // dispatch order info
-      // dispatch(sendOrderInfo(values)); //late for a value
-      // console.log(values);
-      //open dialog?
-      console.log(values);
       dispatch(sendOrderInfo(values, addressDelivery, isCOD)); //late for a value
       console.log("vnpay run into here", values, addressDelivery, isCOD);
       setOpen(!isCOD);
@@ -288,46 +287,15 @@ function Checkouts(props) {
                 <Typography>Giao hàng</Typography>
               </AccordionSummary>
               <AccordionDetails className="selectContainer">
-                <Select
-                  defaultValue="Chọn tỉnh,thành phố"
-                  style={{ width: 150 }}
-                  onChange={(value, e) => handleChangeProvince(e)}>
-                  {province ? (
-                    province.map((item) => (
-                      <Option value={item.ProvinceID}>
-                        {item.ProvinceName}
-                      </Option>
-                    ))
-                  ) : (
-                    <></>
-                  )}
-                </Select>
-                <Select
-                  defaultValue="Chọn quận,huyện"
-                  style={{ width: 150 }}
-                  onChange={(value, e) => handleChangeDistrict(e)}>
-                  {district ? (
-                    district.map((item) => (
-                      <Option value={item.DistrictID}>
-                        {item.DistrictName}
-                      </Option>
-                    ))
-                  ) : (
-                    <></>
-                  )}
-                </Select>
-                <Select
-                  defaultValue="Chọn xã,phường"
-                  style={{ width: 150 }}
-                  onChange={(value, e) => handleChangeWard(e)}>
-                  {ward ? (
-                    ward.map((item) => (
-                      <Option value={item.WardCode}>{item.WardName}</Option>
-                    ))
-                  ) : (
-                    <></>
-                  )}
-                </Select>
+              <Select placeholder="Chọn tỉnh,thành phố" style={{ width: 150 }} onChange={(value,e)=>handleChangeProvince(e)}>
+                {province? province.map(item=><Option value={item.ProvinceID}>{item.ProvinceName}</Option>):<></>}
+              </Select>
+              <Select value={districtId} id="district" placeholder="Chọn quận,huyện" style={{ width: 150 }} onChange={(value,e)=>handleChangeDistrict(e)}>
+                {district? district.map(item=><Option value={item.DistrictID}>{item.DistrictName}</Option>):<></>}
+              </Select>
+              <Select value={wardId} id="ward" placeholder="Chọn xã,phường" style={{ width: 150 }} onChange={(value,e)=>handleChangeWard(e)}>
+                {ward? ward.map(item=><Option value={item.WardCode}>{item.WardName}</Option>):<></>}
+              </Select>
               </AccordionDetails>
             </Accordion>
           </div>
