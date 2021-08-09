@@ -288,7 +288,36 @@ app.get("/api/saveOrder", (req, res) => {
         }
     );
 });
-//
+//-----------------------------------------------admin----------------------------------------------------------
+//delete product by id
+app.post("/api/product/delete", (req, res) => {
+    console.log(req.query);
+    const sqlDelete =
+        "DELETE FROM `product` where ID=?;"; //lệnh đúng rồi
+    db.query(
+        sqlDelete,
+        [req.body.ID],
+        (err, result) => {
+            if (err) console.log(err);
+            console.log(result);
+            res.send(result);
+        }
+    );
+});
+//update product by id
+app.put("/api/product/update", (req, res) => {
+    const sqlUpdate = "UPDATE `product` SET Price = ?,Fullname=?,Detail=?,State=?,Image=?,SellerId=?,Category=?,KindOfRoom=? WHERE ID = ?"; 
+    db.query(
+        sqlUpdate,
+        [req.body.price,req.body.fullname,req.body.detail,req.body.state,req.body.image,+req.body.sellerid,req.body.category,+req.body.kind_of_room,+req.body.ID]
+        ,(err, result) => {
+            if (err) console.log(err);
+            console.log(result);
+            res.send(result);
+        }
+    );
+});
+
 
 app.listen(PORT, () => {
     console.log("running on port ", PORT);
