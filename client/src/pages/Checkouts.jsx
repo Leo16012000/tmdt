@@ -18,6 +18,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+
+import firebase from "firebase/app";
+
 import sendMessage from "../account/sendMessage";
 import LocalPicker from "../vietnamlocalselector";
 import { Select } from 'antd';
@@ -28,6 +31,7 @@ import "../styles/Checkouts.css";
 import { FeeService } from "../service/GHN/FeeService";
 
 const axios = require("axios");
+const db = firebase.firestore();
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -37,15 +41,13 @@ function Checkouts(props) {
   let history = useHistory();
   const dispatch = useDispatch();
   const { currentUser } = useContext(AuthContext);
-  const defaultInfo = currentUser
-    ? {
-        email: currentUser.email,
-        displayName: currentUser.displayName,
-        phoneNumber: currentUser.phoneNumber,
-      }
-    : {};
   const listCart = useSelector((state) => state.listCart);
-  const [values, setValues] = useState(defaultInfo);
+  const [values, setValues] = useState({
+    displayName: "",
+    phoneNumber: "",
+    photoUrl: "",
+    address: "",
+  });
   const [expanded, setExpanded] = useState("panel1");
   const [method, setMethod] = useState("momo");
   const [fee, setFee] = useState(0);
@@ -198,6 +200,15 @@ function Checkouts(props) {
 
   useEffect(() => {
     // Load Location
+    if (currentUser) {
+      const docRef = db.collection("Infos").doc(currentUser.email);
+
+      docRef.get().then((doc) => {
+        console.log(doc.data());
+        if (doc.exists) setValues(doc.data());
+      });
+    }
+
     LocalPicker();
   }, []);
   //   getFee();
@@ -208,8 +219,7 @@ function Checkouts(props) {
           <h3>Dongsuh Furniture</h3>
           <Breadcrumbs
             separator={<NavigateNextIcon fontSize="small" />}
-            aria-label="breadcrumb"
-          >
+            aria-label="breadcrumb">
             <Link color="inherit" to="/cart">
               Giỏ hàng
             </Link>
@@ -232,7 +242,7 @@ function Checkouts(props) {
             id="fullName"
             required
             onChange={handleChange("displayName")}
-            defaultValue={currentUser ? currentUser.displayName : ""}
+            value={values.displayName ? values.displayName : ""}
             fullWidth
           />
           <TextField
@@ -240,7 +250,7 @@ function Checkouts(props) {
             variant="outlined"
             margin="dense"
             onChange={handleChange("email")}
-            defaultValue={currentUser ? currentUser.email : ""}
+            value={currentUser ? currentUser.email : ""}
             id="email"
           />
           <TextField
@@ -249,7 +259,7 @@ function Checkouts(props) {
             margin="dense"
             required
             onChange={handleChange("phoneNumber")}
-            defaultValue={currentUser ? currentUser.phoneNumber : ""}
+            value={values ? values.phoneNumber : ""}
             id="phoneNumber"
           />
           <TextField
@@ -259,19 +269,18 @@ function Checkouts(props) {
             id="address"
             required
             onChange={handleChange("address")}
+            value={values ? values.address : ""}
             fullWidth
           />
 
           <div className="Checkouts__delivery">
             <Accordion
               expanded={expanded === "panel1"}
-              onChange={() => setExpanded("panel1")}
-            >
+              onChange={() => setExpanded("panel1")}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
+                id="panel1a-header">
                 <Typography>Giao hàng</Typography>
               </AccordionSummary>
               <AccordionDetails className="selectContainer">
@@ -310,8 +319,7 @@ function Checkouts(props) {
             open={open}
             maxWidth="xl"
             onClose={handleClickDialog}
-            aria-labelledby="responsive-dialog-title"
-          >
+            aria-labelledby="responsive-dialog-title">
             <DialogTitle id="responsive-dialog-title">
               PHƯƠNG THỨC THANH TOÁN
             </DialogTitle>
@@ -324,8 +332,7 @@ function Checkouts(props) {
                   className={`col-auto mr-sm-2 mx-1 card-block py-0 text-center radio ${
                     method === "momo" ? "selected" : ""
                   }`}
-                  onClick={() => setMethod("momo")}
-                >
+                  onClick={() => setMethod("momo")}>
                   <div className="flex-row">
                     <div className="col">
                       <div className="pic">
@@ -345,8 +352,7 @@ function Checkouts(props) {
                   className={`col-auto mr-sm-2 mx-1 card-block py-0 text-center radio ${
                     method === "vnpay" ? "selected" : ""
                   }`}
-                  onClick={() => setMethod("vnpay")}
-                >
+                  onClick={() => setMethod("vnpay")}>
                   <div className="flex-row">
                     <div className="col">
                       <div className="pic">

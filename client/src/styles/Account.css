@@ -1,34 +1,50 @@
 .Login__Form > a,
 .Register__Form > a {
-	cursor: pointer;
-	display: flex;
-	justify-content: flex-end;
-	padding-right: 40px;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 40px;
 }
 
 .Login__Form,
 .Register__Form {
-	width: 100%;
+  width: 100%;
 }
 
 .Login__Form > *,
 .Register__Form > * {
-	margin: 0 auto !important;
-	max-width: 280px !important;
+  margin: 0 auto !important;
+  max-width: 280px !important;
 }
 
 .Login__Form button,
 .Register__Form button {
-	margin-top: 30px !important;
+  margin-top: 30px !important;
 }
 
 .Account__profile {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  margin: 25px auto;
 }
 
-.Account__profile > * {
-	max-width: 500px;
-	margin-top: 30px !important;
+.Account__profile .container {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.Account__profile .container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.Account__profile .btn-action {
+  gap: 5px;
+  max-width: 200px;
+  margin: 30px auto 0 auto;
+  display: flex;
+  flex-direction: column;
 }
