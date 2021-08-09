@@ -9,7 +9,7 @@ import { Button } from "@material-ui/core";
 
 const sliderImage = [
 	{ src: "https://theme.hstatic.net/1000360516/1000609234/14/slideshow_1.png" },
-	{ src: "https://theme.hstatic.net/1000360516/1000609234/14/slideshow_2.png" },
+	{ src: "https://theme.hstatic.net/1000360516/1000730119/14/slideshow_1.png?v=20" },
 	{ src: "https://theme.hstatic.net/1000360516/1000609234/14/slideshow_3.png" },
 	{ src: "https://theme.hstatic.net/1000360516/1000609234/14/slideshow_4.png" },
 	{ src: "https://theme.hstatic.net/1000360516/1000609234/14/slideshow_5.png" },
