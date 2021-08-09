@@ -44,7 +44,7 @@ function Orders() {
   if (!currentUser) return <Redirect to="/account" />;
 
   return (
-    <div class="container Orders__container">
+    <div class="Orders__container">
       <div class="table-responsive">
         <div class="table-wrapper">
           <div class="table-title">
@@ -63,34 +63,35 @@ function Orders() {
                 <th>Nội dung</th>
                 <th>Địa chỉ nhận hàng</th>
                 <th>Thành tiền</th>
-                <th> Trạng thái đơn hàng</th>
-                <th> Thời gian giao hàng</th>
+                <th>Trạng thái đơn hàng</th>
+                <th>Thời gian giao hàng</th>
+                <th>Hoạt động</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>
-                  <a href="#">Michael Holz</a>
-                </td>
-                <td>04/10/2013</td>
-                <td>Admin</td>
-                <td>
-                  <span class="status text-success">&bull;</span> Active
-                </td>
-                <td>
-                  <td>04/10/2013</td>
-                </td>
-                <td>
-                  <a
-                    href="#"
-                    class="delete"
-                    title="Delete"
-                    data-toggle="tooltip">
-                    <i class="material-icons">&#xE5C9;</i>
-                  </a>
-                </td>
-              </tr>
+              {item.map((row)=>(
+                 <tr>
+                 <td>{row.ID}</td>
+                 <td>{row.Content}</td>
+                 <td>{row.Address}</td>
+                 <td>{row.TotalPrice}</td>
+                 <td>
+                   <span class="status text-success">&bull;</span> {stateGHN[row.OrderState]}
+                 </td>
+                 <td>
+                   <td>{row.DeliveryExpectedTime.slice(0, -5).replace("T", " ")}</td>
+                 </td>
+                 <td>
+                   <a href="##"
+                     class="delete"
+                     title="Delete"
+                     data-toggle="tooltip">
+                     <i class="material-icons">&#xE5C9;</i>
+                   </a>
+                 </td>
+               </tr>
+              ))}
+             
             </tbody>
           </table>
         </div>
