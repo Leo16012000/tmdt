@@ -7,7 +7,7 @@ import {
 	Redirect,
 } from "react-router-dom";
 import { AuthContext } from "../account/Auth";
-import { Form, Input, InputNumber, Image, Button, Select, Layout, Menu, Breadcrumb, Upload, Table, Modal } from "antd";
+import { Form, Input, notification, InputNumber, Image, Button, Select, Layout, Menu, Breadcrumb, Upload, Table, Modal } from "antd";
 import "antd/dist/antd.css";
 import "../styles/Admin.css";
 import {
@@ -32,25 +32,14 @@ const layout = {
 		span: 16,
 	},
 };
+const openNotificationWithIcon = (type, message, des) => {
+	notification[type]({
+		message: message,
+		description: des,
+	});
+};
+
 const db = firebase.firestore();
-
-/* eslint-disable no-template-curly-in-string */
-
-// const orderState = [
-// 	{
-// 		value: "Hoàn tất",
-// 	},
-// 	{
-// 		value: "Đang thực hiện ...",
-// 	},
-// 	{
-// 		value: "Hủy",
-// 	},
-// ];
-
-// function onChange(value, selectedOptions) {
-// 	console.log(value, selectedOptions);
-// }
 
 const validateMessages = {
 	required: "${label} is required!",
@@ -166,12 +155,25 @@ function Admin() {
 
 function OrdersData() {
 	const [item, setItem] = useState([]);
+	const [data, setData] = useState([]);
 
 	useEffect(() => {
 		Axios.get(`http://localhost:3001/getAllOrders`).then((response) => {
 			setItem(response.data);
 		});
 	});
+
+	function handleUpdateStatus(value, record) {
+		Axios.put("/api/order/update", { ID: record.ID, state: value })
+			.then((res) => {
+				if (res.status === 200) {
+					openNotificationWithIcon('success', 'Thành công', 'Cập nhật trạng thái đơn hàng thành công!')
+				}
+			})
+			.catch((err) => {
+				openNotificationWithIcon('err', 'Thất bại', 'Đã có lỗi xảy ra!')
+			});
+	}
 
 	return (
 		<Table dataSource={item}>
@@ -183,9 +185,10 @@ function OrdersData() {
 				title="Trạng thái đơn hàng"
 				dataIndex="OrderState"
 				key="OrderState"
-				render={(OrderState) => {
+				render={(text, record) => {
+
 					return (
-						<Select defaultValue={OrderState} style={{ width: 150 }}>
+						<Select defaultValue={record.OrderState} style={{ width: 150 }} onChange={(value) => handleUpdateStatus(value, record)}>
 							<Option value="new">Đơn hàng mới</Option>
 							<Option value="processing">Đang được xử lý</Option>
 							<Option value="ready_to_pick">Đang được vận chuyển</Option>
@@ -268,10 +271,6 @@ function CollectionData() {
 
 	};
 
-	const handleOk = () => {
-		setIsModalVisible(false);
-	};
-
 	const handleCancel = () => {
 		setIsModalVisible(false);
 	};
@@ -283,17 +282,37 @@ function CollectionData() {
 	function handleSubmit(values) {
 		const newValues = {
 			...values,
-			image: image[0].url
+			ID: data.ID,
+			image: image[0] ? image[0].url : data.Image
 		}
-		console.log(newValues)
+		Axios.put("/api/product/update", newValues)
+			.then((res) => {
+				if (res.status === 200) {
+					openNotificationWithIcon('success', 'Thành công', 'Chỉnh sửa thông tin sản phẩm thành công')
+				}
+				setIsModalVisible(false);
+			})
+			.catch((err) => {
+				openNotificationWithIcon('err', 'Thất bại', 'Đã có lỗi xảy ra!')
+			});
 	}
 
-	const showConfirmModal = () => {
+	const showConfirmModal = (record) => {
 		setConfirmVisible(true);
+		setData(record)
 	};
 
 	const handleConfirmOk = () => {
-
+		Axios.post("/api/product/delete", { ID: data.ID })
+			.then((res) => {
+				if (res.status === 200) {
+					openNotificationWithIcon('success', 'Thành công', 'Xóa sản phẩm thành công')
+				}
+				setConfirmVisible(false);
+			})
+			.catch((err) => {
+				openNotificationWithIcon('err', 'Thất bại', 'Đã có lỗi xảy ra!')
+			});
 	};
 
 	const handleConfirmCancel = () => {
@@ -301,7 +320,6 @@ function CollectionData() {
 	};
 
 	const onImageChange = (event) => {
-		console.log(event)
 		if (event) {
 			const file = event;
 			var storageRef = firebase.storage().ref();
@@ -378,8 +396,6 @@ function CollectionData() {
 
 	useEffect(() => {
 		form.resetFields();
-		console.log(data)
-		console.log(image)
 	}, [data, image]);
 
 	return (
@@ -394,11 +410,11 @@ function CollectionData() {
 					render={(Price) => numberWithCommas(Price)}
 				/>
 				<Column title="Trạng thái sản phẩm" dataIndex="State" key="State" />
-				<Column title="Chỉnh sửa"
+				<Column title="Chỉnh sửa" width={220}
 					render={(text, record) => {
 						return (
-							<div>
-								<Button type="primary" onClick={() => showModal(record)}>
+							<div >
+								<Button type="primary" onClick={() => showModal(record)} style={{ marginRight: '10px' }}>
 									Chỉnh sửa
 								</Button>
 								<Button type="primary" danger onClick={() => showConfirmModal(record)}>
@@ -431,7 +447,8 @@ function CollectionData() {
 						price: data.Price,
 						category: data.Category,
 						kindOfRoom: data.KindOfRoom,
-						detail: data.Detail
+						detail: data.Detail,
+						state: data.State
 					}}
 				>
 					<Form.Item
@@ -497,7 +514,20 @@ function CollectionData() {
 							<Option value={4}>Phòng học/làm việc</Option>
 						</Select>
 					</Form.Item>
-
+					<Form.Item
+						name="state"
+						label="Tình trạng"
+						rules={[
+							{
+								required: false,
+							},
+						]}
+					>
+						<Select>
+							<Option value='còn hàng'>Còn hàng</Option>
+							<Option value='hết hang'>Hết hàng</Option>
+						</Select>
+					</Form.Item>
 					<Form.Item
 						name="detail"
 						label="Mô tả sản phẩm"
@@ -576,19 +606,7 @@ function AddItem() {
 
 	const [image, setImage] = useState([]);
 
-	useEffect(() => {
-		console.log(image)
-	}, [image])
-
-	// {
-	// 	uid: '-1',
-	// 		name: 'image.png',
-	// 			status: 'done',
-	// 				url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-	// 	},
-
 	const onImageChange = (event) => {
-		console.log(event)
 		if (event) {
 			const file = event;
 			var storageRef = firebase.storage().ref();
@@ -665,11 +683,12 @@ function AddItem() {
 		}
 		Axios.post("/api/product", newValues)
 			.then((res) => {
-				if (res.status === 200) console.log("success");
+				if (res.status === 200) {
+					openNotificationWithIcon('success', 'Thành công', 'Thêm sản phẩm mới thành công')
+				}
 			})
 			.catch((err) => {
-				console.log(newValues)
-				console.log("fail");
+				openNotificationWithIcon('err', 'Thất bại', 'Đã có lỗi xảy ra!')
 			});
 	}
 
