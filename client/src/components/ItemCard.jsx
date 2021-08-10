@@ -1,12 +1,12 @@
 import React from "react";
 // import SearchIcon from "@material-ui/icons/Search";
 // import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../styles/ItemCard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { addCart,quantityModifier } from "../redux/action";
+import { addCart, quantityModifier } from "../redux/action";
 import sendMessage from "../account/sendMessage";
 
 // function numberWithCommas(x) {
@@ -15,7 +15,7 @@ import sendMessage from "../account/sendMessage";
 
 function ItemCard(props) {
 
-	const param = '/detail?id=' + props.props.ID + '&fullname=' + props.props.Fullname + '&price=' + props.props.Price + '&des=' + props.props.Detail + '&img=' + props.props.Image
+	const param = '/detail?id=' + props.props.ID + '&fullname=' + props.props.Fullname + '&price=' + props.props.Price + '&des=' + props.props.Detail + '&img="' + props.props.Image + '"'
 
 	const dispatch = useDispatch();
 
@@ -90,7 +90,7 @@ function ItemCard(props) {
 								parseInt(props.props.Price) -
 								(parseInt(props.props.Price) *
 									parseInt(props.props.salePercent)) /
-									100
+								100
 							).toLocaleString()}
 							đ
 						</div>

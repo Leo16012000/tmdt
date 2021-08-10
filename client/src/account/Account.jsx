@@ -60,6 +60,7 @@ function Account(props) {
             case firebase.storage.TaskState.RUNNING: // or 'running'
               console.log("Upload is running");
               break;
+            default: break;
           }
         },
         (error) => {
@@ -78,6 +79,7 @@ function Account(props) {
             case "storage/unknown":
               // Unknown error occurred, inspect error.serverResponse
               break;
+            default: break;
           }
         },
         () => {
