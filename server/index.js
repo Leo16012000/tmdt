@@ -198,10 +198,10 @@ app.get("/vnpay_ipn", function (req, res, next) {
 const PORT = 3001;
 
 const db = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "123456",
-    database: "tmdt_ass2004",
+  host: "localhost",
+  user: "root",
+  password: "quan0402",
+  database: "tmdt_ass2004",
 });
 
 app.use(cors());
@@ -318,6 +318,32 @@ app.put("/api/product/update", (req, res) => {
     );
 });
 
+
+// add new item
+app.post("/api/product", (req, res) => {
+  console.log(req.body);
+  const sqlInsert =
+    "INSERT INTO product (Price,Fullname,Detail,State,Image,RatingPoint,SellerId,Category, KindOfRoom) VALUES (?,?,?,?,?,?,?,?,?);"; //lệnh đúng rồi
+  db.query(
+    sqlInsert,
+    [
+      req.body.price,
+      req.body.name,
+      req.body.detail,
+      'còn hàng',
+      req.body.image,
+      5,
+      2,
+      req.body.category,
+      req.body.kindOfRoom
+    ],
+    (err, result) => {
+      if (err) console.log(err);
+      console.log(result);
+      res.send(result);
+    }
+  );
+});
 
 app.listen(PORT, () => {
     console.log("running on port ", PORT);

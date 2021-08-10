@@ -7,17 +7,18 @@ import {
 	Redirect,
 } from "react-router-dom";
 import { AuthContext } from "../account/Auth";
-import { Form, Input, InputNumber, Button, Select } from "antd";
+import { Form, Input, InputNumber, Image, Button, Select, Layout, Menu, Breadcrumb, Upload, Table, Modal } from "antd";
 import "antd/dist/antd.css";
 import "../styles/Admin.css";
-import { Layout, Menu, Breadcrumb } from "antd";
 import {
 	UserOutlined,
 	LaptopOutlined,
 	NotificationOutlined,
+	UploadOutlined,
+	DeleteOutlined
 } from "@ant-design/icons";
 import Axios from "axios";
-import { Table } from "antd";
+import firebase from "firebase/app";
 const { Column } = Table;
 const { Search } = Input;
 const { SubMenu } = Menu;
@@ -31,6 +32,8 @@ const layout = {
 		span: 16,
 	},
 };
+const db = firebase.firestore();
+
 /* eslint-disable no-template-curly-in-string */
 
 // const orderState = [
@@ -181,12 +184,15 @@ function OrdersData() {
 				dataIndex="OrderState"
 				key="OrderState"
 				render={(OrderState) => {
-					switch (OrderState) {
-						case "ready_to_pick":
-							return "Đang được vận chuyển";
-						default:
-							return "Đang được vận chuyển";
-					}
+					return (
+						<Select defaultValue={OrderState} style={{ width: 150 }}>
+							<Option value="new">Đơn hàng mới</Option>
+							<Option value="processing">Đang được xử lý</Option>
+							<Option value="ready_to_pick">Đang được vận chuyển</Option>
+							<Option value="done">Hoàn tất</Option>
+							<Option value="cancel">Hủy</Option>
+						</Select>
+					)
 				}}
 			/>
 		</Table>
@@ -250,10 +256,119 @@ function SearchOrder() {
 
 function CollectionData() {
 	const [item, setItem] = useState([]);
+	const [confirmVisible, setConfirmVisible] = useState(false);
+	const [form] = Form.useForm();
+	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [data, setData] = useState({});
+	const [image, setImage] = useState([]);
+
+	const showModal = (record) => {
+		setData(record);
+		setIsModalVisible(true);
+
+	};
+
+	const handleOk = () => {
+		setIsModalVisible(false);
+	};
+
+	const handleCancel = () => {
+		setIsModalVisible(false);
+	};
 
 	function numberWithCommas(x) {
 		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
+
+	function handleSubmit(values) {
+		const newValues = {
+			...values,
+			image: image[0].url
+		}
+		console.log(newValues)
+	}
+
+	const showConfirmModal = () => {
+		setConfirmVisible(true);
+	};
+
+	const handleConfirmOk = () => {
+
+	};
+
+	const handleConfirmCancel = () => {
+		setConfirmVisible(false);
+	};
+
+	const onImageChange = (event) => {
+		console.log(event)
+		if (event) {
+			const file = event;
+			var storageRef = firebase.storage().ref();
+
+			// Upload file and metadata to the object 'images/mountains.jpg'
+			var uploadTask = storageRef
+				.child("images/" + file.name)
+				.put(file, { contentType: "image/jpeg" });
+
+			// Listen for state changes, errors, and completion of the upload.
+			uploadTask.on(
+				firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+				(snapshot) => {
+					// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+					var progress =
+						(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+					console.log("Upload is " + progress + "% done");
+					switch (snapshot.state) {
+						case firebase.storage.TaskState.PAUSED: // or 'paused'
+							console.log("Upload is paused");
+							break;
+						case firebase.storage.TaskState.RUNNING: // or 'running'
+							console.log("Upload is running");
+							break;
+						default: break;
+					}
+				},
+				(error) => {
+					// A full list of error codes is available at
+					// https://firebase.google.com/docs/storage/web/handle-errors
+					switch (error.code) {
+						case "storage/unauthorized":
+							// User doesn't have permission to access the object
+							break;
+						case "storage/canceled":
+							// User canceled the upload
+							break;
+
+						// ...
+
+						case "storage/unknown":
+							// Unknown error occurred, inspect error.serverResponse
+							break;
+						default: break;
+					}
+				},
+				() => {
+					// Upload completed successfully, now we can get the download URL
+					uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+						console.log("File available at", downloadURL);
+						const newImage = {
+							uid: '-1',
+							name: file.name,
+							status: 'done',
+							url: downloadURL,
+						}
+						setImage([
+							...image,
+							newImage
+						]);
+					});
+
+
+				}
+			);
+		}
+	};
 
 	useEffect(() => {
 		Axios.get(`http://localhost:3001/collections`).then((response) => {
@@ -261,18 +376,178 @@ function CollectionData() {
 		});
 	});
 
+	useEffect(() => {
+		form.resetFields();
+		console.log(data)
+		console.log(image)
+	}, [data, image]);
+
 	return (
-		<Table dataSource={item}>
-			<Column title="ID" dataIndex="ID" key="ID" />
-			<Column title="Name" dataIndex="Fullname" key="Fullname" />
-			<Column
-				title="Price"
-				dataIndex="Price"
-				key="Price"
-				render={(Price) => numberWithCommas(Price)}
-			/>
-			<Column title="State" dataIndex="State" key="State" />
-		</Table>
+		<div>
+			<Table dataSource={item}>
+				<Column title="Mã sản phẩm" dataIndex="ID" key="ID" />
+				<Column title="Tên sản phẩm" dataIndex="Fullname" key="Fullname" />
+				<Column
+					title="Giá sản phẩm"
+					dataIndex="Price"
+					key="Price"
+					render={(Price) => numberWithCommas(Price)}
+				/>
+				<Column title="Trạng thái sản phẩm" dataIndex="State" key="State" />
+				<Column title="Chỉnh sửa"
+					render={(text, record) => {
+						return (
+							<div>
+								<Button type="primary" onClick={() => showModal(record)}>
+									Chỉnh sửa
+								</Button>
+								<Button type="primary" danger onClick={() => showConfirmModal(record)}>
+									<DeleteOutlined />
+								</Button>
+							</div>
+						)
+					}}
+				/>
+			</Table>
+			<Modal title="Chỉnh sửa sản phẩm" visible={isModalVisible} footer={null} closable width={750} onCancel={handleCancel}>
+				<Image width={250} src={image && image[0] ? image[0].url : data.Image} style={{ margin: '25px 250px' }} />
+				<Form
+					{...layout}
+					form={form}
+					name="nest-messages"
+					action="/add-item"
+					method="post"
+					onFinish={handleSubmit}
+					validateMessages={validateMessages}
+					labelCol={{
+						span: 8,
+					}}
+					wrapperCol={{
+						span: 14,
+					}}
+					layout="horizontal"
+					initialValues={{
+						name: data.Fullname,
+						price: data.Price,
+						category: data.Category,
+						kindOfRoom: data.KindOfRoom,
+						detail: data.Detail
+					}}
+				>
+					<Form.Item
+						name="name"
+						label="Tên sản phẩm"
+						rules={[
+							{
+								required: true,
+								message: "Vui lòng nhập tên của sản phẩm !"
+							},
+						]}
+					>
+						<Input />
+					</Form.Item>
+					<Form.Item
+						name="price"
+						label="Giá sản phẩm"
+						rules={[
+							{
+								required: true,
+								type: "number",
+								min: 0,
+								message: "Vui lòng nhập giá của sản phẩm !"
+							},
+						]}
+					>
+						<InputNumber min={0} />
+					</Form.Item>
+					<Form.Item
+						name="category"
+						label="Loại sản phẩm"
+						rules={[
+							{
+								required: true,
+								message: "Vui lòng chọn loại sản phẩm !"
+							},
+						]}
+					>
+						<Select placeholder="Chọn loại sản phẩm">
+							<Option value="bàn">Bàn</Option>
+							<Option value="giá">Giá</Option>
+							<Option value="giường">Giường</Option>
+							<Option value="gối">Gối</Option>
+							<Option value="kệ">Kệ</Option>
+							<Option value="tủ">Tủ</Option>
+						</Select>
+					</Form.Item>
+
+					<Form.Item
+						name="kindOfRoom"
+						label="Loại phòng"
+						rules={[
+							{
+								required: true,
+								message: "Vui lòng chọn loại phòng sản phẩm thuộc về"
+							},
+						]}
+					>
+						<Select placeholder="Chọn loại phòng">
+							<Option value={1}>Phòng khách</Option>
+							<Option value={2}>Phòng ngủ</Option>
+							<Option value={3}>Phòng ăn</Option>
+							<Option value={4}>Phòng học/làm việc</Option>
+						</Select>
+					</Form.Item>
+
+					<Form.Item
+						name="detail"
+						label="Mô tả sản phẩm"
+						rules={[
+							{
+								required: true,
+								message: "Vui lòng nhập mô tả sản phẩm"
+							},
+						]}
+					>
+						<Input.TextArea />
+					</Form.Item>
+					<Form.Item
+						name="image"
+						label="Link ảnh "
+						rules={[
+							{
+								required: false,
+								message: "Vui lòng upload ảnh của sản phẩm !"
+							},
+						]}
+					>
+						<Upload
+							listType="picture"
+							customRequest={(options) => onImageChange(options.file)}
+							fileList={image}
+						>
+							{
+								image.length < 1 ? <Button icon={<UploadOutlined />}>Upload</Button> : ''
+							}
+						</Upload>
+					</Form.Item>
+					<Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+						<Button type="primary" htmlType="submit">
+							Submit
+						</Button>
+					</Form.Item>
+				</Form>
+			</Modal>
+			<Modal
+				title="Xác nhận xóa sản phẩm"
+				visible={confirmVisible}
+				closable
+				onOk={handleConfirmOk}
+				onCancel={handleConfirmCancel}
+			>
+				<p>Bạn có chắc là muốn xóa sản phẩm này không ?</p>
+			</Modal>
+		</div>
+
 	);
 }
 
@@ -299,15 +574,101 @@ function UserData() {
 function AddItem() {
 	const [form] = Form.useForm();
 
+	const [image, setImage] = useState([]);
+
+	useEffect(() => {
+		console.log(image)
+	}, [image])
+
+	// {
+	// 	uid: '-1',
+	// 		name: 'image.png',
+	// 			status: 'done',
+	// 				url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+	// 	},
+
+	const onImageChange = (event) => {
+		console.log(event)
+		if (event) {
+			const file = event;
+			var storageRef = firebase.storage().ref();
+
+			// Upload file and metadata to the object 'images/mountains.jpg'
+			var uploadTask = storageRef
+				.child("images/" + file.name)
+				.put(file, { contentType: "image/jpeg" });
+
+			// Listen for state changes, errors, and completion of the upload.
+			uploadTask.on(
+				firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+				(snapshot) => {
+					// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+					var progress =
+						(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+					console.log("Upload is " + progress + "% done");
+					switch (snapshot.state) {
+						case firebase.storage.TaskState.PAUSED: // or 'paused'
+							console.log("Upload is paused");
+							break;
+						case firebase.storage.TaskState.RUNNING: // or 'running'
+							console.log("Upload is running");
+							break;
+						default: break;
+					}
+				},
+				(error) => {
+					// A full list of error codes is available at
+					// https://firebase.google.com/docs/storage/web/handle-errors
+					switch (error.code) {
+						case "storage/unauthorized":
+							// User doesn't have permission to access the object
+							break;
+						case "storage/canceled":
+							// User canceled the upload
+							break;
+
+						// ...
+
+						case "storage/unknown":
+							// Unknown error occurred, inspect error.serverResponse
+							break;
+						default: break;
+					}
+				},
+				() => {
+					// Upload completed successfully, now we can get the download URL
+					uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+						console.log("File available at", downloadURL);
+						const newImage = {
+							uid: '-1',
+							name: file.name,
+							status: 'done',
+							url: downloadURL,
+						}
+						setImage([
+							...image,
+							newImage
+						]);
+					});
+
+
+				}
+			);
+		}
+	};
+
+
 	function handleSubmit(values) {
-		console.log(values);
-		Axios.post("/add-item", {
-			values,
-		})
+		const newValues = {
+			...values,
+			image: image[0].url
+		}
+		Axios.post("/api/product", newValues)
 			.then((res) => {
 				if (res.status === 200) console.log("success");
 			})
 			.catch((err) => {
+				console.log(newValues)
 				console.log("fail");
 			});
 	}
@@ -337,24 +698,12 @@ function AddItem() {
 					rules={[
 						{
 							required: true,
+							message: "Vui lòng nhập tên của sản phẩm !"
 						},
 					]}
 				>
 					<Input />
 				</Form.Item>
-
-				<Form.Item
-					name="image"
-					label="Link ảnh "
-					rules={[
-						{
-							required: true,
-						},
-					]}
-				>
-					<Input />
-				</Form.Item>
-
 				<Form.Item
 					name="price"
 					label="Giá sản phẩm"
@@ -363,10 +712,11 @@ function AddItem() {
 							required: true,
 							type: "number",
 							min: 0,
+							message: "Vui lòng nhập giá của sản phẩm !"
 						},
 					]}
 				>
-					<InputNumber />
+					<InputNumber min={0} />
 				</Form.Item>
 
 				<Form.Item
@@ -375,6 +725,7 @@ function AddItem() {
 					rules={[
 						{
 							required: true,
+							message: "Vui lòng chọn loại sản phẩm !"
 						},
 					]}
 				>
@@ -394,6 +745,7 @@ function AddItem() {
 					rules={[
 						{
 							required: true,
+							message: "Vui lòng chọn loại phòng sản phẩm thuộc về"
 						},
 					]}
 				>
@@ -411,12 +763,32 @@ function AddItem() {
 					rules={[
 						{
 							required: true,
+							message: "Vui lòng nhập mô tả sản phẩm"
 						},
 					]}
 				>
 					<Input.TextArea />
 				</Form.Item>
-
+				<Form.Item
+					name="image"
+					label="Link ảnh "
+					rules={[
+						{
+							required: true,
+							message: "Vui lòng upload ảnh của sản phẩm !"
+						},
+					]}
+				>
+					<Upload
+						listType="picture"
+						customRequest={(options) => onImageChange(options.file)}
+						fileList={image}
+					>
+						{
+							image.length < 1 ? <Button icon={<UploadOutlined />}>Upload</Button> : ''
+						}
+					</Upload>
+				</Form.Item>
 				<Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
 					<Button type="primary" htmlType="submit">
 						Submit
