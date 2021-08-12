@@ -276,17 +276,11 @@ function TopNavigation() {
                 </li>
               </ul>
             </li>
-
-            <li>
-              <Button>
-                <Link to="/">Khuyến mãi</Link>
-              </Button>
-            </li>
-            <li>
+            {/* <li>
               <Button>
                 <Link to="/contact">Liên hệ</Link>
               </Button>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

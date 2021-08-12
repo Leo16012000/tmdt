@@ -7,7 +7,7 @@ import Account from "./account/Account";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import NotFoundPage from "./pages/NotFoundPage";
-import Contact from "./pages/Contact";
+import {Contact} from "./pages/Contact";
 import ReactNotification from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import Footer from "./components/Footer";
