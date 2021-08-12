@@ -63,6 +63,7 @@ app.post("/notifyMomo", (req, res) => {
 // Create URL payment
 
 app.post("/create_payment_url", function (req, res, next) {
+    console.log(req.body);
     var ipAddr =
         req.headers["x-forwarded-for"] ||
         req.connection.remoteAddress ||
@@ -198,11 +199,18 @@ app.get("/vnpay_ipn", function (req, res, next) {
 const PORT = 3001;
 
 const db = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "123456",
-    database: "tmdt_ass2004",
+    host: "163.123.183.90",
+    user: "admin",
+    password: "12345678",
+    database: "tmdt_ass1008",
+    port:"17486"
 });
+// const db = mysql.createPool({
+//     host: "localhost",
+//     user: "root",
+//     password: "123456",
+//     database: "tmdt_ass2004",
+// });
 
 app.use(cors());
 app.use(express.json());

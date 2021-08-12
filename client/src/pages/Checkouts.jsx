@@ -153,13 +153,10 @@ function Checkouts(props) {
     }
   }
   const SendPayment = () => {
-    // send order infomation into redux
-    console.log(values);
-    // dispatch(sendOrderInfo(values));
-    //
+    finalPrice+=fee; //test
     if (method === "momo")
       axios
-        .post("/api/momo", { amount: fee+finalPrice })
+        .post("/api/momo", { amount: finalPrice })
         .then((res) => {
           const dataRes = res.data;
           if (dataRes.statusCode === 200)
@@ -183,7 +180,7 @@ function Checkouts(props) {
     else if (method === "vnpay") {
       axios
         .post("/create_payment_url", {
-          amount: fee+finalPrice,
+          amount: finalPrice,
           language: "vn",
           orderDescription: "Thanh toan noi that",
           orderType: "Noi that",

@@ -74,7 +74,7 @@ function Orders() {
                  <td>{row.ID}</td>
                  <td>{row.Content}</td>
                  <td>{row.Address}</td>
-                 <td>{row.TotalPrice}</td>
+                 <td>{numberWithCommas(row.TotalPrice)}</td>
                  <td>
                    <span class="status text-success">&bull;</span> {stateGHN[row.OrderState]}
                  </td>
