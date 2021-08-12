@@ -8,59 +8,59 @@ import "../styles/Home.css";
 import { Button } from "@material-ui/core";
 
 const sliderImage = [
-	{ src: "https://theme.hstatic.net/1000360516/1000609234/14/slideshow_1.png" },
-	{ src: "https://theme.hstatic.net/1000360516/1000730119/14/slideshow_1.png?v=20" },
-	{ src: "https://theme.hstatic.net/1000360516/1000609234/14/slideshow_3.png" },
-	{ src: "https://theme.hstatic.net/1000360516/1000609234/14/slideshow_4.png" },
-	{ src: "https://theme.hstatic.net/1000360516/1000609234/14/slideshow_5.png" },
-	{ src: "https://theme.hstatic.net/1000360516/1000609234/14/slideshow_6.png" },
-	{ src: "https://theme.hstatic.net/1000360516/1000609234/14/slideshow_7.png" },
-	{ src: "https://theme.hstatic.net/1000360516/1000609234/14/slideshow_8.png" },
-	{ src: "https://theme.hstatic.net/1000360516/1000609234/14/slideshow_9.png" },
+  { src: "https://theme.hstatic.net/1000360516/1000730119/14/slideshow_9.png?v=20" },
+  { src: "https://theme.hstatic.net/1000360516/1000730119/14/slideshow_8.png?v=20" },
+  { src: "https://theme.hstatic.net/1000360516/1000730119/14/slideshow_10.png?v=20" },
+  { src: "https://theme.hstatic.net/1000360516/1000730119/14/slideshow_7.png?v=20" },
+  { src: "https://theme.hstatic.net/1000360516/1000730119/14/slideshow_1.png?v=20" },
+  { src: "https://theme.hstatic.net/1000360516/1000730119/14/slideshow_9.png?v=20" },
+  { src: "https://theme.hstatic.net/1000360516/1000730119/14/slideshow_8.png?v=20" },
+  { src: "https://theme.hstatic.net/1000360516/1000730119/14/slideshow_10.png?v=20" },
+  { src: "https://theme.hstatic.net/1000360516/1000730119/14/slideshow_7.png?v=20" },
 ];
 
 const catalogImage1 = [
   {
-    src: "https://theme.hstatic.net/1000360516/1000609234/14/x1.jpg?v=428",
+    src: "https://theme.hstatic.net/1000360516/1000730119/14/x1.jpg?v=20",
     name: "GHẾ SOFA",
   },
   {
-    src: "https://theme.hstatic.net/1000360516/1000609234/14/x2.jpg?v=428",
+    src: "https://theme.hstatic.net/1000360516/1000730119/14/x2.jpg?v=20",
     name: "GIƯỜNG",
   },
   {
-    src: "https://theme.hstatic.net/1000360516/1000609234/14/x3.jpg?v=428",
+    src: "https://theme.hstatic.net/1000360516/1000730119/14/x3.jpg?v=20",
     name: "BÀN ĂN",
   },
   {
-    src: "https://theme.hstatic.net/1000360516/1000609234/14/x4.jpg?v=428",
+    src: "https://theme.hstatic.net/1000360516/1000730119/14/x4.jpg?v=20",
     name: "BÀN LÀM VIỆC",
   },
   {
-    src: "https://theme.hstatic.net/1000360516/1000609234/14/x55.jpg?v=428",
+    src: "https://theme.hstatic.net/1000360516/1000730119/14/x55.jpg?v=20",
     name: "BÀN TRÀ",
   },
 ];
 
 const catalogImage2 = [
   {
-    src: "https://theme.hstatic.net/1000360516/1000609234/14/x6.jpg?v=428",
+    src: "https://theme.hstatic.net/1000360516/1000730119/14/x6.jpg?v=20",
     name: "BÀN TRANG ĐIỂM	",
   },
   {
-    src: "https://theme.hstatic.net/1000360516/1000609234/14/x7.jpg?v=428",
+    src: "https://theme.hstatic.net/1000360516/1000730119/14/x7.jpg?v=20",
     name: "TỦ TRANG TRÍ",
   },
   {
-    src: "https://theme.hstatic.net/1000360516/1000609234/14/x8.jpg?v=428",
+    src: "https://theme.hstatic.net/1000360516/1000730119/14/x8.jpg?v=20",
     name: "KỆ TRANG TRÍ",
   },
   {
-    src: "https://theme.hstatic.net/1000360516/1000609234/14/x9.jpg?v=428",
+    src: "https://theme.hstatic.net/1000360516/1000730119/14/x9.jpg?v=20",
     name: "TỦ ĐẦU GIƯỜNG",
   },
   {
-    src: "https://theme.hstatic.net/1000360516/1000609234/14/x100.jpg?v=428",
+    src: "https://theme.hstatic.net/1000360516/1000730119/14/x100.jpg?v=20",
     name: "GIÁ TREO QUẦN ÁO",
   },
 ];
@@ -102,7 +102,7 @@ function HomeCatalog() {
       </div>
       <div className="map-banner mt-5">
         <img
-          src="https://theme.hstatic.net/1000360516/1000609234/14/map2.gif?v=293"
+          src="https://theme.hstatic.net/1000360516/1000730119/14/map2.gif?v=20"
           alt="map"
         />
       </div>
@@ -190,14 +190,14 @@ function Home(props) {
       <HomeCollection1 />
       <div className="banner-pic">
         <img
-          src="https://theme.hstatic.net/1000360516/1000609234/14/banner_1350.gif?v=870"
+          src="https://theme.hstatic.net/1000360516/1000730119/14/banner_1350.gif?v=20"
           alt="banner-pic"
         />
       </div>
       <HomeCollection2 />
       <div className="banner-pic mt-4">
         <img
-          src="https://theme.hstatic.net/1000360516/1000609234/14/bn_0.jpg?v=428"
+          src="https://theme.hstatic.net/1000360516/1000730119/14/bn_0.jpg?v=20"
           alt="banner-pic"
         />
       </div>
