@@ -54,14 +54,14 @@ function Checkouts(props) {
   const [open, setOpen] = useState(false);
   const { Option } = Select;
 
-  const [province,setProvince]= useState(null);
-  const [district,setDistrict]= useState(null);
-  const [ward,setWard]= useState(null);
-  const [districtId,setDistrictId]= useState(null);
-  const [wardId,setWardId]= useState(null);
-  const [address,setAddress] = useState({province:null,district:null,ward:null});
+  const [province, setProvince] = useState(null);
+  const [district, setDistrict] = useState(null);
+  const [ward, setWard] = useState(null);
+  const [districtId, setDistrictId] = useState(null);
+  const [wardId, setWardId] = useState(null);
+  const [address, setAddress] = useState({ province: null, district: null, ward: null });
 
-  let err=null;
+  let err = null;
 
   var finalPrice = 0;
 
@@ -72,10 +72,10 @@ function Checkouts(props) {
     }
     getProvince();
   }, []);
-  useEffect(()=>console.log(districtId,wardId),[districtId,wardId])
-  const handleChangeProvince=(e)=>{
-    setAddress({...address,province:e.children});
-    setDistrictId(null);setWardId(null);
+  useEffect(() => console.log(districtId, wardId), [districtId, wardId])
+  const handleChangeProvince = (e) => {
+    setAddress({ ...address, province: e.children });
+    setDistrictId(null); setWardId(null);
     // wardElement.children="Chọn xã,phường";
     async function getDistrict() {
       const res = await AddressService.getDistrict(e.value);
@@ -83,8 +83,8 @@ function Checkouts(props) {
     }
     getDistrict();
   }
-  const handleChangeDistrict=(e)=>{
-    setAddress({...address,district:e.children});
+  const handleChangeDistrict = (e) => {
+    setAddress({ ...address, district: e.children });
     setWardId(null);
     setDistrictId(e.value);
     async function getWard() {
@@ -93,35 +93,36 @@ function Checkouts(props) {
     }
     getWard();
   }
-  const handleChangeWard=(e)=>{
+  const handleChangeWard = (e) => {
     setWardId(e.value);
-    setAddress({...address,ward:e.children});
-    const values={
-      from_district_id:3695,
-      service_id:53320,
-      service_type_id:null,
-      to_district_id:districtId,
-      to_ward_code:e.value,
-      height:50,
-      length:20,
-      weight:200,
-      width:20,
-      insurance_fee:10000,
+    setAddress({ ...address, ward: e.children });
+    const values = {
+      from_district_id: 3695,
+      service_id: 53320,
+      service_type_id: null,
+      to_district_id: districtId,
+      to_ward_code: e.value,
+      height: 50,
+      length: 20,
+      weight: 200,
+      width: 20,
+      insurance_fee: 10000,
       coupon: null
-      }
-    async function calculateFee() {
-      let res={};
-      res = await FeeService.calculateFee(values).catch((error)=>{
-        err = "Chưa có dịch vụ vận chuyển đến địa điểm này,xin thứ lỗi";				
-        sendMessage("Chưa có dịch vụ vận chuyển đến địa điểm này,xin thứ lỗi",error.toString(), "danger");
-        setWardId(null);setDistrictId(null);
-    });
-    console.log(err);
-      if(!err) {setFee(res.data.total);console.log("test:",districtId,wardId);}   
     }
-    calculateFee();  }
+    async function calculateFee() {
+      let res = {};
+      res = await FeeService.calculateFee(values).catch((error) => {
+        err = "Chưa có dịch vụ vận chuyển đến địa điểm này,xin thứ lỗi";
+        sendMessage("Chưa có dịch vụ vận chuyển đến địa điểm này,xin thứ lỗi", error.toString(), "danger");
+        setWardId(null); setDistrictId(null);
+      });
+      console.log(err);
+      if (!err) { setFee(res.data.total); console.log("test:", districtId, wardId); }
+    }
+    calculateFee();
+  }
 
-  useEffect(() => {dispatch(toAddress(districtId,wardId))}, [wardId]);
+  useEffect(() => { dispatch(toAddress(districtId, wardId)) }, [wardId]);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -144,7 +145,7 @@ function Checkouts(props) {
     if (errors?.length)
       errors.map((err) => sendMessage("Error happened!", err, "danger"));
     else {
-      const addressDelivery=address.ward+" "+address.district+" "+address.province;
+      const addressDelivery = address.ward + " " + address.district + " " + address.province;
       console.log("addressDelivery: ", addressDelivery);
       dispatch(sendOrderInfo(values, addressDelivery, isCOD)); //late for a value
       console.log("vnpay run into here", values, addressDelivery, isCOD);
@@ -282,15 +283,15 @@ function Checkouts(props) {
                 <Typography>Giao hàng</Typography>
               </AccordionSummary>
               <AccordionDetails className="selectContainer">
-              <Select placeholder="Chọn tỉnh,thành phố" style={{ width: 150 }} onChange={(value,e)=>handleChangeProvince(e)}>
-                {province? province.map(item=><Option value={item.ProvinceID}>{item.ProvinceName}</Option>):<></>}
-              </Select>
-              <Select value={districtId} id="district" placeholder="Chọn quận,huyện" style={{ width: 150 }} onChange={(value,e)=>handleChangeDistrict(e)}>
-                {district? district.map(item=><Option value={item.DistrictID}>{item.DistrictName}</Option>):<></>}
-              </Select>
-              <Select value={wardId} id="ward" placeholder="Chọn xã,phường" style={{ width: 150 }} onChange={(value,e)=>handleChangeWard(e)}>
-                {ward? ward.map(item=><Option value={item.WardCode}>{item.WardName}</Option>):<></>}
-              </Select>
+                <Select placeholder="Chọn tỉnh,thành phố" style={{ width: 150 }} onChange={(value, e) => handleChangeProvince(e)}>
+                  {province ? province.map(item => <Option value={item.ProvinceID}>{item.ProvinceName}</Option>) : <></>}
+                </Select>
+                <Select value={districtId} id="district" placeholder="Chọn quận,huyện" style={{ width: 150 }} onChange={(value, e) => handleChangeDistrict(e)}>
+                  {district ? district.map(item => <Option value={item.DistrictID}>{item.DistrictName}</Option>) : <></>}
+                </Select>
+                <Select value={wardId} id="ward" placeholder="Chọn xã,phường" style={{ width: 150 }} onChange={(value, e) => handleChangeWard(e)}>
+                  {ward ? ward.map(item => <Option value={item.WardCode}>{item.WardName}</Option>) : <></>}
+                </Select>
               </AccordionDetails>
             </Accordion>
           </div>
@@ -327,9 +328,8 @@ function Checkouts(props) {
               </DialogContentText>
               <div className="radio-group row justify-content-between px-3 text-center a">
                 <div
-                  className={`col-auto mr-sm-2 mx-1 card-block py-0 text-center radio ${
-                    method === "momo" ? "selected" : ""
-                  }`}
+                  className={`col-auto mr-sm-2 mx-1 card-block py-0 text-center radio ${method === "momo" ? "selected" : ""
+                    }`}
                   onClick={() => setMethod("momo")}>
                   <div className="flex-row">
                     <div className="col">
@@ -347,9 +347,8 @@ function Checkouts(props) {
                   </div>
                 </div>
                 <div
-                  className={`col-auto mr-sm-2 mx-1 card-block py-0 text-center radio ${
-                    method === "vnpay" ? "selected" : ""
-                  }`}
+                  className={`col-auto mr-sm-2 mx-1 card-block py-0 text-center radio ${method === "vnpay" ? "selected" : ""
+                    }`}
                   onClick={() => setMethod("vnpay")}>
                   <div className="flex-row">
                     <div className="col">

@@ -299,25 +299,30 @@ app.get("/api/saveOrder", (req, res) => {
 //-----------------------------------------------admin----------------------------------------------------------
 //delete product by id
 app.post("/api/product/delete", (req, res) => {
-    console.log(req.query);
+    console.log('hello',req.body);
     const sqlDelete =
         "DELETE FROM `product` where ID=?;"; //lệnh đúng rồi
     db.query(
         sqlDelete,
         [req.body.ID],
         (err, result) => {
-            if (err) console.log(err);
-            console.log(result);
-            res.send(result);
+            if (err){
+                console.log('err',err);
+            } 
+            else {
+                console.log('result',result);
+                res.send(result)
+            }   
         }
     );
 });
+
 //update product by id
 app.put("/api/product/update", (req, res) => {
-    const sqlUpdate = "UPDATE `product` SET Price = ?,Fullname=?,Detail=?,State=?,Image=?,SellerId=?,Category=?,KindOfRoom=? WHERE ID = ?"; 
+    const sqlUpdate = "UPDATE `product` SET Price = ?,Fullname=?,Detail=?,State=?,Image=?,Category=?,KindOfRoom=? WHERE ID = ?"; 
     db.query(
         sqlUpdate,
-        [req.body.price,req.body.fullname,req.body.detail,req.body.state,req.body.image,+req.body.sellerid,req.body.category,+req.body.kind_of_room,+req.body.ID]
+        [req.body.price,req.body.name,req.body.detail,req.body.state,req.body.image,req.body.category,+req.body.kindOfRoom,+req.body.ID]
         ,(err, result) => {
             if (err) console.log(err);
             console.log(result);
@@ -326,6 +331,47 @@ app.put("/api/product/update", (req, res) => {
     );
 });
 
+//update order status by id
+app.put("/api/order/update", (req, res) => {
+    const sqlUpdate = "UPDATE `orders` SET OrderState = ? WHERE ID = ?"; 
+    db.query(
+        sqlUpdate,
+        [req.body.state,req.body.ID]
+        ,(err, result) => {
+            if (err) console.log(err);
+            console.log(result);
+            res.send(result);
+        }
+    );
+});
+
+
+
+// add new item
+app.post("/api/product", (req, res) => {
+  console.log(req.body);
+  const sqlInsert =
+    "INSERT INTO product (Price,Fullname,Detail,State,Image,RatingPoint,SellerId,Category, KindOfRoom) VALUES (?,?,?,?,?,?,?,?,?);"; //lệnh đúng rồi
+  db.query(
+    sqlInsert,
+    [
+      req.body.price,
+      req.body.name,
+      req.body.detail,
+      'còn hàng', 
+      req.body.image,
+      5,
+      2,
+      req.body.category,
+      req.body.kindOfRoom
+    ],
+    (err, result) => {
+      if (err) console.log(err);
+      console.log(result);
+      res.send(result);
+    }
+  );
+});
 
 app.listen(PORT, () => {
     console.log("running on port ", PORT);

@@ -1,22 +1,22 @@
-import {React, useState , Suspense , Spinner} from "react";
+import { React, useState, Suspense, Spinner } from "react";
 import '../styles/Detail.css'
 
 import Button from '../components/Button'
 import QuantityModifier from '../components/QuantityModifier'
-import { Switch, Route, Link ,useLocation} from "react-router-dom";
+import { Switch, Route, Link, useLocation } from "react-router-dom";
 // import Axios from "axios";
 
 
 
 const images = [
-    
+
     'https://product.hstatic.net/1000360516/product/05_list_img_619b099c849e4d89af9b063d6d00eae3_8c41bb6340564577bfad0c9109fa7647_master.jpg',
     'https://product.hstatic.net/1000360516/product/03_list_img_0b56a525983a42d6a83b49ebca3e6e5d_c63cb5defa0340cdb2a2dd3718bf8daf_master.jpg',
     'https://product.hstatic.net/1000360516/product/01_list_img_96c336601b904da0b3e1d614bcf217e0_658dc91c54674848b8d2e8837e9a64cd_master.jpg',
     'https://product.hstatic.net/1000360516/product/06_list_img_1af8260552124e19a6b30b650e6c5e83_master.jpg',
 ]
 
-const banners =[
+const banners = [
     "https://file.hstatic.net/1000360516/file/3_sf309_1_01_3b46241fc02745eebb61d77ef50e17d0.jpg",
     "https://file.hstatic.net/1000360516/file/3_sf309_1_02_10a0ad2902644d27a77c59a16e6d9668.jpg",
     "https://file.hstatic.net/1000360516/file/3_sf309_1_03_5c3e06eaec49496cbb9dac9af4897384.jpg",
@@ -41,56 +41,57 @@ function Detail(props) {
 
     let query = useQuery();
 
-    
-
     const item = {
-        id :  query.get("id"),
-        fullname :  query.get("fullname"),
-        price :  query.get("price"),
-        des :  query.get("des"),
-        img : query.get("img")
+        id: query.get("id"),
+        fullname: query.get("fullname"),
+        price: query.get("price"),
+        des: query.get("des"),
+        img: `${query.get("img")}&token=${query.get("token")}`,
+
     }
+
+    console.log(item.img)
 
     return (
         <Suspense fallback={<Spinner />}>
-        <div className="product-wrapper">
-            <div className="wrapper">
-                <div className="inner">
-                    <div className="product-single">
-                        <ProductGallery img={item.img}/>
-                        <ProductContent item={item} />
-                    </div>
-                    <div className="note"></div>
-                    <div className="related-product"></div>
-                    <div className="product-info"></div>
-                    <div className="seen-product"></div>
-                    
-                    <ProductDescription/>
+            <div className="product-wrapper">
+                <div className="wrapper">
+                    <div className="inner">
+                        <div className="product-single">
+                            <ProductGallery img={item.img} />
+                            <ProductContent item={item} />
+                        </div>
+                        <div className="note"></div>
+                        <div className="related-product"></div>
+                        <div className="product-info"></div>
+                        <div className="seen-product"></div>
 
+                        <ProductDescription />
+
+                    </div>
                 </div>
             </div>
-        </div>
         </Suspense>
     )
 }
 
 function numberWithCommas(x) {
-	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
-  }
+}
 
 
-function ProductGallery(props){
+function ProductGallery(props) {
 
     const [photo, setPhoto] = useState(props.img);
 
     return (
         <div className="gallery">
             <div className="main-img">
-                <img alt="img"  src={photo} />
+                <img alt="img" src={photo} />
             </div>
             <ul className="list" >
                 {
@@ -98,7 +99,7 @@ function ProductGallery(props){
                         return (
                             <li className="image-item" >
                                 <button className="gallery-option-button" onClick={() => setPhoto(image)} > <img alt="img" src={image} className="img" /></button>
-                            </li>                
+                            </li>
                         )
                     })
                 }
@@ -108,7 +109,7 @@ function ProductGallery(props){
 }
 
 
-function ProductContent(props){
+function ProductContent(props) {
 
     var value = 0;
 
@@ -120,20 +121,20 @@ function ProductContent(props){
             <div className="product-short-description">{props.item.des}</div>
 
             <div >
-                <QuantityModifier quantityValue={value}/>
-                <Button name="thêm giỏ hàng" type="Normal" item={props.item}/>
-                <Button name="mua ngay" type="Hightlight" item={props.item}/>
+                <QuantityModifier quantityValue={value} />
+                <Button name="thêm giỏ hàng" type="Normal" item={props.item} />
+                <Button name="mua ngay" type="Hightlight" item={props.item} />
             </div>
 
             <div className="promotion">
-                
-           
-            <img alt="img" src="https://theme.hstatic.net/1000360516/1000609234/14/m02.jpg?v=440" className="social-promotion"/>
-            <img alt="img" src="https://theme.hstatic.net/1000360516/1000609234/14/m03.jpg?v=440" className="social-promotion"/>
+
+
+                <img alt="img" src="https://theme.hstatic.net/1000360516/1000609234/14/m02.jpg?v=440" className="social-promotion" />
+                <img alt="img" src="https://theme.hstatic.net/1000360516/1000609234/14/m03.jpg?v=440" className="social-promotion" />
             </div>
         </div>
     )
-    
+
 }
 
 
@@ -143,9 +144,9 @@ function Description() {
     return (
         <div>
             {
-                banners.map(banner=> {
+                banners.map(banner => {
                     return (
-                        <img alt="img" src={banner}/>
+                        <img alt="img" src={banner} />
                     )
                 })
             }
@@ -155,29 +156,29 @@ function Description() {
 
 
 const Comments = () => <div>Comments</div>;
-const FAQs= () => <div>FAQs</div>;
+const FAQs = () => <div>FAQs</div>;
 
 
 function ProductDescription() {
 
     const path = window.location.search
 
-    return(
+    return (
         <div>
-        <div className="links">
-          <Link to={`/detail` + path} className="link left-tab">Mô tả sản phẩm</Link>
-          <Link to={`/detail` + path + `/faqs`} className="link center-tab">FAQs</Link>
-          <Link to={`/detail` + path + `/comments`} className="link right-tab">Đánh giá</Link>
+            <div className="links">
+                <Link to={`/detail` + path} className="link left-tab">Mô tả sản phẩm</Link>
+                <Link to={`/detail` + path + `/faqs`} className="link center-tab">FAQs</Link>
+                <Link to={`/detail` + path + `/comments`} className="link right-tab">Đánh giá</Link>
+            </div>
+            <div className="tabs">
+                <Switch>
+                    <Route path={`/detail`} exact component={Description} />
+                    <Route path={`/detail/faqs`} component={FAQs} />
+                    <Route path={`/detail/comments`} component={Comments} />
+                </Switch>
+            </div>
         </div>
-        <div className="tabs">
-          <Switch>
-            <Route path={`/detail`}  exact component={Description} />
-            <Route path={`/detail/faqs`} component={FAQs} />
-            <Route path={`/detail/comments`} component={Comments} />
-          </Switch>
-        </div>
-      </div>
-      
+
     )
 }
 
