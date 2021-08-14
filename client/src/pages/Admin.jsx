@@ -302,7 +302,7 @@ function CollectionData() {
 				setIsModalVisible(false);
 			})
 			.catch((error) => {
-				openNotificationWithIcon('error', 'Thất bại', 'Đã có lỗi xảy ra!')
+				openNotificationWithIcon('error', 'Thất bại', 'Tên và giá mới của sản phẩm đã tồn tại !')
 			});
 	}
 
