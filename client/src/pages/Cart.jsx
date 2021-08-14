@@ -46,8 +46,6 @@ function Cart(props) {
     dispatch(increaseQuantity(key));
   }
 
-  console.log(listCart);
-
   return (
     <div className="Cart__Container">
       <div className="Cart__Wrapper">

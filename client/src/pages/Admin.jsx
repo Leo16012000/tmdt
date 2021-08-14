@@ -172,9 +172,12 @@ function OrdersData() {
 				if (res.status === 200) {
 					openNotificationWithIcon('success', 'Thành công', 'Cập nhật trạng thái đơn hàng thành công!')
 				}
+				else {
+					openNotificationWithIcon('error', 'Thất bại', 'Đã có lỗi xảy ra!')
+				}
 			})
-			.catch((err) => {
-				openNotificationWithIcon('err', 'Thất bại', 'Đã có lỗi xảy ra!')
+			.catch((error) => {
+				openNotificationWithIcon('error', 'Thất bại', 'Đã có lỗi xảy ra!')
 			});
 	}
 
@@ -293,10 +296,13 @@ function CollectionData() {
 				if (res.status === 200) {
 					openNotificationWithIcon('success', 'Thành công', 'Chỉnh sửa thông tin sản phẩm thành công')
 				}
+				else {
+					openNotificationWithIcon('error', 'Thất bại', 'Đã có lỗi xảy ra!')
+				}
 				setIsModalVisible(false);
 			})
-			.catch((err) => {
-				openNotificationWithIcon('err', 'Thất bại', 'Đã có lỗi xảy ra!')
+			.catch((error) => {
+				openNotificationWithIcon('error', 'Thất bại', 'Đã có lỗi xảy ra!')
 			});
 	}
 
@@ -311,10 +317,13 @@ function CollectionData() {
 				if (res.status === 200) {
 					openNotificationWithIcon('success', 'Thành công', 'Xóa sản phẩm thành công')
 				}
+				else {
+					openNotificationWithIcon('error', 'Thất bại', 'Đã có lỗi xảy ra!')
+				}
 				setConfirmVisible(false);
 			})
-			.catch((err) => {
-				openNotificationWithIcon('err', 'Thất bại', 'Đã có lỗi xảy ra!')
+			.catch((error) => {
+				openNotificationWithIcon('error', 'Thất bại', 'Đã có lỗi xảy ra!')
 			});
 	};
 
@@ -644,7 +653,6 @@ function AddItem() {
 	};
 
 	useEffect(() => {
-		console.log(roomList)
 	}, [roomList])
 
 	const onImageChange = (event) => {
@@ -728,9 +736,12 @@ function AddItem() {
 				if (res.status === 200) {
 					openNotificationWithIcon('success', 'Thành công', 'Thêm sản phẩm mới thành công')
 				}
+				else {
+					openNotificationWithIcon('error', 'Thất bại', 'Đã có lỗi xảy ra!')
+				}
 			})
-			.catch((err) => {
-				openNotificationWithIcon('err', 'Thất bại', 'Đã có lỗi xảy ra!')
+			.catch((error) => {
+				openNotificationWithIcon('error', 'Thất bại', 'Sản phẩm đã tồn tại!')
 			});
 	}
 

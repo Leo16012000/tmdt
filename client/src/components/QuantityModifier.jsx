@@ -3,42 +3,40 @@ import { useDispatch } from "react-redux";
 import '../styles/QuantityModifier.css'
 import { quantityModifier } from "../redux/action";
 
-function QuantityModifier({quantityValue}) {
+function QuantityModifier({ quantityValue }) {
 
     const [quantity, setQuantity] = useState(1);
 
     const dispatch = useDispatch();
     function handleFilter(quantityState) {
-		dispatch(quantityState);
-	}
+        dispatch(quantityState);
+    }
 
     return (
         <div className="modifier">
             <div className="modifier-wrapper">
-                <button className="button" onClick={()=>{setQuantity(quantity+1);quantityValue = quantity;handleFilter(quantityModifier(quantity+1))}} >+</button>
+                <button className="button" onClick={() => { setQuantity(quantity + 1); quantityValue = quantity; handleFilter(quantityModifier(quantity + 1)) }} >+</button>
                 <div className="quantity-display">
-                    <input 
-                    className="quantity-input" 
-                    value={quantity} 
-                    onChange={
-                        (e)=>{
-                            if(e.target.value === ""){
-                                setQuantity(0);
-                                console.log(e.target.value);
-                                handleFilter(quantityModifier(0))
+                    <input
+                        className="quantity-input"
+                        value={quantity}
+                        onChange={
+                            (e) => {
+                                if (e.target.value === "") {
+                                    setQuantity(0);
+                                    handleFilter(quantityModifier(0))
+                                }
+                                else {
+                                    setQuantity(parseInt(e.target.value));
+                                    handleFilter(quantityModifier(parseInt(e.target.value)))
+                                }
+
                             }
-                            else {
-                                setQuantity(parseInt(e.target.value));
-                                console.log(e.target.value);
-                                handleFilter(quantityModifier(parseInt(e.target.value)))
-                            }
-                            
                         }
-                    }
                     />
                 </div>
-                <button className="button" onClick={()=>{setQuantity(quantity-1);quantityValue = quantity;handleFilter(quantityModifier(quantity+1))}} disabled={quantity <= 1 ? "true" : false}>-</button>
-            </div>  
+                <button className="button" onClick={() => { setQuantity(quantity - 1); quantityValue = quantity; handleFilter(quantityModifier(quantity + 1)) }} disabled={quantity <= 1 ? "true" : false}>-</button>
+            </div>
         </div>
     )
 }

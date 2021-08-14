@@ -37,7 +37,6 @@ function TopNavigation() {
   }
 
   function handleSearchFilter(keyword) {
-    console.log("đã dispatch");
     dispatch(searchFilter(keyword));
     dispatch(roomFilter(0));
     dispatch(categoryFilter("all"));
