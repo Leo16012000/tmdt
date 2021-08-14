@@ -12,10 +12,15 @@ import {
   SEND_ORDER_INFO,
   RESET_CART,
   TO_ADDRESS,
+  IMAGE
 } from "./types";
 
 export const roomFilter = (value) => {
   return { type: ROOM_FILTER, value };
+};
+
+export const image = (value) => {
+  return { type: IMAGE, value };
 };
 
 export const updateUser = (
