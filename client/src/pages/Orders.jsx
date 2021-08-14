@@ -159,11 +159,7 @@ function Orders() {
                         <span className="status text-success">&bull;</span>{" "}
                         {stateGHN[row.OrderState]}
                       </td>
-                      <td>
-                        <td>
-                          {row.DeliveryExpectedTime.slice(0,-8)}
-                        </td>
-                      </td>
+                      <td>{row.DeliveryExpectedTime.slice(0, -8)}</td>
                       <td>
                         <Tooltip title={"Huỷ đơn hàng"}>
                           <Button
