@@ -88,6 +88,10 @@
     float: left;
     margin-top: 2px;
   }
+  table.table tr td:nth-child(2),
+  table.table tr th:nth-child(2) {
+    white-space: pre;
+  }
   table.table tr th,
   table.table tr td {
     border-color: #e9e9e9;

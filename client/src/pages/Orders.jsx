@@ -105,12 +105,12 @@ function Orders() {
   if (!currentUser) return <Redirect to="/account" />;
 
   return (
-    <div class="Orders__container">
-      <div class="table-responsive">
-        <div class="table-wrapper">
-          <div class="table-title">
-            <div class="row">
-              <div class="col-sm-5">
+    <div className="Orders__container">
+      <div className="table-responsive">
+        <div className="table-wrapper">
+          <div className="table-title">
+            <div className="row">
+              <div className="col-sm-5">
                 <h2>
                   Quản lý <b>Đơn hàng</b>
                 </h2>
@@ -127,7 +127,7 @@ function Orders() {
             </div>
           </div>
           <TabPanel value={value} index={0}>
-            <table class="table table-striped table-hover">
+            <table className="table table-striped table-hover">
               <thead>
                 <tr>
                   <th>Mã vận đơn</th>
@@ -150,20 +150,15 @@ function Orders() {
                   .map((row) => (
                     <tr>
                       <td>{row.ID}</td>
-                      <td>{row.Content}</td>
+                      <td>{row.Content.replace(",", "\n")}</td>
                       <td>{row.Address}</td>
                       <td>{numberWithCommas(row.TotalPrice)}</td>
                       <td>
-                        <span class="status text-success">&bull;</span>{" "}
+                        <span className="status text-success">&bull;</span>{" "}
                         {stateGHN[row.OrderState]}
                       </td>
                       <td>
-                        <td>
-                          {row.DeliveryExpectedTime.slice(0, -5).replace(
-                            "T",
-                            " "
-                          )}
-                        </td>
+                        <td>{row.DeliveryExpectedTime.split("T")[0]}</td>
                       </td>
                       <td>
                         <Tooltip title={"Huỷ đơn hàng"}>
@@ -173,7 +168,7 @@ function Orders() {
                             onClick={() => {
                               handleCancel(row.ID);
                             }}
-                            icon={<i class="material-icons">&#xE5C9;</i>}
+                            icon={<i className="material-icons">&#xE5C9;</i>}
                           />
                         </Tooltip>
                       </td>
@@ -183,7 +178,7 @@ function Orders() {
             </table>
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <table class="table table-striped table-hover">
+            <table className="table table-striped table-hover">
               <thead>
                 <tr>
                   <th>Mã vận đơn</th>
@@ -210,7 +205,7 @@ function Orders() {
                       <td>{numberWithCommas(row.TotalPrice)}</td>
                       <td>
                         <span
-                          class={
+                          className={
                             row.OrderState === "delivered"
                               ? "status text-success"
                               : "status text-danger"
