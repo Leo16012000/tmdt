@@ -19,6 +19,9 @@ import {
 } from "@ant-design/icons";
 import Axios from "axios";
 import firebase from "firebase/app";
+import { Divider } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+
 const { Column } = Table;
 const { Search } = Input;
 const { SubMenu } = Menu;
@@ -471,7 +474,7 @@ function CollectionData() {
 								required: true,
 								type: "number",
 								min: 1000,
-								message: "Vui lòng nhập giá của sản phẩm !"
+								message: "Vui lòng nhập giá của sản phẩm (tối thiểu 1.000VNĐ)!"
 							},
 						]}
 					>
@@ -605,6 +608,44 @@ function AddItem() {
 	const [form] = Form.useForm();
 
 	const [image, setImage] = useState([]);
+	const [room, setRoom] = useState('');
+	const [roomList, setRoomList] = useState([
+		{
+			id: '1',
+			name: 'Phòng khách',
+		},
+		{
+			id: '2',
+			name: 'Phòng ngủ',
+		},
+		{
+			id: '3',
+			name: 'Phòng ăn',
+		},
+		{
+			id: '4',
+			name: 'Phòng học/làm việc',
+		},
+	]);
+
+	const [category, setCategory] = useState('');
+	const [categoryList, setCategoryList] = useState(["bàn", "giá", "gối", "gối", "kệ", "tủ"]);
+
+	function addCategory() {
+		setCategoryList([...categoryList, category]);
+	};
+
+	function addRoom() {
+		const newRoom = {
+			id: (roomList.length + 1).toString(),
+			name: room
+		}
+		setRoomList([...roomList, newRoom]);
+	};
+
+	useEffect(() => {
+		console.log(roomList)
+	}, [roomList])
 
 	const onImageChange = (event) => {
 		if (event) {
@@ -679,6 +720,7 @@ function AddItem() {
 	function handleSubmit(values) {
 		const newValues = {
 			...values,
+			room: parseInt(room.id, 10),
 			image: image[0].url
 		}
 		Axios.post("/api/product", newValues)
@@ -690,6 +732,14 @@ function AddItem() {
 			.catch((err) => {
 				openNotificationWithIcon('err', 'Thất bại', 'Đã có lỗi xảy ra!')
 			});
+	}
+
+	function handleCategoryChange(e) {
+		setCategory(e.target.value)
+	}
+
+	function handleRoomChange(e) {
+		setRoom(e.target.value)
 	}
 
 	return (
@@ -731,7 +781,7 @@ function AddItem() {
 							required: true,
 							type: "number",
 							min: 1000,
-							message: "Vui lòng nhập giá của sản phẩm !"
+							message: "Vui lòng nhập giá của sản phẩm (tối thiểu 1.000VNĐ)!"
 						},
 					]}
 				>
@@ -748,13 +798,29 @@ function AddItem() {
 						},
 					]}
 				>
-					<Select placeholder="Chọn loại sản phẩm">
-						<Option value="bàn">Bàn</Option>
-						<Option value="giá">Giá</Option>
-						<Option value="giường">Giường</Option>
-						<Option value="gối">Gối</Option>
-						<Option value="kệ">Kệ</Option>
-						<Option value="tủ">Tủ</Option>
+					<Select placeholder="Chọn loại sản phẩm"
+						dropdownRender={menu => (
+							<div>
+								{menu}
+								<Divider style={{ margin: '4px 0' }} />
+								<div style={{ display: 'flex', flexWrap: 'nowrap', padding: 8 }}>
+									<Input style={{ flex: 'auto' }} placeholder="Thêm loại sản phẩm mới ..." onChange={handleCategoryChange} />
+									<Button
+										style={{ flex: 'none', padding: '8px', display: 'block', cursor: 'pointer' }}
+										onClick={addCategory}
+									>
+										<PlusOutlined /> Add item
+									</Button>
+								</div>
+							</div>
+						)}>
+						{
+							categoryList.map((item) => {
+								return (
+									<Option key={item} value={item} style={{ textTransform: 'uppercase' }}>{item}</Option>
+								)
+							})
+						}
 					</Select>
 				</Form.Item>
 
@@ -768,11 +834,18 @@ function AddItem() {
 						},
 					]}
 				>
-					<Select placeholder="Chọn loại phòng">
-						<Option value="1">Phòng khách</Option>
+					<Select
+						placeholder="Chọn loại phòng"
+					>
+						{
+							roomList.map(item => {
+								return <Option key={item.id} value={item.id}>{item.name}</Option>
+							})
+						}
+						{/* <Option value="1">Phòng khách</Option>
 						<Option value="2">Phòng ngủ</Option>
 						<Option value="3">Phòng ăn</Option>
-						<Option value="4">Phòng học/làm việc</Option>
+						<Option value="4">Phòng học/làm việc</Option> */}
 					</Select>
 				</Form.Item>
 
