@@ -1,13 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 .ItemCard {
-
     width: 100%;
     font-size: 14px;
     font-family: Montserrat, Helvetica, Arial, sans-serif;
 }
 .ItemCard__ImgBlock {
-    width: 318px;
+    width: 100%;
     height: 318px;
     display: flex;
     justify-content: center;
@@ -17,7 +16,7 @@
 }
 
 .ItemCard__ImgBlock__Img {
-    width: 318px;
+    width: 100%;
     object-fit: contain;
     position: relative;
 }
