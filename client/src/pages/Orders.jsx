@@ -137,7 +137,7 @@ function Orders() {
                   <th>Địa chỉ nhận hàng</th>
                   <th>Thành tiền</th>
                   <th>Trạng thái đơn hàng</th>
-                  <th>Thời gian giao hàng</th>
+                  <th>Thời gian giao hàng dự kiến</th>
                   <th>Hoạt động</th>
                 </tr>
               </thead>
@@ -160,7 +160,9 @@ function Orders() {
                         {stateGHN[row.OrderState]}
                       </td>
                       <td>
-                        <td>{row.DeliveryExpectedTime.split("T")[0]}</td>
+                        <td>
+                          {row.DeliveryExpectedTime.slice(0,-8)}
+                        </td>
                       </td>
                       <td>
                         <Tooltip title={"Huỷ đơn hàng"}>
@@ -234,7 +236,6 @@ function Orders() {
                   <th>Địa chỉ nhận hàng</th>
                   <th>Thành tiền</th>
                   <th>Trạng thái đơn hàng</th>
-                  <th>Thời gian giao hàng</th>
                 </tr>
               </thead>
               <tbody>
@@ -261,9 +262,6 @@ function Orders() {
                           &bull;
                         </span>{" "}
                         {stateGHN[row.OrderState]}
-                      </td>
-                      <td>
-                        <td>{row.DeliveryExpectedTime.split("T")[0]}</td>
                       </td>
                     </tr>
                   ))}
