@@ -11,7 +11,8 @@ import {
   QUANTITY_MODIFIER,
   SEND_ORDER_INFO,
   RESET_CART,
-  TO_ADDRESS
+  TO_ADDRESS,
+  IMAGE
 } from "./types";
 
 const initialState = {
@@ -27,13 +28,17 @@ const initialState = {
   isCOD: 1,
   listCart: [],
   toDistrictId:null,
-  toWardId:null
+  toWardId:null,
+  image: '',
 };
 
 const appReducer = (state = initialState, action) => {
   // { type, data...} process
   // process action
   switch (action.type) {
+    case IMAGE: {
+      return { ...state, image: action.value };
+    }
     case ROOM_FILTER: {
       return { ...state, room: action.value };
     }
