@@ -159,7 +159,7 @@ function OrdersData() {
 
 	useEffect(() => {
 		Axios.get(`http://localhost:3001/getAllOrders`).then((response) => {
-			setItem(response.data);
+			setItem(response.data.reverse());
 		});
 	});
 
