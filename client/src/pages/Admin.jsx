@@ -470,7 +470,7 @@ function CollectionData() {
 							{
 								required: true,
 								type: "number",
-								min: 0,
+								min: 1000,
 								message: "Vui lòng nhập giá của sản phẩm !"
 							},
 						]}
@@ -730,7 +730,7 @@ function AddItem() {
 						{
 							required: true,
 							type: "number",
-							min: 0,
+							min: 1000,
 							message: "Vui lòng nhập giá của sản phẩm !"
 						},
 					]}

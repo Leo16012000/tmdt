@@ -11,3 +11,4 @@ export const QUANTITY_MODIFIER = "QUANTITY_MODIFIER";
 export const SEND_ORDER_INFO = "SEND_ORDER_INFO";
 export const RESET_CART = "RESET_CART";
 export const TO_ADDRESS = "TO_ADDRESS";
+export const IMAGE = "IMAGE";
