@@ -197,19 +197,19 @@ app.get("/vnpay_ipn", function (req, res, next) {
 
 const PORT = 3001;
 
-// const db = mysql.createPool({
-//     host: "163.123.183.90",
-//     user: "admin",
-//     password: "12345678",
-//     database: "tmdt_ass1008",
-//     port:"17486"
-// });
 const db = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "sanglaso1",
-  database: "tmdt_ass2004",
+  host: "38.17.53.118",
+  user: "admin",
+  password: "eT6pbwXv",
+  database: "tmdt_ass1008",
+  port: "19896",
 });
+// const db = mysql.createPool({
+//   host: "localhost",
+//   user: "root",
+//   password: "sanglaso1",
+//   database: "tmdt_ass2004",
+// });
 
 app.use(cors());
 app.use(express.json());
