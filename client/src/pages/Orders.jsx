@@ -135,7 +135,7 @@ function Orders() {
                   <th>Địa chỉ nhận hàng</th>
                   <th>Thành tiền</th>
                   <th>Trạng thái đơn hàng</th>
-                  <th>Thời gian giao hàng</th>
+                  <th>Thời gian giao hàng dự kiến</th>
                   <th>Hoạt động</th>
                 </tr>
               </thead>
@@ -159,10 +159,7 @@ function Orders() {
                       </td>
                       <td>
                         <td>
-                          {row.DeliveryExpectedTime.slice(0, -5).replace(
-                            "T",
-                            " "
-                          )}
+                          {row.DeliveryExpectedTime.slice(0,-8)}
                         </td>
                       </td>
                       <td>
@@ -191,7 +188,7 @@ function Orders() {
                   <th>Địa chỉ nhận hàng</th>
                   <th>Thành tiền</th>
                   <th>Trạng thái đơn hàng</th>
-                  <th>Thời gian giao hàng</th>
+                  <th>Thời gian giao hàng dự kiến</th>
                 </tr>
               </thead>
               <tbody>
