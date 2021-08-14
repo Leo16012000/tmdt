@@ -60,7 +60,8 @@ function Account(props) {
             case firebase.storage.TaskState.RUNNING: // or 'running'
               console.log("Upload is running");
               break;
-            default: break;
+            default:
+              break;
           }
         },
         (error) => {
@@ -79,7 +80,8 @@ function Account(props) {
             case "storage/unknown":
               // Unknown error occurred, inspect error.serverResponse
               break;
-            default: break;
+            default:
+              break;
           }
         },
         () => {
@@ -94,166 +96,188 @@ function Account(props) {
   };
 
   const onPhoneNumberChange = () => {
-    if (values.phoneNumber.substr(1) !== currentUser.phoneNumber.substr(3)) {
-      //Unlink phonenumber
-      const docRef = db.collection("Infos").doc(currentUser.email);
+    const phoneRegex = /(0[3|5|7|8|9])+([0-9]{8})/g;
 
-      firebase
-        .auth()
-        .currentUser.unlink(firebase.auth.PhoneAuthProvider.PROVIDER_ID)
-        .then(() => {
-          window.appVerifier = new firebase.auth.RecaptchaVerifier(
-            "recaptcha-container",
-            {
-              size: "invisible",
-              // Bỏ qua xác thực hình ảnh trước
-              // callback: (res) => {},
-            }
-          );
+    if (values.phoneNumber.match(phoneRegex)) {
+      if (values.phoneNumber.substr(1) !== currentUser.phoneNumber.substr(3)) {
+        //Unlink phonenumber
+        const docRef = db.collection("Infos").doc(currentUser.email);
 
-          const appVerifier = window.appVerifier;
+        firebase
+          .auth()
+          .currentUser.unlink(firebase.auth.PhoneAuthProvider.PROVIDER_ID)
+          .then(() => {
+            window.appVerifier = new firebase.auth.RecaptchaVerifier(
+              "recaptcha-container",
+              {
+                size: "invisible",
+                // Bỏ qua xác thực hình ảnh trước
+                // callback: (res) => {},
+              }
+            );
 
-          firebase
-            .auth()
-            .currentUser.linkWithPhoneNumber(
-              `+84${values.phoneNumber.slice(1)}`,
-              appVerifier
-            )
-            .then((confirmationResult) => {
-              window.confirmationResult = confirmationResult;
-              // prompt user to entre code
-              let code = window.prompt(
-                "Please enter the 6 digit code from your phone number!"
-              );
+            const appVerifier = window.appVerifier;
 
-              confirmationResult
-                .confirm(code)
-                .then((result) => {
-                  const credential = firebase.auth.PhoneAuthProvider.credential(
-                    window.confirmationResult.verificationId,
-                    code
-                  );
-                  firebase.auth().currentUser.linkWithCredential(credential);
-                })
-                .then((res) => {
-                  sendMessage(
-                    "Successfully",
-                    "Xác thực thành công!",
-                    "success"
-                  );
+            firebase
+              .auth()
+              .currentUser.linkWithPhoneNumber(
+                `+84${values.phoneNumber.slice(1)}`,
+                appVerifier
+              )
+              .then((confirmationResult) => {
+                window.confirmationResult = confirmationResult;
+                // prompt user to entre code
+                let code = window.prompt(
+                  "Please enter the 6 digit code from your phone number!"
+                );
 
-                  docRef
-                    .set(values)
-                    .then(() => {
-                      sendMessage(
-                        "Cập nhật thông tin thành công!",
-                        "Successfully",
-                        "success"
+                confirmationResult
+                  .confirm(code)
+                  .then((result) => {
+                    const credential =
+                      firebase.auth.PhoneAuthProvider.credential(
+                        window.confirmationResult.verificationId,
+                        code
                       );
-                    })
-                    .catch((error) => {
-                      sendMessage("Error happend!", error.toString(), "danger");
-                    });
-                })
-                .catch((error) => {
-                  // reset rechatcha and try again
-                  sendMessage("Error happend!", error.toString(), "danger");
-                });
-            })
-            .catch((error) => {
-              // reset rechatcha and try again
-              sendMessage("Error happend!", error.toString(), "danger");
-            });
-        });
+                    firebase.auth().currentUser.linkWithCredential(credential);
+                  })
+                  .then((res) => {
+                    sendMessage(
+                      "Successfully",
+                      "Xác thực thành công!",
+                      "success"
+                    );
+
+                    docRef
+                      .set(values)
+                      .then(() => {
+                        sendMessage(
+                          "Cập nhật thông tin thành công!",
+                          "Successfully",
+                          "success"
+                        );
+                      })
+                      .catch((error) => {
+                        sendMessage(
+                          "Error happend!",
+                          error.toString(),
+                          "danger"
+                        );
+                      });
+                  })
+                  .catch((error) => {
+                    // reset rechatcha and try again
+                    sendMessage(
+                      "Error happend!",
+                      "Xác thực thất bại!",
+                      "danger"
+                    );
+                  });
+              })
+              .catch((error) => {
+                // reset rechatcha and try again
+                sendMessage("Error happend!", "Xác thực thất bại!", "danger");
+              });
+          });
+      } else {
+        sendMessage(
+          "Error happend!",
+          "Vui lòng nhập số điện thoại khác để thay đổi!",
+          "danger"
+        );
+      }
     } else {
-      sendMessage(
-        "Error happend!",
-        "Vui lòng nhập số điện thoại khác để thay đổi!",
-        "danger"
-      );
+      sendMessage("Error happend!", "Số điện thoại không hợp lệ!", "danger");
     }
   };
 
   const onProfileChange = () => {
+    const phoneRegex = /(0[3|5|7|8|9])+([0-9]{8})/g;
+
     const docRef = db.collection("Infos").doc(currentUser.email);
 
-    // Xác thực sđt trước
-    if (
-      values.phoneNumber &&
-      currentUser.phoneNumber &&
-      currentUser.phoneNumber.substr(3) !== values.phoneNumber.substr(1)
-    ) {
-      window.appVerifier = new firebase.auth.RecaptchaVerifier(
-        "recaptcha-container",
-        {
-          size: "invisible",
-          // Bỏ qua xác thực hình ảnh trước
-          // callback: (res) => {},
-        }
-      );
+    if (values.phoneNumber.match(phoneRegex) || !values.phoneNumber) {
+      // Xác thực sđt trước
+      if (
+        (values.phoneNumber && !currentUser.phoneNumber) ||
+        (values.phoneNumber &&
+          currentUser.phoneNumber &&
+          currentUser.phoneNumber.substr(3) !== values.phoneNumber.substr(1))
+      ) {
+        window.appVerifier = new firebase.auth.RecaptchaVerifier(
+          "recaptcha-container",
+          {
+            size: "invisible",
+            // Bỏ qua xác thực hình ảnh trước
+            // callback: (res) => {},
+          }
+        );
 
-      const appVerifier = window.appVerifier;
+        const appVerifier = window.appVerifier;
 
-      firebase
-        .auth()
-        .currentUser.linkWithPhoneNumber(
-          `+84${values.phoneNumber.slice(1)}`,
-          appVerifier
-        )
-        .then((confirmationResult) => {
-          window.confirmationResult = confirmationResult;
-          // prompt user to entre code
-          let code = window.prompt(
-            "Please enter the 6 digit code from your phone number!"
-          );
+        firebase
+          .auth()
+          .currentUser.linkWithPhoneNumber(
+            `+84${values.phoneNumber.slice(1)}`,
+            appVerifier
+          )
+          .then((confirmationResult) => {
+            window.confirmationResult = confirmationResult;
+            // prompt user to entre code
+            let code = window.prompt(
+              "Please enter the 6 digit code from your phone number!"
+            );
 
-          confirmationResult
-            .confirm(code)
-            .then((result) => {
-              const credential = firebase.auth.PhoneAuthProvider.credential(
-                window.confirmationResult.verificationId,
-                code
-              );
-              firebase.auth().currentUser.linkWithCredential(credential);
-            })
-            .then((res) => {
-              sendMessage("Successfully", "Xác thực thành công!", "success");
+            confirmationResult
+              .confirm(code)
+              .then((result) => {
+                const credential = firebase.auth.PhoneAuthProvider.credential(
+                  window.confirmationResult.verificationId,
+                  code
+                );
+                firebase.auth().currentUser.linkWithCredential(credential);
+              })
+              .then((res) => {
+                sendMessage("Successfully", "Xác thực thành công!", "success");
 
-              docRef
-                .set(values)
-                .then(() => {
-                  sendMessage(
-                    "Cập nhật thông tin thành công!",
-                    "Successfully",
-                    "success"
-                  );
-                })
-                .catch((error) => {
-                  sendMessage("Error happend!", error.toString(), "danger");
-                });
-            })
-            .catch((error) => {
-              // reset rechatcha and try again
-              sendMessage("Error happend!", error.toString(), "danger");
-            });
-        })
-        .catch((error) => {
-          // reset rechatcha and try again
-          sendMessage("Error happend!", error.toString(), "danger");
-        });
+                docRef
+                  .set(values)
+                  .then(() => {
+                    sendMessage(
+                      "Cập nhật thông tin thành công!",
+                      "Successfully",
+                      "success"
+                    );
+                  })
+                  .catch((error) => {
+                    sendMessage("Error happend!", error.toString(), "danger");
+                  });
+              })
+              .catch((error) => {
+                // reset rechatcha and try again
+                sendMessage("Error happend!", "Xác thực thất bại!", "danger");
+              });
+          })
+          .catch((error) => {
+            // reset rechatcha and try again
+            sendMessage("Error happend!", "Xác thực thất bại!", "danger");
+          });
+      } else {
+        docRef
+          .set(values)
+          .then(() => {
+            sendMessage(
+              "Cập nhật thông tin thành công!",
+              "Successfully",
+              "success"
+            );
+          })
+          .catch((error) => {
+            sendMessage("Error happend!", error.toString(), "danger");
+          });
+      }
     } else {
-      docRef
-        .set(values)
-        .then(() => {
-          sendMessage(
-            "Cập nhật thông tin thành công!",
-            "Successfully",
-            "success"
-          );
-        })
-        .catch((error) => {
-          sendMessage("Error happend!", error.toString(), "danger");
-        });
+      sendMessage("Error happend!", "Số điện thoại không hợp lệ!", "danger");
     }
   };
 
