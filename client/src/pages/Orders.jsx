@@ -88,7 +88,9 @@ function Orders() {
       "Huỷ đơn hàng thành công",
       "success"
     );
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   };
 
   useEffect(() => {
@@ -150,7 +152,7 @@ function Orders() {
                   .map((row) => (
                     <tr>
                       <td>{row.ID}</td>
-                      <td>{row.Content.replace(",", "\n")}</td>
+                      <td>{row.Content.replaceAll(",", "\n")}</td>
                       <td>{row.Address}</td>
                       <td>{numberWithCommas(row.TotalPrice)}</td>
                       <td>
@@ -165,18 +167,64 @@ function Orders() {
                           <Button
                             size="middle"
                             type="link"
-                            onClick={() => {
-                              handleCancel(row.ID);
-                            }}
+                            style={{ color: "red" }}
+                            data-bs-toggle="modal"
+                            data-bs-target={`#deleteModal${row.ID}`}
                             icon={<i className="material-icons">&#xE5C9;</i>}
                           />
                         </Tooltip>
                       </td>
+
+                      <div
+                        id={`deleteModal${row.ID}`}
+                        className="modal fade"
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div className="modal-dialog modal-confirm modal-dialog-centered">
+                          <div className="modal-content">
+                            <div className="modal-header flex-column">
+                              <div className="icon-box">
+                                <i className="material-icons">&#xE5CD;</i>
+                              </div>
+                              <h4 className="modal-title w-100">
+                                Are you sure?
+                              </h4>
+                              <button
+                                type="button"
+                                className="close"
+                                data-bs-dismiss="modal"
+                                aria-hidden="true">
+                                &times;
+                              </button>
+                            </div>
+                            <div className="modal-body">
+                              <p>Bạn có chắc chắc muốn xóa đơn hàng này?</p>
+                            </div>
+                            <div className="modal-footer justify-content-center">
+                              <button
+                                type="button"
+                                className="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                                Hủy bỏ
+                              </button>
+                              <button
+                                type="button"
+                                className="btn btn-danger"
+                                onClick={() => {
+                                  handleCancel(row.ID);
+                                }}>
+                                Xóa
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </tr>
                   ))}
               </tbody>
             </table>
           </TabPanel>
+
           <TabPanel value={value} index={1}>
             <table className="table table-striped table-hover">
               <thead>
@@ -200,7 +248,7 @@ function Orders() {
                   .map((row) => (
                     <tr>
                       <td>{row.ID}</td>
-                      <td>{row.Content}</td>
+                      <td>{row.Content.replaceAll(",", "\n")}</td>
                       <td>{row.Address}</td>
                       <td>{numberWithCommas(row.TotalPrice)}</td>
                       <td>
@@ -215,12 +263,7 @@ function Orders() {
                         {stateGHN[row.OrderState]}
                       </td>
                       <td>
-                        <td>
-                          {row.DeliveryExpectedTime.slice(0, -5).replace(
-                            "T",
-                            " "
-                          )}
-                        </td>
+                        <td>{row.DeliveryExpectedTime.split("T")[0]}</td>
                       </td>
                     </tr>
                   ))}
