@@ -6,7 +6,7 @@ import "../styles/ItemCard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus, faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { addCart, quantityModifier } from "../redux/action";
+import { addCart, quantityModifier, image } from "../redux/action";
 import sendMessage from "../account/sendMessage";
 
 // function numberWithCommas(x) {
@@ -29,6 +29,11 @@ function ItemCard(props) {
 			"success"
 		);
 	}
+
+	function handleImage(img) {
+		dispatch(image(img))
+	}
+
 
 	return (
 		<div className="ItemCard">
@@ -81,7 +86,7 @@ function ItemCard(props) {
 			</div>
 			<div className="ItemCard__InfoBlock">
 				<div className="ItemCard__InfoBlock__Info">
-					<Link className="ItemCard__InfoBlock__Info__Link" to={param}>{props.props.ID} - {props.props.Fullname}</Link>
+					<Link className="ItemCard__InfoBlock__Info__Link" onClick={() => handleImage(props.props.Image)} to={param}>{props.props.ID} - {props.props.Fullname}</Link>
 				</div>
 				{props.props.salePercent > 0 ? (
 					<div className="ItemCard__InfoBlock__PriceBlock">

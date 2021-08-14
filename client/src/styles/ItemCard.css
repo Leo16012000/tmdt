@@ -7,12 +7,18 @@
     font-family: Montserrat, Helvetica, Arial, sans-serif;
 }
 .ItemCard__ImgBlock {
+    width: 318px;
+    height: 318px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
 	cursor: pointer;
 }
 
 .ItemCard__ImgBlock__Img {
-    width: 100%;
+    width: 318px;
+    object-fit: contain;
     position: relative;
 }
 

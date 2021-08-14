@@ -4,7 +4,7 @@ import '../styles/Detail.css'
 import Button from '../components/Button'
 import QuantityModifier from '../components/QuantityModifier'
 import { Switch, Route, Link, useLocation } from "react-router-dom";
-// import Axios from "axios";
+import { useSelector } from "react-redux";
 
 
 
@@ -40,6 +40,7 @@ const banners = [
 function Detail(props) {
 
     let query = useQuery();
+    const image = useSelector((state) => state.image);
 
     const item = {
         id: query.get("id"),
@@ -47,10 +48,7 @@ function Detail(props) {
         price: query.get("price"),
         des: query.get("des"),
         img: `${query.get("img")}&token=${query.get("token")}`,
-
     }
-
-    console.log(item.img)
 
     return (
         <Suspense fallback={<Spinner />}>
@@ -58,7 +56,7 @@ function Detail(props) {
                 <div className="wrapper">
                     <div className="inner">
                         <div className="product-single">
-                            <ProductGallery img={item.img} />
+                            <ProductGallery img={image} />
                             <ProductContent item={item} />
                         </div>
                         <div className="note"></div>
