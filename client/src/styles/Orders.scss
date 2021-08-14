@@ -24,6 +24,15 @@
   margin: 0 auto !important;
 }
 
+.bar-process {
+  display: flex;
+  justify-content: center !important;
+  button,
+  button:focus {
+    outline: none;
+  }
+}
+
 .Orders__container {
   body {
     color: #566787;

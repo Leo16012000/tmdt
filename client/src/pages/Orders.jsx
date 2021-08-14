@@ -3,9 +3,16 @@ import { AuthContext } from "../account/Auth";
 import { Redirect } from "react-router-dom";
 import "../styles/Orders.scss";
 import axios from "axios";
-import PropTypes from 'prop-types';
-import { AppBar, Box, makeStyles, Tab, Tabs, Typography } from "@material-ui/core";
-import {Button, Tooltip} from "antd";
+import PropTypes from "prop-types";
+import {
+  AppBar,
+  Box,
+  makeStyles,
+  Tab,
+  Tabs,
+  Typography,
+} from "@material-ui/core";
+import { Button, Tooltip } from "antd";
 
 import sendMessage from "../account/sendMessage";
 
@@ -22,8 +29,7 @@ function TabPanel(props) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+      {...other}>
       {value === index && (
         <Box p={3}>
           <Typography>{children}</Typography>
@@ -42,7 +48,7 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
@@ -72,14 +78,18 @@ function Orders() {
     setValue(newValue);
   };
 
-  const handleCancel = (ID)=>{
-    axios
-    .put(
-      `http://localhost:3001/api/order/update`,{state:"cancel",ID:ID}
-    )
-    sendMessage("Đơn hàng mã số "+{ID},"Huỷ đơn hàng thành công", "success");
+  const handleCancel = (ID) => {
+    axios.put(`http://localhost:3001/api/order/update`, {
+      state: "cancel",
+      ID: ID,
+    });
+    sendMessage(
+      "Đơn hàng mã số " + { ID },
+      "Huỷ đơn hàng thành công",
+      "success"
+    );
     window.location.reload();
-  }
+  };
 
   useEffect(() => {
     if (currentUser)
@@ -105,81 +115,122 @@ function Orders() {
                   Quản lý <b>Đơn hàng</b>
                 </h2>
               </div>
+              <AppBar position="static" class="col-sm-7 bar-process">
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  aria-label="simple tabs example">
+                  <Tab label="Trong tiến trình" {...a11yProps(0)} />
+                  <Tab label="Đã kết thúc" {...a11yProps(1)} />
+                </Tabs>
+              </AppBar>
             </div>
           </div>
-           <AppBar position="static">
-            <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-              <Tab label="Trong tiến trình" {...a11yProps(0)} />
-              <Tab label="Đã kết thúc" {...a11yProps(1)} />
-            </Tabs>
-          </AppBar>
           <TabPanel value={value} index={0}>
-          <table class="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th>Mã vận đơn</th>
-                <th>Nội dung</th>
-                <th>Địa chỉ nhận hàng</th>
-                <th>Thành tiền</th>
-                <th>Trạng thái đơn hàng</th>
-                <th>Thời gian giao hàng</th>
-                <th>Hoạt động</th>
-              </tr>
-            </thead>
-            <tbody>
-              {item.filter(row=>row.OrderState!=="delivered" && row.OrderState!=="delivered_fail" && row.OrderState!=="cancel").map((row)=>(
-                 <tr>
-                 <td>{row.ID}</td>
-                 <td>{row.Content}</td>
-                 <td>{row.Address}</td>
-                 <td>{numberWithCommas(row.TotalPrice)}</td>
-                 <td>
-                   <span class="status text-success">&bull;</span> {stateGHN[row.OrderState]}
-                 </td>
-                 <td>
-                   <td>{row.DeliveryExpectedTime.slice(0, -5).replace("T", " ")}</td>
-                 </td>
-                 <td>
-                 <Tooltip title={"Huỷ đơn hàng"}>
-                     <Button size="middle" type="link" onClick={()=>{handleCancel(row.ID)}} icon={<i class="material-icons">&#xE5C9;</i>} />
-                  </Tooltip>
-                 </td>
-               </tr>
-              ))}
-             
-            </tbody>
-          </table>
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Mã vận đơn</th>
+                  <th>Nội dung</th>
+                  <th>Địa chỉ nhận hàng</th>
+                  <th>Thành tiền</th>
+                  <th>Trạng thái đơn hàng</th>
+                  <th>Thời gian giao hàng</th>
+                  <th>Hoạt động</th>
+                </tr>
+              </thead>
+              <tbody>
+                {item
+                  .filter(
+                    (row) =>
+                      row.OrderState !== "delivered" &&
+                      row.OrderState !== "delivered_fail" &&
+                      row.OrderState !== "cancel"
+                  )
+                  .map((row) => (
+                    <tr>
+                      <td>{row.ID}</td>
+                      <td>{row.Content}</td>
+                      <td>{row.Address}</td>
+                      <td>{numberWithCommas(row.TotalPrice)}</td>
+                      <td>
+                        <span class="status text-success">&bull;</span>{" "}
+                        {stateGHN[row.OrderState]}
+                      </td>
+                      <td>
+                        <td>
+                          {row.DeliveryExpectedTime.slice(0, -5).replace(
+                            "T",
+                            " "
+                          )}
+                        </td>
+                      </td>
+                      <td>
+                        <Tooltip title={"Huỷ đơn hàng"}>
+                          <Button
+                            size="middle"
+                            type="link"
+                            onClick={() => {
+                              handleCancel(row.ID);
+                            }}
+                            icon={<i class="material-icons">&#xE5C9;</i>}
+                          />
+                        </Tooltip>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
           </TabPanel>
           <TabPanel value={value} index={1}>
-          <table class="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th>Mã vận đơn</th>
-                <th>Nội dung</th>
-                <th>Địa chỉ nhận hàng</th>
-                <th>Thành tiền</th>
-                <th>Trạng thái đơn hàng</th>
-                <th>Thời gian giao hàng</th>
-              </tr>
-            </thead>
-            <tbody>
-              {item.filter(row=>row.OrderState==="delivered" || row.OrderState==="delivered_fail" || row.OrderState==="cancel").map((row)=>(
-                 <tr>
-                 <td>{row.ID}</td>
-                 <td>{row.Content}</td>
-                 <td>{row.Address}</td>
-                 <td>{numberWithCommas(row.TotalPrice)}</td>
-                 <td>
-                   <span class={row.OrderState==="delivered"?"status text-success":"status text-danger"}>&bull;</span> {stateGHN[row.OrderState]}
-                 </td>
-                 <td>
-                   <td>{row.DeliveryExpectedTime.slice(0, -5).replace("T", " ")}</td>
-                 </td>
-               </tr>
-              ))}
-             
-            </tbody>
-          </table>
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Mã vận đơn</th>
+                  <th>Nội dung</th>
+                  <th>Địa chỉ nhận hàng</th>
+                  <th>Thành tiền</th>
+                  <th>Trạng thái đơn hàng</th>
+                  <th>Thời gian giao hàng</th>
+                </tr>
+              </thead>
+              <tbody>
+                {item
+                  .filter(
+                    (row) =>
+                      row.OrderState === "delivered" ||
+                      row.OrderState === "delivered_fail" ||
+                      row.OrderState === "cancel"
+                  )
+                  .map((row) => (
+                    <tr>
+                      <td>{row.ID}</td>
+                      <td>{row.Content}</td>
+                      <td>{row.Address}</td>
+                      <td>{numberWithCommas(row.TotalPrice)}</td>
+                      <td>
+                        <span
+                          class={
+                            row.OrderState === "delivered"
+                              ? "status text-success"
+                              : "status text-danger"
+                          }>
+                          &bull;
+                        </span>{" "}
+                        {stateGHN[row.OrderState]}
+                      </td>
+                      <td>
+                        <td>
+                          {row.DeliveryExpectedTime.slice(0, -5).replace(
+                            "T",
+                            " "
+                          )}
+                        </td>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
           </TabPanel>
         </div>
       </div>
