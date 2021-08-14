@@ -108,7 +108,7 @@ function UpdateOrder(props) {
           orderDetail = {
             ID: createDataReturn.order_code,
             PaymentMethod: paymentMethod ? "chưa thanh toán" : "đã thanh toán",
-            DeliveryExpectedTime: createDataReturn.expected_delivery_time,
+            DeliveryExpectedTime: createDataReturn.expected_delivery_time.slice(0,-2),
             Address: dataInfoReturn.note,
             OrderState: dataInfoReturn.status,
             UserEmail: currentUser.email,

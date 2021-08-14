@@ -1,163 +1,149 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 
 .ItemCard {
-    width: 100%;
-    font-size: 14px;
-    font-family: Montserrat, Helvetica, Arial, sans-serif;
+  width: 100%;
+  font-size: 14px;
+  font-family: Montserrat, Helvetica, Arial, sans-serif;
 }
 .ItemCard__ImgBlock {
-    width: 100%;
-    height: 318px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-	cursor: pointer;
+  width: 100%;
+  height: 318px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
 }
 
 .ItemCard__ImgBlock__Img {
-    width: 100%;
-    object-fit: contain;
-    position: relative;
+  width: 100%;
+  object-fit: contain;
+  position: relative;
 }
 
-.ItemCard:hover  .ItemCard__ImgBlock__ProductAction__Buy{
-    display: block;
+.ItemCard:hover .ItemCard__ImgBlock__ProductAction__Buy {
+  display: block;
 }
 
-.ItemCard__InfoBlock__Info__Link:hover  {
-	color: #2a3167;
-    text-decoration: none;
+.ItemCard__InfoBlock__Info__Link:hover {
+  color: #2a3167;
+  text-decoration: none;
 }
-
 
 .ItemCard__ImgBlock__Sale {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    height: 27px;
-    width: 50px;
-    color:white;
-    background-color: #ff914a;
-    text-align: center;
-    line-height: 28px;
-
-
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  height: 27px;
+  width: 50px;
+  color: white;
+  background-color: #ff914a;
+  text-align: center;
+  line-height: 28px;
 }
 .ItemCard__ImgBlock__ProductAction {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    position: absolute;
-    left: calc( (100% - 73px - 24px*2 )/2);
-    bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  position: absolute;
+  left: calc((100% - 73px - 24px * 2) / 2);
+  bottom: 10px;
 }
 .ItemCard__InfoBlock {
-
-	padding-top: 15px ;
-	padding-bottom: 10px;
-    z-index: 4;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  z-index: 4;
 }
 
 .ProductAction__Button {
-    
-    height: 34px;
-    padding: 0px 5px;
-    font-size: 14px;
-    margin: 0 0;
-    
+  height: 34px;
+  padding: 0px 5px;
+  font-size: 14px;
+  margin: 0 0;
 }
 
 .ItemCard__ImgBlock__ProductAction__Buy {
-    display: none;
-    border: none;
-    cursor: pointer;
-    background-color: white;
-    color:#ff914a;
-    
-
-    
+  display: none;
+  border: none;
+  cursor: pointer;
+  background-color: white;
+  color: #ff914a;
 }
 
 .ItemCard__ImgBlock__ProductAction__Buy:hover {
-    background-color: #ff914a;
-    color:white;
+  background-color: #ff914a;
+  color: white;
 }
 
 .Left_Button {
-    animation: slideFromLeft .5s ease-in-out forwards;
-    
+  animation: slideFromLeft 0.5s ease-in-out forwards;
 }
 .Center_Button {
-    animation: slideUp .5s ease-in-out forwards;
-    
+  animation: slideUp 0.5s ease-in-out forwards;
 }
 .Right_Button {
-    animation: slideFromRight .5s ease-in-out forwards;
-    
+  animation: slideFromRight 0.5s ease-in-out forwards;
 }
 
 .ItemCard__InfoBlock__Info {
-    display: block;
-    
-    line-height: 1.6em;
-    padding-bottom: 5px;
-    font-weight: 400;
-    text-transform: uppercase;
-    text-align: left;
+  display: block;
+
+  line-height: 1.6em;
+  padding-bottom: 5px;
+  font-weight: 400;
+  text-transform: uppercase;
+  text-align: left;
 }
 
 .ItemCard__InfoBlock__Info__Link {
-    text-decoration: none;
-    color: #000;
-    
+  text-decoration: none;
+  color: #000;
 }
 .ItemCard__InfoBlock__Price {
-    text-align: left;
-    color: #adadad;
-    font-size: 17px;
-    font-weight: 300;
-    display: inline-block;
-    margin-left: 10px;
-    text-decoration: line-through;
+  text-align: left;
+  color: #adadad;
+  font-size: 17px;
+  font-weight: 300;
+  display: inline-block;
+  margin-left: 10px;
+  text-decoration: line-through;
 }
 
 .ItemCard__InfoBlock__SalePrice {
-    color: #cc0000; 
-    display: inline-block;
-    font-size: 17px;
-    font-weight: 600;
+  color: #cc0000;
+  display: inline-block;
+  font-size: 17px;
+  font-weight: 600;
 }
 
 .ItemCard__InfoBlock__PriceBlock {
-    
-    display: block;
-    text-align: left;
+  display: block;
+  text-align: left;
 }
 
 @keyframes slideFromRight {
-    0%   { 
-    transform: translateX(100%); 		
-    }
-    100% { 
-    transform: translateX(0%); 
-    }
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
 }
 
 @keyframes slideFromLeft {
-    0%   { 
-    transform: translateX(-100%); 		
-    }
-    100% { 
-    transform: translateX(0%); 
-    }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
 }
 
 @keyframes slideUp {
-    0%   { 
-    transform: translateY(100%); 		
-    }
-    100% { 
-    transform: translateY(0%); 
-    }
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
 }

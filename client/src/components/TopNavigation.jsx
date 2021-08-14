@@ -67,23 +67,22 @@ function TopNavigation() {
               <p id="account">
                 <Link to="/account">Tài khoản</Link>
               </p>
-              <p id="shop">
-                <Link to="/cart">Giỏ hàng</Link>
-                <span class="badge badge-warning" id="lblCartCount">
-                  {numberCart}
-                </span>
-              </p>
-
+              {(!currentUser || !currentUser.email === "admin@gmail.com") && (
+                <p id="shop">
+                  <Link to="/cart">Giỏ hàng</Link>
+                  <span class="badge badge-warning" id="lblCartCount">
+                    {numberCart}
+                  </span>
+                </p>
+              )}
               <p id="orders">
-                <Link
-                  to={
-                    currentUser?.email === "admin@gmail.com"
-                      ? "/admin"
-                      : "/orders"
-                  }
-                >
-                  Đơn hàng
-                </Link>
+                {currentUser?.email === "admin@gmail.com" && (
+                  <Link to="/admin">Quản lý</Link>
+                )}
+                {!currentUser ||
+                  (currentUser.email !== "admin@gmail.com" && (
+                    <Link to="/admin">Đơn hàng</Link>
+                  ))}
               </p>
 
               <ShoppingCartOutlinedIcon />
@@ -99,8 +98,7 @@ function TopNavigation() {
               <Button
                 onClick={() =>
                   handleFilter(roomFilter(1), categoryFilter("all"))
-                }
-              >
+                }>
                 <Link to="/">Trang chủ</Link>
               </Button>
             </li>
@@ -108,8 +106,7 @@ function TopNavigation() {
               <Button
                 onClick={() => {
                   handleFilter(roomFilter(1), categoryFilter("all"));
-                }}
-              >
+                }}>
                 <Link to="/collections">Phòng khách</Link>
                 <ExpandMoreIcon />
               </Button>
@@ -120,8 +117,7 @@ function TopNavigation() {
                   <Button
                     onClick={() =>
                       handleFilter(roomFilter(1), categoryFilter("bàn"))
-                    }
-                  >
+                    }>
                     <Link to="/collections">Bàn</Link>
                   </Button>
                 </li>
@@ -130,8 +126,7 @@ function TopNavigation() {
                   <Button
                     onClick={() =>
                       handleFilter(roomFilter(1), categoryFilter("tủ"))
-                    }
-                  >
+                    }>
                     <Link to="/collections">Tủ</Link>
                   </Button>
                 </li>
@@ -140,8 +135,7 @@ function TopNavigation() {
                   <Button
                     onClick={() =>
                       handleFilter(roomFilter(1), categoryFilter("giá"))
-                    }
-                  >
+                    }>
                     <Link to="/collections">Giá</Link>
                   </Button>
                 </li>
@@ -150,8 +144,7 @@ function TopNavigation() {
                   <Button
                     onClick={() =>
                       handleFilter(roomFilter(1), categoryFilter("kệ"))
-                    }
-                  >
+                    }>
                     <Link to="/collections">Kệ</Link>
                   </Button>
                 </li>
@@ -161,8 +154,7 @@ function TopNavigation() {
               <Button
                 onClick={() => {
                   handleFilter(roomFilter(2), categoryFilter("all"));
-                }}
-              >
+                }}>
                 <Link to="/collections">Phòng ngủ</Link>
                 <ExpandMoreIcon />
               </Button>
@@ -173,8 +165,7 @@ function TopNavigation() {
                   <Button
                     onClick={() =>
                       handleFilter(roomFilter(2), categoryFilter("bàn"))
-                    }
-                  >
+                    }>
                     <Link to="/collections">Bàn</Link>
                   </Button>
                 </li>
@@ -183,8 +174,7 @@ function TopNavigation() {
                   <Button
                     onClick={() =>
                       handleFilter(roomFilter(2), categoryFilter("tủ"))
-                    }
-                  >
+                    }>
                     <Link to="/collections">Tủ</Link>
                   </Button>
                 </li>
@@ -193,8 +183,7 @@ function TopNavigation() {
                   <Button
                     onClick={() =>
                       handleFilter(roomFilter(2), categoryFilter("gối"))
-                    }
-                  >
+                    }>
                     <Link to="/collections">Gối</Link>
                   </Button>
                 </li>
@@ -203,8 +192,7 @@ function TopNavigation() {
                   <Button
                     onClick={() =>
                       handleFilter(roomFilter(2), categoryFilter("giường"))
-                    }
-                  >
+                    }>
                     <Link to="/collections">Giường</Link>
                   </Button>
                 </li>
@@ -214,8 +202,7 @@ function TopNavigation() {
               <Button
                 onClick={() => {
                   handleFilter(roomFilter(3), categoryFilter("all"));
-                }}
-              >
+                }}>
                 <Link to="/collections">Phòng ăn</Link>
                 <ExpandMoreIcon />
               </Button>
@@ -226,8 +213,7 @@ function TopNavigation() {
                   <Button
                     onClick={() =>
                       handleFilter(roomFilter(3), categoryFilter("bàn"))
-                    }
-                  >
+                    }>
                     <Link to="/collections">Bàn</Link>
                   </Button>
                 </li>
@@ -237,8 +223,7 @@ function TopNavigation() {
               <Button
                 onClick={() => {
                   handleFilter(roomFilter(4), categoryFilter("all"));
-                }}
-              >
+                }}>
                 <Link to="/collections">Phòng học/làm việc</Link>
                 <ExpandMoreIcon />
               </Button>
@@ -249,8 +234,7 @@ function TopNavigation() {
                   <Button
                     onClick={() =>
                       handleFilter(roomFilter(4), categoryFilter("bàn"))
-                    }
-                  >
+                    }>
                     <Link to="/collections">Bàn</Link>
                   </Button>
                 </li>
@@ -259,8 +243,7 @@ function TopNavigation() {
                   <Button
                     onClick={() =>
                       handleFilter(roomFilter(4), categoryFilter("kệ"))
-                    }
-                  >
+                    }>
                     <Link to="/collections">Kệ</Link>
                   </Button>
                 </li>
@@ -269,8 +252,7 @@ function TopNavigation() {
                   <Button
                     onClick={() =>
                       handleFilter(roomFilter(4), categoryFilter("tủ"))
-                    }
-                  >
+                    }>
                     <Link to="/collections">Tủ</Link>
                   </Button>
                 </li>

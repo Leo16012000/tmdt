@@ -25,7 +25,6 @@ import sendMessage from "../account/sendMessage";
 import LocalPicker from "../vietnamlocalselector";
 import { Select } from "antd";
 
-
 import { AddressService } from "../service/GHN/AddressService";
 import "../styles/Checkouts.css";
 import { FeeService } from "../service/GHN/FeeService";
@@ -59,7 +58,11 @@ function Checkouts(props) {
   const [ward, setWard] = useState(null);
   const [districtId, setDistrictId] = useState(null);
   const [wardId, setWardId] = useState(null);
-  const [address, setAddress] = useState({ province: null, district: null, ward: null });
+  const [address, setAddress] = useState({
+    province: null,
+    district: null,
+    ward: null,
+  });
 
   let err = null;
 
@@ -72,17 +75,18 @@ function Checkouts(props) {
     }
     getProvince();
   }, []);
-  useEffect(() => console.log(districtId, wardId), [districtId, wardId])
+  useEffect(() => console.log(districtId, wardId), [districtId, wardId]);
   const handleChangeProvince = (e) => {
     setAddress({ ...address, province: e.children });
-    setDistrictId(null); setWardId(null);
+    setDistrictId(null);
+    setWardId(null);
     // wardElement.children="Chọn xã,phường";
     async function getDistrict() {
       const res = await AddressService.getDistrict(e.value);
       setDistrict(res.data);
     }
     getDistrict();
-  }
+  };
   const handleChangeDistrict = (e) => {
     setAddress({ ...address, district: e.children });
     setWardId(null);
@@ -92,7 +96,7 @@ function Checkouts(props) {
       setWard(res.data);
     }
     getWard();
-  }
+  };
   const handleChangeWard = (e) => {
     setWardId(e.value);
     setAddress({ ...address, ward: e.children });
@@ -107,22 +111,32 @@ function Checkouts(props) {
       weight: 200,
       width: 20,
       insurance_fee: 10000,
-      coupon: null
-    }
+      coupon: null,
+    };
     async function calculateFee() {
       let res = {};
       res = await FeeService.calculateFee(values).catch((error) => {
         err = "Chưa có dịch vụ vận chuyển đến địa điểm này,xin thứ lỗi";
-        sendMessage("Chưa có dịch vụ vận chuyển đến địa điểm này,xin thứ lỗi", error.toString(), "danger");
-        setWardId(null); setDistrictId(null);
+        sendMessage(
+          "Chưa có dịch vụ vận chuyển đến địa điểm này,xin thứ lỗi",
+          error.toString(),
+          "danger"
+        );
+        setWardId(null);
+        setDistrictId(null);
       });
       console.log(err);
-      if (!err) { setFee(res.data.total); console.log("test:", districtId, wardId); }
+      if (!err) {
+        setFee(res.data.total);
+        console.log("test:", districtId, wardId);
+      }
     }
     calculateFee();
-  }
+  };
 
-  useEffect(() => { dispatch(toAddress(districtId, wardId)) }, [wardId]);
+  useEffect(() => {
+    dispatch(toAddress(districtId, wardId));
+  }, [wardId]);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -133,28 +147,38 @@ function Checkouts(props) {
   };
 
   function moveNextStep(isCOD) {
-    var errors = [];
-
-    if (!values.displayName) errors.push("Tên không được để trống!");
-    if (!values.phoneNumber) errors.push("Số điện thoại không được để trống!");
-    if (!values.address) errors.push("Địa chỉ không được để trống!");
-
-    if (expanded === "panel1" && !wardId)
-      errors.push("Vui lòng chọn địa chỉ giao hàng!");
-
-    if (errors?.length)
-      errors.map((err) => sendMessage("Error happened!", err, "danger"));
+    if (!currentUser)
+      sendMessage(
+        "Error happened!",
+        "Vui lòng đăng nhập trước khi thanh toán",
+        "danger"
+      );
     else {
-      const addressDelivery = address.ward + " " + address.district + " " + address.province;
-      console.log("addressDelivery: ", addressDelivery);
-      dispatch(sendOrderInfo(values, addressDelivery, isCOD)); //late for a value
-      console.log("vnpay run into here", values, addressDelivery, isCOD);
-      setOpen(!isCOD);
-      if (isCOD) history.push("/update-order");
+      var errors = [];
+
+      if (!values.displayName) errors.push("Tên không được để trống!");
+      if (!values.phoneNumber)
+        errors.push("Số điện thoại không được để trống!");
+      if (!values.address) errors.push("Địa chỉ không được để trống!");
+
+      if (expanded === "panel1" && !wardId)
+        errors.push("Vui lòng chọn địa chỉ giao hàng!");
+
+      if (errors?.length)
+        errors.map((err) => sendMessage("Error happened!", err, "danger"));
+      else {
+        const addressDelivery =
+          address.ward + " " + address.district + " " + address.province;
+        console.log("addressDelivery: ", addressDelivery);
+        dispatch(sendOrderInfo(values, addressDelivery, isCOD)); //late for a value
+        console.log("vnpay run into here", values, addressDelivery, isCOD);
+        setOpen(!isCOD);
+        if (isCOD) history.push("/update-order");
+      }
     }
   }
   const SendPayment = () => {
-    finalPrice+=fee; //test
+    finalPrice += fee; //test
     if (method === "momo")
       axios
         .post("/api/momo", { amount: finalPrice })
@@ -283,14 +307,49 @@ function Checkouts(props) {
                 <Typography>Giao hàng</Typography>
               </AccordionSummary>
               <AccordionDetails className="selectContainer">
-                <Select placeholder="Chọn tỉnh,thành phố" style={{ width: 150 }} onChange={(value, e) => handleChangeProvince(e)}>
-                  {province ? province.map(item => <Option value={item.ProvinceID}>{item.ProvinceName}</Option>) : <></>}
+                <Select
+                  placeholder="Chọn tỉnh,thành phố"
+                  style={{ width: 150 }}
+                  onChange={(value, e) => handleChangeProvince(e)}>
+                  {province ? (
+                    province.map((item) => (
+                      <Option value={item.ProvinceID}>
+                        {item.ProvinceName}
+                      </Option>
+                    ))
+                  ) : (
+                    <></>
+                  )}
                 </Select>
-                <Select value={districtId} id="district" placeholder="Chọn quận,huyện" style={{ width: 150 }} onChange={(value, e) => handleChangeDistrict(e)}>
-                  {district ? district.map(item => <Option value={item.DistrictID}>{item.DistrictName}</Option>) : <></>}
+                <Select
+                  value={districtId}
+                  id="district"
+                  placeholder="Chọn quận,huyện"
+                  style={{ width: 150 }}
+                  onChange={(value, e) => handleChangeDistrict(e)}>
+                  {district ? (
+                    district.map((item) => (
+                      <Option value={item.DistrictID}>
+                        {item.DistrictName}
+                      </Option>
+                    ))
+                  ) : (
+                    <></>
+                  )}
                 </Select>
-                <Select value={wardId} id="ward" placeholder="Chọn xã,phường" style={{ width: 150 }} onChange={(value, e) => handleChangeWard(e)}>
-                  {ward ? ward.map(item => <Option value={item.WardCode}>{item.WardName}</Option>) : <></>}
+                <Select
+                  value={wardId}
+                  id="ward"
+                  placeholder="Chọn xã,phường"
+                  style={{ width: 150 }}
+                  onChange={(value, e) => handleChangeWard(e)}>
+                  {ward ? (
+                    ward.map((item) => (
+                      <Option value={item.WardCode}>{item.WardName}</Option>
+                    ))
+                  ) : (
+                    <></>
+                  )}
                 </Select>
               </AccordionDetails>
             </Accordion>
@@ -328,8 +387,9 @@ function Checkouts(props) {
               </DialogContentText>
               <div className="radio-group row justify-content-between px-3 text-center a">
                 <div
-                  className={`col-auto mr-sm-2 mx-1 card-block py-0 text-center radio ${method === "momo" ? "selected" : ""
-                    }`}
+                  className={`col-auto mr-sm-2 mx-1 card-block py-0 text-center radio ${
+                    method === "momo" ? "selected" : ""
+                  }`}
                   onClick={() => setMethod("momo")}>
                   <div className="flex-row">
                     <div className="col">
@@ -347,8 +407,9 @@ function Checkouts(props) {
                   </div>
                 </div>
                 <div
-                  className={`col-auto mr-sm-2 mx-1 card-block py-0 text-center radio ${method === "vnpay" ? "selected" : ""
-                    }`}
+                  className={`col-auto mr-sm-2 mx-1 card-block py-0 text-center radio ${
+                    method === "vnpay" ? "selected" : ""
+                  }`}
                   onClick={() => setMethod("vnpay")}>
                   <div className="flex-row">
                     <div className="col">

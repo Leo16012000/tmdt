@@ -88,7 +88,9 @@ function Orders() {
       "Huỷ đơn hàng thành công",
       "success"
     );
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   };
 
   useEffect(() => {
@@ -105,12 +107,12 @@ function Orders() {
   if (!currentUser) return <Redirect to="/account" />;
 
   return (
-    <div class="Orders__container">
-      <div class="table-responsive">
-        <div class="table-wrapper">
-          <div class="table-title">
-            <div class="row">
-              <div class="col-sm-5">
+    <div className="Orders__container">
+      <div className="table-responsive">
+        <div className="table-wrapper">
+          <div className="table-title">
+            <div className="row">
+              <div className="col-sm-5">
                 <h2>
                   Quản lý <b>Đơn hàng</b>
                 </h2>
@@ -127,7 +129,7 @@ function Orders() {
             </div>
           </div>
           <TabPanel value={value} index={0}>
-            <table class="table table-striped table-hover">
+            <table className="table table-striped table-hover">
               <thead>
                 <tr>
                   <th>Mã vận đơn</th>
@@ -135,7 +137,7 @@ function Orders() {
                   <th>Địa chỉ nhận hàng</th>
                   <th>Thành tiền</th>
                   <th>Trạng thái đơn hàng</th>
-                  <th>Thời gian giao hàng</th>
+                  <th>Thời gian giao hàng dự kiến</th>
                   <th>Hoạt động</th>
                 </tr>
               </thead>
@@ -150,40 +152,79 @@ function Orders() {
                   .map((row) => (
                     <tr>
                       <td>{row.ID}</td>
-                      <td>{row.Content}</td>
+                      <td>{row.Content.replaceAll(",", "\n")}</td>
                       <td>{row.Address}</td>
                       <td>{numberWithCommas(row.TotalPrice)}</td>
                       <td>
-                        <span class="status text-success">&bull;</span>{" "}
+                        <span className="status text-success">&bull;</span>{" "}
                         {stateGHN[row.OrderState]}
                       </td>
-                      <td>
-                        <td>
-                          {row.DeliveryExpectedTime.slice(0, -5).replace(
-                            "T",
-                            " "
-                          )}
-                        </td>
-                      </td>
+                      <td>{row.DeliveryExpectedTime.slice(0, 10)}</td>
                       <td>
                         <Tooltip title={"Huỷ đơn hàng"}>
                           <Button
                             size="middle"
                             type="link"
-                            onClick={() => {
-                              handleCancel(row.ID);
-                            }}
-                            icon={<i class="material-icons">&#xE5C9;</i>}
+                            style={{ color: "red" }}
+                            data-bs-toggle="modal"
+                            data-bs-target={`#deleteModal${row.ID}`}
+                            icon={<i className="material-icons">&#xE5C9;</i>}
                           />
                         </Tooltip>
                       </td>
+
+                      <div
+                        id={`deleteModal${row.ID}`}
+                        className="modal fade"
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div className="modal-dialog modal-confirm modal-dialog-centered">
+                          <div className="modal-content">
+                            <div className="modal-header flex-column">
+                              <div className="icon-box">
+                                <i className="material-icons">&#xE5CD;</i>
+                              </div>
+                              <h4 className="modal-title w-100">
+                                Are you sure?
+                              </h4>
+                              <button
+                                type="button"
+                                className="close"
+                                data-bs-dismiss="modal"
+                                aria-hidden="true">
+                                &times;
+                              </button>
+                            </div>
+                            <div className="modal-body">
+                              <p>Bạn có chắc chắc muốn xóa đơn hàng này?</p>
+                            </div>
+                            <div className="modal-footer justify-content-center">
+                              <button
+                                type="button"
+                                className="btn btn-secondary"
+                                data-bs-dismiss="modal">
+                                Hủy bỏ
+                              </button>
+                              <button
+                                type="button"
+                                className="btn btn-danger"
+                                onClick={() => {
+                                  handleCancel(row.ID);
+                                }}>
+                                Xóa
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </tr>
                   ))}
               </tbody>
             </table>
           </TabPanel>
+
           <TabPanel value={value} index={1}>
-            <table class="table table-striped table-hover">
+            <table className="table table-striped table-hover">
               <thead>
                 <tr>
                   <th>Mã vận đơn</th>
@@ -191,7 +232,6 @@ function Orders() {
                   <th>Địa chỉ nhận hàng</th>
                   <th>Thành tiền</th>
                   <th>Trạng thái đơn hàng</th>
-                  <th>Thời gian giao hàng</th>
                 </tr>
               </thead>
               <tbody>
@@ -205,12 +245,12 @@ function Orders() {
                   .map((row) => (
                     <tr>
                       <td>{row.ID}</td>
-                      <td>{row.Content}</td>
+                      <td>{row.Content.replaceAll(",", "\n")}</td>
                       <td>{row.Address}</td>
                       <td>{numberWithCommas(row.TotalPrice)}</td>
                       <td>
                         <span
-                          class={
+                          className={
                             row.OrderState === "delivered"
                               ? "status text-success"
                               : "status text-danger"
@@ -218,14 +258,6 @@ function Orders() {
                           &bull;
                         </span>{" "}
                         {stateGHN[row.OrderState]}
-                      </td>
-                      <td>
-                        <td>
-                          {row.DeliveryExpectedTime.slice(0, -5).replace(
-                            "T",
-                            " "
-                          )}
-                        </td>
                       </td>
                     </tr>
                   ))}
