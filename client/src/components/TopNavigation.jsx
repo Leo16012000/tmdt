@@ -67,14 +67,15 @@ function TopNavigation() {
               <p id="account">
                 <Link to="/account">Tài khoản</Link>
               </p>
-              {(!currentUser || !currentUser.email === "admin@gmail.com") && (
-                <p id="shop">
-                  <Link to="/cart">Giỏ hàng</Link>
-                  <span class="badge badge-warning" id="lblCartCount">
-                    {numberCart}
-                  </span>
-                </p>
-              )}
+              {!currentUser ||
+                (currentUser.email !== "admin@gmail.com" && (
+                  <p id="shop">
+                    <Link to="/cart">Giỏ hàng</Link>
+                    <span class="badge badge-warning" id="lblCartCount">
+                      {numberCart}
+                    </span>
+                  </p>
+                ))}
               <p id="orders">
                 {currentUser?.email === "admin@gmail.com" && (
                   <Link to="/admin">Quản lý</Link>
