@@ -135,6 +135,12 @@ function Checkouts(props) {
   };
 
   useEffect(() => {
+    if (!currentUser)
+      sendMessage(
+        "Error happened!",
+        "Vui lòng đăng nhập trước khi thanh toán",
+        "danger"
+      );
     dispatch(toAddress(districtId, wardId));
   }, [wardId]);
 

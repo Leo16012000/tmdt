@@ -46,6 +46,8 @@ function TopNavigation() {
     setKeyword(e.target.value);
   }
 
+  console.log(!currentUser);
+
   return (
     <header className="TopNavigation">
       <div className="TopNavigation__container--top">
@@ -66,7 +68,7 @@ function TopNavigation() {
               <p id="account">
                 <Link to="/account">Tài khoản</Link>
               </p>
-              {(!currentUser || !currentUser.email === "admin@gmail.com") && (
+              {(!currentUser || currentUser.email !== "admin@gmail.com") && (
                 <p id="shop">
                   <Link to="/cart">Giỏ hàng</Link>
                   <span class="badge badge-warning" id="lblCartCount">
@@ -78,10 +80,9 @@ function TopNavigation() {
                 {currentUser?.email === "admin@gmail.com" && (
                   <Link to="/admin">Quản lý</Link>
                 )}
-                {!currentUser ||
-                  (currentUser.email !== "admin@gmail.com" && (
-                    <Link to="/admin">Đơn hàng</Link>
-                  ))}
+                {currentUser && currentUser.email !== "admin@gmail.com" && (
+                  <Link to="/orders">Đơn hàng</Link>
+                )}
               </p>
 
               <ShoppingCartOutlinedIcon />
