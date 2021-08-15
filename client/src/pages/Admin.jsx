@@ -7,7 +7,7 @@ import {
 	Redirect,
 } from "react-router-dom";
 import { AuthContext } from "../account/Auth";
-import { Form, Input, notification, InputNumber, Image, Button, Select, Layout, Menu, Breadcrumb, Upload, Table, Modal } from "antd";
+import { Form, Input, notification, InputNumber, Image, Button, Select, Layout, Menu, Breadcrumb, Upload, Table, Modal, Descriptions } from "antd";
 import "antd/dist/antd.css";
 import "../styles/Admin.css";
 import {
@@ -158,13 +158,23 @@ function Admin() {
 
 function OrdersData() {
 	const [item, setItem] = useState([]);
-	const [data, setData] = useState([]);
+	const [data, setData] = useState({});
+	const [confirmVisible, setConfirmVisible] = useState(false);
 
 	useEffect(() => {
 		Axios.get(`http://localhost:3001/getAllOrders`).then((response) => {
 			setItem(response.data.reverse());
 		});
 	});
+
+	const showConfirmModal = (record) => {
+		setConfirmVisible(true);
+		setData(record)
+	};
+
+	const handleConfirmCancel = () => {
+		setConfirmVisible(false);
+	};
 
 	function handleUpdateStatus(value, record) {
 		Axios.put("/api/order/update", { ID: record.ID, state: value })
@@ -182,34 +192,90 @@ function OrdersData() {
 	}
 
 	return (
-		<Table dataSource={item}>
-			<Column title="Mã đơn hàng" dataIndex="ID" key="ID" />
-			<Column title="Email" dataIndex="UserEmail" key="UserEmail" />
-			<Column title="Địa chỉ" dataIndex="Address" key="Address" />
-			<Column title="Tổng tiền" dataIndex="TotalPrice" key="TotalPrice" />
-			<Column
-				title="Trạng thái đơn hàng"
-				dataIndex="OrderState"
-				key="OrderState"
-				render={(text, record) => {
+		<div>
+			<Table dataSource={item}>
+				<Column title="Mã đơn hàng" dataIndex="ID" key="ID" />
+				<Column title="Email" dataIndex="UserEmail" key="UserEmail" />
+				<Column title="Địa chỉ" dataIndex="Address" key="Address" />
+				<Column title="Tổng tiền" dataIndex="TotalPrice" key="TotalPrice" />
+				<Column
+					title="Trạng thái đơn hàng"
+					dataIndex="OrderState"
+					key="OrderState"
+					width={300}
+					render={(text, record) => {
 
-					return (
-						<Select defaultValue={record.OrderState} style={{ width: 150 }} onChange={(value) => handleUpdateStatus(value, record)}>
-							<Option value="new">Đơn hàng mới</Option>
-							<Option value="processing">Đang được xử lý</Option>
-							<Option value="ready_to_pick">Đang được vận chuyển</Option>
-							<Option value="done">Hoàn tất</Option>
-							<Option value="cancel">Hủy</Option>
-						</Select>
-					)
-				}}
-			/>
-		</Table>
+						return (
+							<div>
+								<Select defaultValue={record.OrderState} style={{ width: 150 }} onChange={(value) => handleUpdateStatus(value, record)}>
+									<Option value="new">Đơn hàng mới</Option>
+									<Option value="processing">Đang được xử lý</Option>
+									<Option value="ready_to_pick">Đang được vận chuyển</Option>
+									<Option value="done">Hoàn tất</Option>
+									<Option value="cancel">Hủy</Option>
+								</Select>
+								<Button style={{ marginLeft: '20px' }} onClick={() => showConfirmModal(record)}>
+									Chi tiết
+								</Button>
+							</div>
+						)
+					}}
+				/>
+			</Table>
+			<Modal
+				title={`Chi tiết đơn hàng ${data ? data.ID : ''}`}
+				visible={confirmVisible}
+				closable
+				onCancel={handleConfirmCancel}
+				footer={null}
+			>
+				<Descriptions className="detail" layout="horizontal">
+					<Descriptions.Item span={24} label="Người Nhận">{data ? data.Receiver : ''}</Descriptions.Item>
+					<Descriptions.Item span={24} label="Email">{data ? data.UserEmail : ''}</Descriptions.Item>
+					<Descriptions.Item span={24} label="Địa chỉ giao hàng">
+						{data ? data.Address : ''}
+					</Descriptions.Item>
+					<Descriptions.Item span={24} label="Nội dung đơn hàng">
+						{data ? data.Content : ''}
+					</Descriptions.Item>
+					<Descriptions.Item span={24} label="Giá sản phẩm">
+						{data ? data.Price : ''} VNĐ
+					</Descriptions.Item>
+					<Descriptions.Item span={24} label="Phí vận chuyển">
+						{data ? data.GHNServicePrice : ''} VNĐ
+					</Descriptions.Item>
+					<Descriptions.Item span={24} label="Tổng đơn hàng">
+						{data ? data.TotalPrice : ''} VNĐ
+					</Descriptions.Item>
+					<Descriptions.Item span={24} label="Phương thức thanh toán">
+						{data ? data.PaymentMethod : ''}
+					</Descriptions.Item>
+					<Descriptions.Item span={24} label="Trạng thái đơn hàng">
+						{data ? data.OrderState : ''}
+					</Descriptions.Item>
+					<Descriptions.Item span={24} label="Thời gian giao hàng dự kiến">
+						{data ? data.DeliveryExpectedTime : ''}
+					</Descriptions.Item>
+				</Descriptions>
+			</Modal>
+		</div>
+
 	);
 }
 
 function SearchOrder() {
 	const [item, setItem] = useState([]);
+	const [data, setData] = useState({});
+	const [confirmVisible, setConfirmVisible] = useState(false);
+
+	const showConfirmModal = (record) => {
+		setConfirmVisible(true);
+		setData(record)
+	};
+
+	const handleConfirmCancel = () => {
+		setConfirmVisible(false);
+	};
 
 	async function getOrders(e) {
 		var lst1 = await Axios.get(
@@ -231,6 +297,21 @@ function SearchOrder() {
 		getOrders(e);
 	}
 
+	function handleUpdateStatus(value, record) {
+		Axios.put("/api/order/update", { ID: record.ID, state: value })
+			.then((res) => {
+				if (res.status === 200) {
+					openNotificationWithIcon('success', 'Thành công', 'Cập nhật trạng thái đơn hàng thành công!')
+				}
+				else {
+					openNotificationWithIcon('error', 'Thất bại', 'Đã có lỗi xảy ra!')
+				}
+			})
+			.catch((error) => {
+				openNotificationWithIcon('error', 'Thất bại', 'Đã có lỗi xảy ra!')
+			});
+	}
+
 	return (
 		<div>
 			<div style={{ marginBottom: "10px", marginRight: "10px" }}>
@@ -249,16 +330,62 @@ function SearchOrder() {
 					title="Trạng thái đơn hàng"
 					dataIndex="OrderState"
 					key="OrderState"
-					render={(OrderState) => {
-						switch (OrderState) {
-							case "ready_to_pick":
-								return "Đang được vận chuyển";
-							default:
-								return "Đang được vận chuyển";
-						}
+					width={300}
+					render={(text, record) => {
+
+						return (
+							<div>
+								<Select defaultValue={record.OrderState} style={{ width: 150 }} onChange={(value) => handleUpdateStatus(value, record)}>
+									<Option value="new">Đơn hàng mới</Option>
+									<Option value="processing">Đang được xử lý</Option>
+									<Option value="ready_to_pick">Đang được vận chuyển</Option>
+									<Option value="done">Hoàn tất</Option>
+									<Option value="cancel">Hủy</Option>
+								</Select>
+								<Button style={{ marginLeft: '20px' }} onClick={() => showConfirmModal(record)}>
+									Chi tiết
+								</Button>
+							</div>
+						)
 					}}
 				/>
 			</Table>
+			<Modal
+				title={`Chi tiết đơn hàng ${data ? data.ID : ''}`}
+				visible={confirmVisible}
+				closable
+				onCancel={handleConfirmCancel}
+				footer={null}
+			>
+				<Descriptions className="detail" layout="horizontal">
+					<Descriptions.Item span={24} label="Người Nhận">{data ? data.Receiver : ''}</Descriptions.Item>
+					<Descriptions.Item span={24} label="Email">{data ? data.UserEmail : ''}</Descriptions.Item>
+					<Descriptions.Item span={24} label="Địa chỉ giao hàng">
+						{data ? data.Address : ''}
+					</Descriptions.Item>
+					<Descriptions.Item span={24} label="Nội dung đơn hàng">
+						{data ? data.Content : ''}
+					</Descriptions.Item>
+					<Descriptions.Item span={24} label="Giá sản phẩm">
+						{data ? data.Price : ''} VNĐ
+					</Descriptions.Item>
+					<Descriptions.Item span={24} label="Phí vận chuyển">
+						{data ? data.GHNServicePrice : ''} VNĐ
+					</Descriptions.Item>
+					<Descriptions.Item span={24} label="Tổng đơn hàng">
+						{data ? data.TotalPrice : ''} VNĐ
+					</Descriptions.Item>
+					<Descriptions.Item span={24} label="Phương thức thanh toán">
+						{data ? data.PaymentMethod : ''}
+					</Descriptions.Item>
+					<Descriptions.Item span={24} label="Trạng thái đơn hàng">
+						{data ? data.OrderState : ''}
+					</Descriptions.Item>
+					<Descriptions.Item span={24} label="Thời gian giao hàng dự kiến">
+						{data ? data.DeliveryExpectedTime : ''}
+					</Descriptions.Item>
+				</Descriptions>
+			</Modal>
 		</div>
 	);
 }
