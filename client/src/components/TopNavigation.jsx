@@ -81,7 +81,7 @@ function TopNavigation() {
                 )}
                 {!currentUser ||
                   (currentUser.email !== "admin@gmail.com" && (
-                    <Link to="/admin">Đơn hàng</Link>
+                    <Link to="/orders">Đơn hàng</Link>
                   ))}
               </p>
 
