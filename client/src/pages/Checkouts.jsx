@@ -393,9 +393,8 @@ function Checkouts(props) {
               </DialogContentText>
               <div className="radio-group row justify-content-between px-3 text-center a">
                 <div
-                  className={`col-auto mr-sm-2 mx-1 card-block py-0 text-center radio ${
-                    method === "momo" ? "selected" : ""
-                  }`}
+                  className={`col-auto mr-sm-2 mx-1 card-block py-0 text-center radio ${method === "momo" ? "selected" : ""
+                    }`}
                   onClick={() => setMethod("momo")}>
                   <div className="flex-row">
                     <div className="col">
@@ -413,9 +412,8 @@ function Checkouts(props) {
                   </div>
                 </div>
                 <div
-                  className={`col-auto mr-sm-2 mx-1 card-block py-0 text-center radio ${
-                    method === "vnpay" ? "selected" : ""
-                  }`}
+                  className={`col-auto mr-sm-2 mx-1 card-block py-0 text-center radio ${method === "vnpay" ? "selected" : ""
+                    }`}
                   onClick={() => setMethod("vnpay")}>
                   <div className="flex-row">
                     <div className="col">

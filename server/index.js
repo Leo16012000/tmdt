@@ -225,7 +225,7 @@ app.get("/collections", (req, res) => {
     res.send(result);
   });
 });
-
+ 
 app.get("/users", (req, res) => {
   const sqlSelect = "SELECT * FROM `user`";
   db.query(sqlSelect, (err, result) => {
@@ -312,26 +312,49 @@ app.post("/api/product/delete", (req, res) => {
 
 //update product by id
 app.put("/api/product/update", (req, res) => {
-  const sqlUpdate =
-    "UPDATE `product` SET Price = ?,Fullname=?,Detail=?,State=?,Image=?,Category=?,KindOfRoom=? WHERE ID = ?";
+
+  const check = "SELECT * FROM product WHERE Fullname=? AND Price=?;"
   db.query(
-    sqlUpdate,
+    check,
     [
-      req.body.price,
       req.body.name,
-      req.body.detail,
-      req.body.state,
-      req.body.image,
-      req.body.category,
-      +req.body.kindOfRoom,
-      +req.body.ID,
+      req.body.price,
     ],
     (err, result) => {
-      if (err) console.log(err);
-      console.log(result);
-      res.send(result);
-    }
-  );
+      if (err) {
+        console.log(err);
+      }
+      else {
+        if(result.length > 0){ 
+          console.log(result.length)
+          res.sendStatus(404);
+        }
+        else {
+        const sqlUpdate =
+            "UPDATE `product` SET Price = ?,Fullname=?,Detail=?,State=?,Image=?,Category=?,KindOfRoom=? WHERE ID = ?";
+          db.query(
+            sqlUpdate,
+            [
+              req.body.price,
+              req.body.name,
+              req.body.detail,
+              req.body.state,
+              req.body.image,
+              req.body.category,
+              +req.body.kindOfRoom,
+              +req.body.ID,
+            ],
+            (err, result) => {
+              if (err) console.log(err);
+              console.log(result);
+              res.send(result);
+            }
+          );
+        }
+      }
+    });
+
+  
 });
 
 //update order status by id
@@ -347,27 +370,51 @@ app.put("/api/order/update", (req, res) => {
 // add new item
 app.post("/api/product", (req, res) => {
   console.log(req.body);
-  const sqlInsert =
-    "INSERT INTO product (Price,Fullname,Detail,State,Image,RatingPoint,SellerId,Category, KindOfRoom) VALUES (?,?,?,?,?,?,?,?,?);"; //lệnh đúng rồi
+  const check = "SELECT * FROM product WHERE Fullname=? AND Price=?;"
   db.query(
-    sqlInsert,
+    check,
     [
-      req.body.price,
       req.body.name,
-      req.body.detail,
-      "còn hàng",
-      req.body.image,
-      5,
-      2,
-      req.body.category,
-      req.body.kindOfRoom,
+      req.body.price,
     ],
     (err, result) => {
-      if (err) console.log(err);
-      console.log(result);
-      res.send(result);
+      if (err) {
+        console.log(err);
+      }
+      else {
+        if(result.length > 0){ 
+          console.log(result.length)
+          res.sendStatus(404);
+        }
+        else {
+        const sqlInsert = "INSERT INTO product (Price,Fullname,Detail,State,Image,RatingPoint,SellerId,Category, KindOfRoom) VALUES (?,?,?,?,?,?,?,?,?);"; //lệnh đúng rồi
+          db.query(
+            sqlInsert,
+            [
+              req.body.price,
+              req.body.name,
+              req.body.detail,
+              "còn hàng",
+              req.body.image,
+              5,
+              2,
+              req.body.category,
+              req.body.kindOfRoom,
+            ],
+            (err, result) => {
+              if (err) console.log(err);
+              console.log(result);
+              res.send(result);
+            }
+          );
+        }
+      }
     }
   );
+
+  
+
+  
 });
 
 app.listen(PORT, () => {
